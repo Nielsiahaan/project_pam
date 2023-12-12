@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Boxicons -->
+    <link
+      href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- My CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="../Asset/logo.jpg" />
+    <title>Admin Del</title>
+  </head>
+  <body>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+      <a href="#" class="brand">
+        <i class="bx bxs-smile"></i>
+        <span class="text">Administrator</span>
+      </a>
+      <ul class="side-menu top">
+        <li>
+          <a href="index.html">
+            <i class="bx bxs-dashboard"></i>
+            <span class="text">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="pengumuman.html">
+            <i class="bx bxs-megaphone"></i>
+            <span class="text">Pengumuman</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="#">
+            <i class="bx bxs-graduation"></i>
+            <span class="text">Pendidikan</span>
+          </a>
+        </li>
+        <li>
+          <a href="fasilitas.html">
+            <i class="bx bxs-home"></i>
+            <span class="text">Fasilitas</span>
+          </a>
+        </li>
+        <li>
+          <a href="lembaga.html">
+            <i class="bx bxs-group"></i>
+            <span class="text">Lembaga</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="side-menu">
+        <li>
+          <a href="#">
+            <i class="bx bxs-cog"></i>
+            <span class="text">Settings</span>
+          </a>
+        </li>
+        <li>
+          <a href="../UserUmum/Dashboard.html" class="logout">
+            <i class="bx bxs-log-out-circle"></i>
+            <span class="text">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+    <section id="content">
+      <!-- NAVBAR -->
+      <nav>
+        <i class="bx bx-menu"></i>
+        <a href="#" class="nav-link">Categories</a>
+        <form action="#">
+          <div class="form-input">
+            <input type="search" placeholder="Search..." />
+            <button type="submit" class="search-btn">
+              <i class="bx bx-search"></i>
+            </button>
+          </div>
+        </form>
+        <input type="checkbox" id="switch-mode" hidden />
+        <label for="switch-mode" class="switch-mode"></label>
+        <a href="#" class="notification">
+          <i class="bx bxs-bell"></i>
+          <span class="num">8</span>
+        </a>
+        <a href="#" class="profile">
+          <img src="img/people.png" />
+        </a>
+      </nav>
+      <!-- NAVBAR -->
+
+      <!-- MAIN -->
+      <main>
+        <div class="head-title">
+          <div class="left">
+            <h1>Program Pendidikan</h1>
+            <ul class="breadcrumb">
+              <li>
+                <a href="#">Dashboard</a>
+              </li>
+              <li><i class="bx bx-chevron-right"></i></li>
+              <li>
+                <a class="active" href="#">Prodi</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- ... (your existing code) ... -->
+        <div class="table-data">
+          <div class="order">
+            <div class="head">
+              <h3>Program Studi</h3>
+              <i class="bx bx-plus" id="addProgramButton"></i>
+            </div>
+            <form id="addProgramForm" style="display: none;">
+              <label for="programName">Program Studi:</label>
+              <input type="text" id="programName" name="programName" required>
+              <br><br>
+              <label for="programVisi">Visi:</label>
+              <textarea id="programVisi" name="programVisi" required></textarea>
+              <br><br>
+              <label for="programMisi">Misi:</label>
+              <textarea id="programMisi" name="programMisi" required></textarea>
+              <br><br>
+              <button type="submit">Tambah Program Studi</button>
+              <button type="button" onclick="cancelAddProgram()">Cancel</button>
+            </form>
+
+            <table id="programTable">
+              <thead>
+                <tr style="background-color: #3C91E6;">
+                  <th style="width: 20%;">Program Studi</th>
+                  <th style="width: 35%;">Visi</th>
+                  <th style="width: 35%;">Misi</th>
+                  <th style="width: 10%;">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <p>D3 Teknologi Infromasi</p>
+                  </td>
+                  <td>Menghasilkan lulusan yang memiliki kemam ...</td>
+                  <td>Mampu membangun, mengembangkan dan ...</td>
+                  <td>
+                    <a href="#"><i class="fas fa-eye" title="Lihat"></i></a>
+                    <a href="#"><i class="fas fa-edit" title="Edit"></i></a>
+                    <a href="#"><i class="fas fa-trash" title="Delete"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr>
+                  <td>
+                    <p>D3 Teknologi Komputer</p>
+                  </td>
+                  <td>Menghasilkan lulusan yang memiliki kemam ...</td>
+                  <td>Mampu membangun, mengembangkan dan ...</td>
+                  <td>
+                    <a href="#"><i class="fas fa-eye" title="Lihat"></i></a>
+                    <a href="#"><i class="fas fa-edit" title="Edit"></i></a>
+                    <a href="#"><i class="fas fa-trash" title="Delete"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr>
+                  <td>
+                    <p>ST Teknologi Rekayasa Peragkat Lunak</p>
+                  </td>
+                  <td>Menghasilkan lulusan yang memiliki kemam ...</td>
+                  <td>Mampu membangun, mengembangkan dan ...</td>
+                  <td>
+                    <a href="#"><i class="fas fa-eye" title="Lihat"></i></a>
+                    <a href="#"><i class="fas fa-edit" title="Edit"></i></a>
+                    <a href="#"><i class="fas fa-trash" title="Delete"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr>
+                  <td>
+                    <p>S1 Informatika</p>
+                  </td>
+                  <td>Menghasilkan lulusan yang memiliki kemam ...</td>
+                  <td>Mampu membangun, mengembangkan dan ...</td>
+                  <td>
+                    <a href="#"><i class="fas fa-eye" title="Lihat"></i></a>
+                    <a href="#"><i class="fas fa-edit" title="Edit"></i></a>
+                    <a href="#"><i class="fas fa-trash" title="Delete"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr>
+                  <td>
+                    <p>S1 Sistem Informasi</p>
+                  </td>
+                  <td>Menghasilkan lulusan yang memiliki kemam ...</td>
+                  <td>Mampu membangun, mengembangkan dan ...</td>
+                  <td>
+                    <a href="#"><i class="fas fa-eye" title="Lihat"></i></a>
+                    <a href="#"><i class="fas fa-edit" title="Edit"></i></a>
+                    <a href="#"><i class="fas fa-trash" title="Delete"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr>
+                  <td>
+                    <p>S1 Teknik Elektro</p>
+                  </td>
+                  <td>Menghasilkan lulusan yang memiliki kemam ...</td>
+                  <td>Mampu membangun, mengembangkan dan ...</td>
+                  <td>
+                    <a href="#"><i class="fas fa-eye" title="Lihat"></i></a>
+                    <a href="#"><i class="fas fa-edit" title="Edit"></i></a>
+                    <a href="#"><i class="fas fa-trash" title="Delete"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr>
+                  <td>
+                    <p>S1 Manajemen Rekayasa</p>
+                  </td>
+                  <td>Menghasilkan lulusan yang memiliki kemam ...</td>
+                  <td>Mampu membangun, mengembangkan dan ...</td>
+                  <td>
+                    <a href="#"><i class="fas fa-eye" title="Lihat"></i></a>
+                    <a href="#"><i class="fas fa-edit" title="Edit"></i></a>
+                    <a href="#"><i class="fas fa-trash" title="Delete"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr>
+                  <td>
+                    <p>S1 Teknik Metalurgi</p>
+                  </td>
+                  <td>Menghasilkan lulusan yang memiliki kemam ...</td>
+                  <td>Mampu membangun, mengembangkan dan ...</td>
+                  <td>
+                    <a href="#"><i class="fas fa-eye" title="Lihat"></i></a>
+                    <a href="#"><i class="fas fa-edit" title="Edit"></i></a>
+                    <a href="#"><i class="fas fa-trash" title="Delete"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr>
+                  <td>
+                    <p>S1 Teknik Bioproses</p>
+                  </td>
+                  <td>Menghasilkan lulusan yang memiliki kemam ...</td>
+                  <td>Mampu membangun, mengembangkan dan ...</td>
+                  <td>
+                    <a href="#"><i class="fas fa-eye" title="Lihat"></i></a>
+                    <a href="#"><i class="fas fa-edit" title="Edit"></i></a>
+                    <a href="#"><i class="fas fa-trash" title="Delete"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ... (your existing code) ... -->
+      </main>
+      <!-- MAIN -->
+    </section>
+    <!-- CONTENT -->
+
+    <script src="script.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const addProgramButton = document.getElementById('addProgramButton');
+        const addProgramForm = document.getElementById('addProgramForm');
+        const programTable = document.getElementById('programTable');
+    
+        addProgramButton.addEventListener('click', function () {
+          // Sembunyikan tabel dan tampilkan formulir
+          programTable.style.display = 'none';
+          addProgramForm.style.display = 'block';
+        });
+    
+        function cancelAddProgram() {
+          // Reset nilai formulir
+          addProgramForm.reset();
+    
+          // Tampilkan kembali tabel dan sembunyikan formulir
+          programTable.style.display = 'table';
+          addProgramForm.style.display = 'none';
+        }
+    
+        addProgramForm.addEventListener('submit', function (event) {
+          // Menghentikan perilaku bawaan formulir
+          event.preventDefault();
+    
+          // Ambil nilai dari input formulir
+          const programName = document.getElementById('programName').value;
+          const programVisi = document.getElementById('programVisi').value;
+          const programMisi = document.getElementById('programMisi').value;
+    
+          // Buat elemen row baru untuk tabel
+          const newRow = document.createElement('tr');
+          newRow.innerHTML = `
+            <td>${programName}</td>
+            <td>${programVisi}</td>
+            <td>${programMisi}</td>
+            <td>
+              <a href="#"><i class="fas fa-eye" title="Lihat"></i></a>
+              <a href="#"><i class="fas fa-edit" title="Edit"></i></a>
+            </td>
+          `;
+    
+          // Tambahkan row baru ke tabel
+          const tbody = programTable.querySelector('tbody');
+          tbody.appendChild(newRow);
+    
+          // Reset nilai formulir
+          addProgramForm.reset();
+    
+          // Tampilkan kembali tabel dan sembunyikan formulir
+          programTable.style.display = 'table';
+          addProgramForm.style.display = 'none';
+        });
+      });
+    
+      function cancelAddProgram() {
+        // Reset nilai formulir
+        document.getElementById('addProgramForm').reset();
+    
+        // Tampilkan kembali tabel dan sembunyikan formulir
+        document.getElementById('programTable').style.display = 'table';
+        document.getElementById('addProgramForm').style.display = 'none';
+      }
+    </script>
+  </body>
+</html>
