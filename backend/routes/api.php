@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\MahasiswaController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Feed\FeedController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\IBRequestController;
 use App\Http\Controllers\RequestIKController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SuratRequestController;
@@ -30,8 +31,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('bookings', [BookingController::class, 'index']);
 
     //Route IK
-    Route::get('requestIK', [RequestIKController::class, 'index']);
-    Route::post('requestIK/store', [RequestIKController::class, 'store']);
+    Route::apiResource('requestIK', RequestIKController::class)->only(['index', 'store']);
+
+    //Route IB
+    Route::apiResource('requestIB', IBRequestController::class)->only(['index', 'store']);
 });
 
 

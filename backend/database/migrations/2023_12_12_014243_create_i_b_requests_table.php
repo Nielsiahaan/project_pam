@@ -12,7 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('i_b_requests', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('mahasiswa_id');
+            $table->foreign('mahasiswa_id')->references('id')->on('mahasiswas');
+            $table->dateTime('tanggal_berangkat');
+            $table->dateTime('tanggal_kembali');
+            $table->text('deskripsi');
+            $table->string('tujuan');
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

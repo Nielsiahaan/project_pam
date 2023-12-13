@@ -84,6 +84,7 @@ class AuthenticationController extends GetxController {
       if (response.statusCode == 200) {
         isLoading.value = false;
         token.value = json.decode(response.body)['token'];
+        //tulis token
         box.write('token', token.value);
         Get.offAll(() => const BasePage());
       } else {
@@ -126,5 +127,50 @@ class AuthenticationController extends GetxController {
     }
   }
 
-  // Future<void> logout(){}
+  Future<void> logout() async {
+    try {
+      isLoading.value = true;
+      // Get the token from the storage
+      String? storedToken = box.read('token');
+
+      if (storedToken != null && storedToken.isNotEmpty) {
+        var response = await http.get(Uri.parse(url + 'logout'), headers: {
+          'Authorization': 'Bearer $storedToken',
+          'Accept': 'application/json',
+        });
+
+        if (response.statusCode == 200) {
+          isLoading.value = false;
+          token.value = ''; // clear the token
+          box.remove('token');
+          Get.offAll(() => const LoginPage());
+          Get.snackbar('Success', 'Successfully Logged Out',
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.green,
+              colorText: Colors.white);
+        } else {
+          isLoading.value = false;
+          Get.snackbar('Error', json.decode(response.body)['message'],
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.red,
+              colorText: Colors.white);
+          try {
+            var decodeData = json.decode(response.body);
+            debugPrint(decodeData.toString());
+          } catch (e) {
+            debugPrint("Error decoding JSON: $e");
+          }
+        }
+      } else {
+        isLoading.value = false;
+        Get.snackbar('Error', 'Token not found',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white);
+      }
+    } catch (e) {
+      isLoading.value = false;
+      debugPrint(e.toString());
+    }
+  }
 }

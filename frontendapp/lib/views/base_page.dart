@@ -41,7 +41,7 @@ class _BasePageState extends State<BasePage> {
                 icFeaturedOutlined,
                 height: kBottomNavigationBarItemSize,
               ),
-              label: "Featured",
+              label: "Home",
             ),
             BottomNavigationBarItem(
               activeIcon: Image.asset(

@@ -24,7 +24,7 @@ class Mahasiswa {
     required this.updatedAt,
     required this.googleId,
   });
-
+  String get mahasiswaName => name;
   factory Mahasiswa.fromJson(Map<String, dynamic> json) => Mahasiswa(
         id: json["id"],
         nim: json["nim"],

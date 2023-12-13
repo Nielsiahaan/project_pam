@@ -1,7 +1,7 @@
 const _path = 'assets/icons';
 
-const icFeatured = '$_path/star.png';
-const icFeaturedOutlined = '$_path/star_outlined.png';
+const icFeatured = '$_path/home_outlined.png';
+const icFeaturedOutlined = '$_path/home.png';
 const icLearning = '$_path/play.png';
 const icLearningOutlined = '$_path/play_outlined.png';
 const icWishlist = '$_path/heart.png';
