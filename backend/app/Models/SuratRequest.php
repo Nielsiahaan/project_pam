@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SuratRequest extends Model
 {
@@ -18,5 +19,10 @@ class SuratRequest extends Model
     public function getCreatedAtFormattedAttribute()
     {
         return Carbon::parse($this->attributes['created_at'])->toDateTimeString();
+    }
+
+    public function mahasiswa(): BelongsTo
+    {
+        return $this->belongsTo(Mahasiswa::class, 'mahasiswa_id', 'id');
     }
 }

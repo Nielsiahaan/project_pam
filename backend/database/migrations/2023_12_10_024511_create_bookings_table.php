@@ -14,7 +14,7 @@ return new class extends Migration
             $table->unsignedBigInteger('mahasiswa_id');
             $table->foreign('mahasiswa_id')->references('id')->on('mahasiswas');
             $table->unsignedBigInteger('room_id');
-            $table->foreign('room_id')->references('id')->on('rooms');
+            $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
             $table->dateTime('start_time');
             $table->date('end_time');
             $table->string('status')->default('pending');

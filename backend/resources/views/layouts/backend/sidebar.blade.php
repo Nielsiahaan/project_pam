@@ -11,8 +11,7 @@
         <!-- Sidebar user (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('backend/dist/img/avatar5.png') }}" class="img-circle elevation-2"
-                    alt="User Image">
+                <img src="{{ asset('backend/dist/img/avatar5.png') }}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block">{{ Auth::user()->name }}</a>
@@ -43,7 +42,7 @@
 
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('room.index')}}" class="nav-link" data-breadcrumb="Room">
+                    <a href="{{ route('room.index') }}" class="nav-link" data-breadcrumb="Room">
                         <i class="nav-icon fas fa-bell"></i>
                         <p>
                             {{ __('Room') }}
@@ -51,45 +50,17 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link" data-breadcrumb="Artikel">
+                    <a href="{{ route('requestIk.index') }}" class="nav-link" data-breadcrumb="Request IK">
                         <i class="nav-icon fas fa-file-alt"></i>
-                        <p>{{ __('Artikel') }}<i class="fas fa-angle-left right"></i></p>
+                        <p>{{ __('Request IK') }} </p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-breadcrumb="Index Artikel">
-                                <i class="far fa-circle nav-icon"></i>
-                                {{ __('Index Artikel') }}
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link"
-                                data-breadcrumb="Kategori Artikel">
-                                <i class="far fa-circle nav-icon"></i>
-                                {{ __('Kategori Artikel') }}
-                            </a>
-                        </li>
-                    </ul>
+
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link" data-breadcrumb="Event">
+                    <a href="{{ route('requestSurat.index') }}" class="nav-link" data-breadcrumb="Event">
                         <i class="nav-icon fas fa-clock"></i>
-                        <p>{{ __('Event') }}<i class="fas fa-angle-left right"></i></p>
+                        <p>{{ __('Request Surat') }}</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-breadcrumb="Index Event">
-                                <i class="far fa-circle nav-icon"></i>
-                                {{ __('Index Event') }}
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-breadcrumb="Kategori Event">
-                                <i class="far fa-circle nav-icon"></i>
-                                {{ __('Kategori Event') }}
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link" data-breadcrumb="Berita">
@@ -124,8 +95,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link"
-                                data-breadcrumb="Kategori Pelapor">
+                            <a href="#" class="nav-link" data-breadcrumb="Kategori Pelapor">
                                 <i class="far fa-circle nav-icon"></i>
                                 {{ __('Kategori Pelapor') }}
                             </a>

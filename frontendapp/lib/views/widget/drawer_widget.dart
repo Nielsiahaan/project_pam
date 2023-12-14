@@ -1,7 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:frontendapp/controllers/authentication.dart';
+import 'package:frontendapp/views/requestIB_page.dart';
 import 'package:frontendapp/views/requestik_page.dart';
+import 'package:frontendapp/views/surat_page.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,8 +19,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   final _authenticationController = Get.put(AuthenticationController());
 
   Map<String, IconData> menuIcons = {
-    'Request IK': Icons.departure_board,
-    'Booking Room': Icons.business,
+    'Request IK': Icons.access_time,
+    'Request IB': Icons.home_max_outlined,
+    'Request Surat': Icons.mail_outlined,
     'Settings': Icons.settings,
     'Sign Out': Icons.exit_to_app,
   };
@@ -43,13 +45,19 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           for (var menu in menuIcons.keys)
             ListTile(
               leading: Icon(menuIcons[menu]),
-              title: Text(menu, style: GoogleFonts.poppins(fontWeight: FontWeight.w400, fontSize: 14)),
+              title: Text(menu,
+                  style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w400, fontSize: 14)),
               onTap: () {
                 // Add logic to handle menu taps
                 if (menu == 'Sign Out') {
                   _handleSignOut();
-                } else if(menu == 'Request IK') {
-                  Get.to(()=> IzinKeluarPage());
+                } else if (menu == 'Request IK') {
+                  Get.to(() => IzinKeluarPage());
+                } else if (menu == 'Request Surat') {
+                  Get.to(() => SuratRequestPage());
+                } else if (menu == 'Request IB') {
+                  Get.to(() => IzinBermalamPage());
                 }
               },
             ),

@@ -11,7 +11,7 @@ class RequestIK extends Model
     use HasFactory;
 
     protected $fillable = [
-        'mahasiswa_id', 'tanggal_berangkat', 'tanggal_kembali', 'deskripsi'
+        'mahasiswa_id', 'tanggal_berangkat', 'tanggal_kembali', 'deskripsi', 'status'
     ];
 
     public function mahasiswa(): BelongsTo

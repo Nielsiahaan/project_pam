@@ -1,6 +1,6 @@
-// 
 import 'package:flutter/material.dart';
 import 'package:frontendapp/controllers/request_ik_controller.dart';
+import 'package:frontendapp/views/all_requestik_page.dart';
 import 'package:frontendapp/views/form_ik.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 class IzinKeluarPage extends StatelessWidget {
   final RequestIKController _requestIKController =
       Get.put(RequestIKController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,37 +46,49 @@ class IzinKeluarPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'All Request IK',
+                  'List Request IK',
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
-                InkWell(
-                  onTap: () {
-                    // Redirect to a new page to display all requests
-                    // Implement the navigation logic based on your requirement
+                PopupMenuButton<String>(
+                  itemBuilder: (BuildContext context) {
+                    return <PopupMenuEntry<String>>[
+                      PopupMenuItem<String>(
+                        value: 'view_all',
+                        child: Text('View All', style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.blue) )
+                      ),
+                    ];
                   },
-                  child: Icon(Icons.more_horiz),
+                  onSelected: (String value) {
+                    if (value == 'view_all') {
+                      Get.to(() => AllRequestIKPage());
+                    }
+                  },
                 ),
               ],
             ),
             SizedBox(height: 8.0),
             Obx(() {
-              return _requestIKController.isLoading.value
-                  ? Center(child: CircularProgressIndicator())
-                  : Expanded(
-                      child: ListView.builder(
-                        itemCount: _requestIKController.requestIK.length > 6
-                            ? 6
-                            : _requestIKController.requestIK.length,
-                        itemBuilder: (context, index) {
-                          var requestIK = _requestIKController.requestIK[index];
-                          return buildIzinTile(
-                            keperluan: requestIK.deskripsi,
-                            status: requestIK.status,
-                          );
-                        },
-                      ),
-                    );
-            }),
+              if (_requestIKController.isLoading.value) {
+                return Center(child: CircularProgressIndicator());
+              } else if (_requestIKController.requestIK.isEmpty) {
+                return Center(child: Text('No Request IK available.'));
+              } else {
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: _requestIKController.requestIK.length > 6
+                        ? 6
+                        : _requestIKController.requestIK.length,
+                    itemBuilder: (context, index) {
+                      var requestIK = _requestIKController.requestIK[index];
+                      return buildIzinTile(
+                        keperluan: requestIK.deskripsi,
+                        status: requestIK.status,
+                      );
+                    },
+                  ),
+                );
+              }
+            })
           ],
         ),
       ),
@@ -83,14 +96,30 @@ class IzinKeluarPage extends StatelessWidget {
   }
 
   Widget buildIzinTile({required String keperluan, required String status}) {
+    Color? backgroundColor;
+
+    switch (status.toLowerCase()) {
+      case 'rejected':
+        backgroundColor = Colors.red[100];
+        break;
+      case 'pending':
+        backgroundColor = Colors.yellow[100];
+        break;
+      case 'approved':
+        backgroundColor = Colors.green[100];
+        break;
+      default:
+        backgroundColor = Colors.white;
+    }
+
     return Card(
+      color: backgroundColor,
       child: ListTile(
         title: Text(
           keperluan,
           style: GoogleFonts.poppins(fontSize: 13, fontWeight: FontWeight.w400),
         ),
         subtitle: Text('Status Request: $status'),
-        // Tambahkan aksi lainnya jika diperlukan
       ),
     );
   }

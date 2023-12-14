@@ -32,6 +32,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //Route IK
     Route::apiResource('requestIK', RequestIKController::class)->only(['index', 'store']);
+    Route::put('approve-status/{id}', [RequestIKController::class, 'approveStatus']);
+    Route::put('reject-status/{id}', [RequestIKController::class, 'rejectStatus']);
 
     //Route IB
     Route::apiResource('requestIB', IBRequestController::class)->only(['index', 'store']);

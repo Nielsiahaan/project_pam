@@ -12,7 +12,7 @@ class IBRequestController extends Controller
     {
         try {
             $requestIB = IBRequest::with('mahasiswa')->latest()->get();
-            return response(['requestIB' => $requestIB]);
+            return response(['requestIB' => $requestIB], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Gagal mengambil data request IB', 'error' => $e->getMessage()], 500);
         }
@@ -34,14 +34,14 @@ class IBRequestController extends Controller
                 'tanggal_kembali' => $request->input('tanggal_kembali'),
                 'deskripsi' => $request->input('deskripsi'),
                 'tujuan' => $request->input('tujuan'),
-                'status_request' => 'pending',
+
             ]);
             return response()->json([
                 'message' => 'Izin bermalam berhasil diajukan', 'data' => $izin
             ], 201);
         } catch (\Throwable $th) {
             // Log the error
-            \Illuminate\Support\Facades\Log::error($th);
+            // \Illuminate\Support\Facades\Log::error($th);
             return response()->json(['message' => 'Gagal melakukan request Izin Bermalam.', 'error' => $th->getMessage()], 500);
         }
     }

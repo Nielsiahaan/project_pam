@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:frontendapp/controllers/request_ik_controller.dart';
+import 'package:frontendapp/views/Future_method/select_date.dart';
+import 'package:frontendapp/views/Future_method/select_time.dart';
+import 'package:frontendapp/views/Future_method/submit_formIK.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
+
 
 class IzinKeluarForm extends StatefulWidget {
   @override
@@ -19,124 +23,16 @@ class _IzinKeluarFormState extends State<IzinKeluarForm> {
     return DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
   }
 
-  Future<void> _selectTime(
-      BuildContext context, bool isRencanaBerangkat) async {
-    TimeOfDay currentTime = isRencanaBerangkat
-        ? TimeOfDay.fromDateTime(_rencanaBerangkat)
-        : TimeOfDay.fromDateTime(_rencanaKembali);
-
-    TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      initialTime: currentTime,
-    );
-
-    if (pickedTime != null) {
-      setState(() {
-        if (isRencanaBerangkat) {
-          _rencanaBerangkat = DateTime(
-            _rencanaBerangkat.year,
-            _rencanaBerangkat.month,
-            _rencanaBerangkat.day,
-            pickedTime.hour,
-            pickedTime.minute,
-          );
-        } else {
-          _rencanaKembali = DateTime(
-            _rencanaKembali.year,
-            _rencanaKembali.month,
-            _rencanaKembali.day,
-            pickedTime.hour,
-            pickedTime.minute,
-          );
-        }
-      });
-    }
+  void _updateRencanaBerangkat(DateTime dateTime) {
+    setState(() {
+      _rencanaBerangkat = dateTime;
+    });
   }
 
-  Future<void> _selectDate(
-      BuildContext context, bool isRencanaBerangkat) async {
-    DateTime currentDate =
-        isRencanaBerangkat ? _rencanaBerangkat : _rencanaKembali;
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: currentDate,
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2101),
-    );
-
-    if (pickedDate != null && pickedDate != currentDate) {
-      setState(() {
-        if (isRencanaBerangkat) {
-          _rencanaBerangkat = DateTime(
-            pickedDate.year,
-            pickedDate.month,
-            pickedDate.day,
-            _rencanaBerangkat.hour,
-            _rencanaBerangkat.minute,
-          );
-        } else {
-          _rencanaKembali = DateTime(
-            pickedDate.year,
-            pickedDate.month,
-            pickedDate.day,
-            _rencanaKembali.hour,
-            _rencanaKembali.minute,
-          );
-        }
-      });
-    }
-  }
-
-  Future<void> _submitForm() async {
-    DateTime currentDate = DateTime.now();
-
-    // Validate if the selected dates are not before the current date
-    if (_rencanaBerangkat.isBefore(currentDate) ||
-        _rencanaKembali.isBefore(currentDate)) {
-      Get.snackbar(
-        'Error',
-        'Tidak dapat memilih tanggal atau waktu sebelum hari ini.',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red[800],
-        colorText: Colors.white,
-      );
-      return;
-    }
-
-    // Validate if tanggal_kembali is after tanggal_berangkat
-    if (_rencanaKembali.isBefore(_rencanaBerangkat)) {
-      Get.snackbar(
-        'Error',
-        'Tanggal kembali harus setelah tanggal berangkat.',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red[800],
-        colorText: Colors.white,
-      );
-      return;
-    }
-
-    try {
-      await _requestIKController.createRequestIK(
-        deskripsi: _keperluanController.text,
-        tanggal_berangkat: _rencanaBerangkat,
-        tanggal_kembali: _rencanaKembali,
-      );
-
-      _keperluanController.clear();
-      setState(() {
-        _rencanaBerangkat = currentDate;
-        _rencanaKembali = currentDate;
-      });
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Gagal melakukan request Izin Keluar Kampus.',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red[800],
-        colorText: Colors.white,
-      );
-      debugPrint(e.toString());
-    }
+  void _updateRencanaKembali(DateTime dateTime) {
+    setState(() {
+      _rencanaKembali = dateTime;
+    });
   }
 
   @override
@@ -152,7 +48,7 @@ class _IzinKeluarFormState extends State<IzinKeluarForm> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               InkWell(
-                onTap: () => _selectDate(context, true),
+                onTap: () => selectDate(context, _rencanaBerangkat, _updateRencanaBerangkat),
                 child: InputDecorator(
                   decoration: InputDecoration(
                     labelText: 'Rencana Berangkat',
@@ -171,7 +67,7 @@ class _IzinKeluarFormState extends State<IzinKeluarForm> {
               ),
               SizedBox(height: 16.0),
               InkWell(
-                onTap: () => _selectTime(context, true),
+               onTap: () => selectTime(context, true, _rencanaBerangkat, _updateRencanaBerangkat),
                 child: InputDecorator(
                   decoration: InputDecoration(
                     labelText: 'Waktu Berangkat',
@@ -190,7 +86,7 @@ class _IzinKeluarFormState extends State<IzinKeluarForm> {
               ),
               SizedBox(height: 16.0),
               InkWell(
-                onTap: () => _selectDate(context, false),
+                onTap: () => selectDate(context, _rencanaKembali, _updateRencanaKembali),
                 child: InputDecorator(
                   decoration: InputDecoration(
                     labelText: 'Rencana Kembali',
@@ -209,7 +105,7 @@ class _IzinKeluarFormState extends State<IzinKeluarForm> {
               ),
               SizedBox(height: 16.0),
               InkWell(
-                onTap: () => _selectTime(context, false),
+               onTap: () => selectTime(context, false, _rencanaKembali, _updateRencanaKembali),
                 child: InputDecorator(
                   decoration: InputDecoration(
                     labelText: 'Waktu Kembali',
@@ -237,7 +133,7 @@ class _IzinKeluarFormState extends State<IzinKeluarForm> {
               ),
               SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: _submitForm,
+                onPressed: () => submitFormIK(_rencanaBerangkat, _rencanaKembali, _keperluanController, _requestIKController),
                 child: Text('Buat Baru'),
               ),
             ],

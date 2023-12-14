@@ -11,7 +11,7 @@ class IBRequest extends Model
     use HasFactory;
 
     protected $fillable = [
-        'mahasiswa_id', 'tanggal_berangkat', 'tanggal_kembali', 'deskripsi', 'tujuan'
+        'mahasiswa_id', 'tanggal_berangkat', 'tanggal_kembali', 'deskripsi', 'tujuan', 'status'
     ];
 
     public function mahasiswa(): BelongsTo
