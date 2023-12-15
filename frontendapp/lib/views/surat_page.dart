@@ -26,17 +26,17 @@ class SuratRequestPage extends StatelessWidget {
               onPressed: () {
                 Get.to(() => SuratFormPage());
               },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue, // Set the background color to blue
+              ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Center(
                   child: Text(
                     'Request Surat',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
               ),
             ),
             SizedBox(height: 16),

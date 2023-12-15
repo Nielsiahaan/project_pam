@@ -3,7 +3,6 @@ import 'package:frontendapp/controllers/request_ib_controller.dart';
 import 'package:frontendapp/views/Future_method/select_date.dart';
 import 'package:frontendapp/views/Future_method/select_time.dart';
 import 'package:frontendapp/views/Future_method/submit_formIB.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 
@@ -40,91 +39,89 @@ class _IzinBermalamFormState extends State<IzinBermalamForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Request Izin Keluar',
-            style: GoogleFonts.poppins(color: Colors.white)),
-        backgroundColor: Colors.blue, // Set your preferred color
+        title: Text(
+          'Request Izin Bermalam',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.blue,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _buildDateTimeInput(
-                label: 'Rencana Berangkat',
-                value: formatDate(_rencanaBerangkat),
-                onTap: () => selectDate(
-                  context,
-                  _rencanaBerangkat,
-                  _updateRencanaBerangkat,
-                ),
-              ),
-              SizedBox(height: 8.0),
-              _buildDateTimeInput(
-                label: 'Waktu Berangkat',
-                value:
-                    "${TimeOfDay.fromDateTime(_rencanaBerangkat).format(context)}",
-                onTap: () => selectTime(
-                  context,
-                  true,
-                  _rencanaBerangkat,
-                  _updateRencanaBerangkat,
-                ),
-              ),
-              SizedBox(height: 8.0),
-              _buildDateTimeInput(
-                label: 'Rencana Kembali',
-                value: formatDate(_rencanaKembali),
-                onTap: () => selectDate(
-                  context,
-                  _rencanaKembali,
-                  _updateRencanaKembali,
-                ),
-              ),
-              SizedBox(height: 8.0),
-              _buildDateTimeInput(
-                label: 'Waktu Kembali',
-                value:
-                    "${TimeOfDay.fromDateTime(_rencanaKembali).format(context)}",
-                onTap: () => selectTime(
-                  context,
-                  false,
-                  _rencanaKembali,
-                  _updateRencanaKembali,
-                ),
-              ),
-              SizedBox(height: 8.0),
-              _buildTextInput(
-                controller: _keperluanController,
-                label: 'Keperluan Izin Keluar',
-                maxLines: 3,
-              ),
-              SizedBox(height: 8.0),
-              _buildTextInput(
-                controller: _tujuanController,
-                label: 'Tujuan Izin Bermalam',
-              ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () => submitFormIB(
-                  _rencanaBerangkat,
-                  _rencanaKembali,
-                  _keperluanController,
-                  _tujuanController,
-                  _requestIBController,
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[400],
-                ),
-                child: Text(
-                  'Buat Baru',
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontSize: 14,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _buildDateTimeInput(
+                  label: 'Rencana Berangkat',
+                  value: formatDate(_rencanaBerangkat),
+                  onTap: () => selectDate(
+                    context,
+                    _rencanaBerangkat,
+                    _updateRencanaBerangkat,
                   ),
                 ),
-              ),
-            ],
+                SizedBox(height: 16.0),
+                _buildDateTimeInput(
+                  label: 'Waktu Berangkat',
+                  value:
+                      "${TimeOfDay.fromDateTime(_rencanaBerangkat).format(context)}",
+                  onTap: () => selectTime(
+                    context,
+                    true,
+                    _rencanaBerangkat,
+                    _updateRencanaBerangkat,
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                _buildDateTimeInput(
+                  label: 'Rencana Kembali',
+                  value: formatDate(_rencanaKembali),
+                  onTap: () => selectDate(
+                    context,
+                    _rencanaKembali,
+                    _updateRencanaKembali,
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                _buildDateTimeInput(
+                  label: 'Waktu Kembali',
+                  value:
+                      "${TimeOfDay.fromDateTime(_rencanaKembali).format(context)}",
+                  onTap: () => selectTime(
+                    context,
+                    false,
+                    _rencanaKembali,
+                    _updateRencanaKembali,
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                _buildTextInput(
+                  controller: _keperluanController,
+                  label: 'Keperluan Izin Bermalam',
+                  maxLines: 6,
+                ),
+                SizedBox(height: 16.0),
+                _buildTextInput(
+                  controller: _tujuanController,
+                  label: 'Tujuan Izin Bermalam',
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () => submitFormIB(
+                    _rencanaBerangkat,
+                    _rencanaKembali,
+                    _keperluanController,
+                    _tujuanController,
+                    _requestIBController,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                  ),
+                  child: Text('Buat Baru', style: TextStyle(color: Colors.white)),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -140,8 +137,7 @@ class _IzinBermalamFormState extends State<IzinBermalamForm> {
       child: InputDecorator(
         decoration: InputDecoration(
           labelText: label,
-          hintText: 'Pilih',
-          border: OutlineInputBorder(),
+          hintText: 'Pilih Tanggal',
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -159,17 +155,12 @@ class _IzinBermalamFormState extends State<IzinBermalamForm> {
       required String label,
       int maxLines = 1}) {
     return TextFormField(
-        controller: controller,
-        maxLines: maxLines,
-        decoration: InputDecoration(
-          labelText: label,
-          border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: controller.text.isEmpty
-                  ? Colors.transparent
-                  : const Color.fromRGBO(44, 185, 176, 1),
-            ),
-          ),
-        ));
+      controller: controller,
+      maxLines: maxLines,
+      decoration: InputDecoration(
+        labelText: label,
+        border: OutlineInputBorder(),
+      ),
+    );
   }
 }

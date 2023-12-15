@@ -6,7 +6,6 @@ import 'package:frontendapp/views/Future_method/submit_formIK.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 
-
 class IzinKeluarForm extends StatefulWidget {
   @override
   _IzinKeluarFormState createState() => _IzinKeluarFormState();
@@ -39,7 +38,11 @@ class _IzinKeluarFormState extends State<IzinKeluarForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Request Izin Keluar'),
+        title: Text(
+          'Request Izin Keluar',
+          style: TextStyle(color: Colors.white), // Set text color to white
+        ),
+        backgroundColor: Colors.blue, // Set the background color to blue
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -48,7 +51,8 @@ class _IzinKeluarFormState extends State<IzinKeluarForm> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               InkWell(
-                onTap: () => selectDate(context, _rencanaBerangkat, _updateRencanaBerangkat),
+                onTap: () => selectDate(
+                    context, _rencanaBerangkat, _updateRencanaBerangkat),
                 child: InputDecorator(
                   decoration: InputDecoration(
                     labelText: 'Rencana Berangkat',
@@ -67,7 +71,8 @@ class _IzinKeluarFormState extends State<IzinKeluarForm> {
               ),
               SizedBox(height: 16.0),
               InkWell(
-               onTap: () => selectTime(context, true, _rencanaBerangkat, _updateRencanaBerangkat),
+                onTap: () => selectTime(
+                    context, true, _rencanaBerangkat, _updateRencanaBerangkat),
                 child: InputDecorator(
                   decoration: InputDecoration(
                     labelText: 'Waktu Berangkat',
@@ -86,7 +91,8 @@ class _IzinKeluarFormState extends State<IzinKeluarForm> {
               ),
               SizedBox(height: 16.0),
               InkWell(
-                onTap: () => selectDate(context, _rencanaKembali, _updateRencanaKembali),
+                onTap: () =>
+                    selectDate(context, _rencanaKembali, _updateRencanaKembali),
                 child: InputDecorator(
                   decoration: InputDecoration(
                     labelText: 'Rencana Kembali',
@@ -105,7 +111,8 @@ class _IzinKeluarFormState extends State<IzinKeluarForm> {
               ),
               SizedBox(height: 16.0),
               InkWell(
-               onTap: () => selectTime(context, false, _rencanaKembali, _updateRencanaKembali),
+                onTap: () => selectTime(
+                    context, false, _rencanaKembali, _updateRencanaKembali),
                 child: InputDecorator(
                   decoration: InputDecoration(
                     labelText: 'Waktu Kembali',
@@ -133,8 +140,17 @@ class _IzinKeluarFormState extends State<IzinKeluarForm> {
               ),
               SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: () => submitFormIK(_rencanaBerangkat, _rencanaKembali, _keperluanController, _requestIKController),
-                child: Text('Buat Baru'),
+                onPressed: () => submitFormIK(
+                  _rencanaBerangkat,
+                  _rencanaKembali,
+                  _keperluanController,
+                  _requestIKController,
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Colors.blue, // Set the background color to blue
+                ),
+                child: Text('Buat Baru', style: TextStyle(color: Colors.white)),
               ),
             ],
           ),

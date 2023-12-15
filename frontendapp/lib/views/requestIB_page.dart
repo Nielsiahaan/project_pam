@@ -26,7 +26,7 @@ class IzinBermalamPage extends StatelessWidget {
               child: Ink(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.green,
+                  color: Colors.blue,
                 ),
                 child: Container(
                   padding: EdgeInsets.all(12.0),

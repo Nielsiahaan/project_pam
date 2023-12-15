@@ -54,70 +54,81 @@ class _SuratFormPageState extends State<SuratFormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Request Surat'),
+        title: Text(
+          'Request Surat',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.blue,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Form Pengajuan Surat',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16),
-            TextFormField(
-              controller: _kategoriSuratController,
-              decoration: InputDecoration(labelText: 'Kategori Surat'),
-            ),
-            SizedBox(height: 16),
-            TextFormField(
-              controller: _contentController,
-              maxLines: 6,
-              decoration: InputDecoration(labelText: 'Isi Surat'),
-            ),
-            SizedBox(height: 16),
-            InkWell(
-              onTap: () => _selectDate(context),
-              child: InputDecorator(
+      body: SingleChildScrollView(
+        // Wrap the Column with SingleChildScrollView
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Form Pengajuan Surat',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 16),
+              TextFormField(
+                controller: _kategoriSuratController,
+                decoration: InputDecoration(labelText: 'Kategori Surat'),
+              ),
+              SizedBox(height: 16),
+              TextFormField(
+                controller: _contentController,
+                maxLines: 6,
                 decoration: InputDecoration(
-                  labelText: 'Tanggal Pengambilan',
-                  hintText: 'Pilih Tanggal',
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "${formatDate(_selectedDate)}",
-                    ),
-                    Icon(Icons.calendar_today),
-                  ],
+                  labelText: 'Isi Surat',
+                  border:
+                      OutlineInputBorder(), // Add this line to create a border
                 ),
               ),
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                _requestSuratController.storeSuratRequest(
-                  kategori_surat: _kategoriSuratController.text,
-                  content: _contentController.text,
-                  tanggal_pengambilan: _selectedDate,
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Center(
-                  child: Text(
-                    'Ajukan Surat',
-                    style: TextStyle(fontSize: 16),
+              SizedBox(height: 16),
+              InkWell(
+                onTap: () => _selectDate(context),
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    labelText: 'Tanggal Pengambilan',
+                    hintText: 'Pilih Tanggal',
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "${formatDate(_selectedDate)}",
+                      ),
+                      Icon(Icons.calendar_today),
+                    ],
                   ),
                 ),
               ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  _requestSuratController.storeSuratRequest(
+                    kategori_surat: _kategoriSuratController.text,
+                    content: _contentController.text,
+                    tanggal_pengambilan: _selectedDate,
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Center(
+                    child: Text(
+                      'Ajukan Surat',
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
