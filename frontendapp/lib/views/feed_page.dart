@@ -23,7 +23,7 @@ class _FeedPageState extends State<FeedPage> {
             'Forum APP',
             style: TextStyle(color: Colors.white),
           ),
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.black,
           elevation: 0,
           centerTitle: true,
         ),
@@ -39,7 +39,7 @@ class _FeedPageState extends State<FeedPage> {
                 const SizedBox(height: 8),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
+                        backgroundColor: Colors.black,
                         elevation: 0,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 50, vertical: 10)),

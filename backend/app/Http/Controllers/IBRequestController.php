@@ -40,8 +40,6 @@ class IBRequestController extends Controller
                 'message' => 'Izin bermalam berhasil diajukan', 'data' => $izin
             ], 201);
         } catch (\Throwable $th) {
-            // Log the error
-            // \Illuminate\Support\Facades\Log::error($th);
             return response()->json(['message' => 'Gagal melakukan request Izin Bermalam.', 'error' => $th->getMessage()], 500);
         }
     }

@@ -24,16 +24,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('feeds', [FeedController::class, 'index']);
     // room routes
     Route::apiResource('rooms', RoomController::class);
+
     //surat routes
     Route::apiResource('surat', SuratRequestController::class)->only(['index', 'store', 'update']);
+
     //Route booking
-    Route::post('booking/store/{room_id}', [BookingController::class, 'store']);
     Route::get('bookings', [BookingController::class, 'index']);
+    Route::post('booking/store/{room_id}', [BookingController::class, 'store']);
+    Route::put('booking/cancel/{id}', [BookingController::class, 'cancel']);
 
     //Route IK
     Route::apiResource('requestIK', RequestIKController::class)->only(['index', 'store']);
-    Route::put('approve-status/{id}', [RequestIKController::class, 'approveStatus']);
-    Route::put('reject-status/{id}', [RequestIKController::class, 'rejectStatus']);
+    // Route::put('approve-status/{id}', [RequestIKController::class, 'approveStatus']);
+    // Route::put('reject-status/{id}', [RequestIKController::class, 'rejectStatus']);
 
     //Route IB
     Route::apiResource('requestIB', IBRequestController::class)->only(['index', 'store']);

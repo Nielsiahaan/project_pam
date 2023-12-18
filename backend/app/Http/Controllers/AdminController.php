@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BookingRequest;
+use App\Models\IBRequest;
 use App\Models\Mahasiswa;
 use App\Models\RequestIK;
 use App\Models\SuratRequest;
@@ -71,11 +73,8 @@ class AdminController extends Controller
     public function updateStatusSurat($id, $status)
     {
         try {
-
-            // $validatedData = request()->validate([
-            //     'id' => 'integer|exists:,id',
-            // ]);
             $ikRequest = SuratRequest::findOrFail($id);
+
             // Check if the status is not 'pending'
             if ($ikRequest->status !== 'pending') {
                 return redirect()->route('requestSurat.index')->with('error', 'Status permintaan izin keluar sudah tidak dalam status pending.');
@@ -87,6 +86,67 @@ class AdminController extends Controller
         } catch (\Throwable $th) {
 
             return redirect()->route('requestSurat.index')->with('error', 'Gagal mengubah status permintaan izin keluar.');
+        }
+    }
+    public function getAllIzinBermalam()
+    {
+        $izinBermalam = IBRequest::latest()->paginate(null);
+        $mahasiswa = Mahasiswa::get();
+        return view('admin.requestIB.index', compact('izinBermalam', 'mahasiswa'));
+    }
+
+    public function approveIzinBermalam($id)
+    {
+        return $this->updateStatusIzinBermalam($id, 'approved');
+    }
+
+    public function rejectIzinBermalam($id)
+    {
+        return $this->updateStatusIzinBermalam($id, 'rejected');
+    }
+    public function updateStatusIzinBermalam($id, $status)
+    {
+        try {
+
+            $ibRequest = IBRequest::findOrFail($id);
+            // Check if the status is not 'pending'
+            if ($ibRequest->status !== 'pending') {
+                return redirect()->route('requestIB.index')->with('error', 'Status permintaan izin keluar sudah tidak dalam status pending.');
+            }
+            // Update the status
+            $ibRequest->update(['status' => $status]);
+
+            return redirect()->route('requestIB.index')->with('success', "Status permintaan izin keluar berhasil diubah menjadi '$status'.");
+        } catch (\Throwable $th) {
+
+            return redirect()->route('requestIB.index ')->with('error', 'Gagal mengubah status permintaan izin keluar.');
+        }
+    }
+
+
+    public function getAllBookingRoom()
+    {
+        $bookingRoom = BookingRequest::latest()->paginate(null);
+        $mahasiswa = Mahasiswa::get();
+        return view('admin.bookingRoom.index', compact('bookingRoom', 'mahasiswa'));
+    }
+
+    public function updateStatusBookingRoom($id, $status)
+    {
+        try {
+            $bookingRoom = BookingRequest::findOrFail($id);
+            if ($bookingRoom->status !==  'pending') {
+                return redirect()->route('bookingRoom.index')->with('error', 'Status pemesanan ruangan sudah tidak pending lagi');
+            }
+
+            $bookingRoom->update([
+                'status' => $status
+            ]);
+            return redirect()->route('bookingRoom.index')->with(
+                'success',
+                "Status pemesanan ruangan berhasil diubah menjadi '$status'"
+            );
+        } catch (\Throwable $th) {
         }
     }
 }

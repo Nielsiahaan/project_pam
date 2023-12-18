@@ -3,7 +3,7 @@
     <a href="http://www.del.ac.id" class="brand-link">
         <img src="{{ asset('backend/dist/img/icon.jpeg') }}" alt="AdminLTE Logo" class="brand-image elevation-3"
             style="opacity: .8">
-        <span class="brand-text font-weight-light">SPI IT DEL</span>
+        <span class="brand-text font-weight-light">CIS IT DEL</span>
     </a>
 
     <!-- Sidebar -->
@@ -52,7 +52,14 @@
                 <li class="nav-item">
                     <a href="{{ route('requestIk.index') }}" class="nav-link" data-breadcrumb="Request IK">
                         <i class="nav-icon fas fa-file-alt"></i>
-                        <p>{{ __('Request IK') }} </p>
+                        <p>{{ __('Izin Keluar') }} </p>
+                    </a>
+
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('requestIB.index')}}" class="nav-link" data-breadcrumb="Berita">
+                        <i class="nav-icon fas fa-globe"></i>
+                        <p>{{ __('Izin Bermalam') }}</p>
                     </a>
 
                 </li>
@@ -65,74 +72,9 @@
                 <li class="nav-item">
                     <a href="#" class="nav-link" data-breadcrumb="Berita">
                         <i class="nav-icon fas fa-globe"></i>
-                        <p>{{ __('Berita') }}<i class="fas fa-angle-left right"></i></p>
+                        <p>{{ __('Booking Room') }}</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-breadcrumb="Index Berita">
-                                <i class="far fa-circle nav-icon"></i>
-                                {{ __('Index Berita') }}
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href ="#" class="nav-link" data-breadcrumb="Kategori Berita">
-                                <i class="far fa-circle nav-icon"></i>
-                                {{ __('Kategori Berita') }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-breadcrumb="Pelapor">
-                        <i class="nav-icon bi bi-people-fill"></i>
-                        <p>{{ __('Pelapor') }}<i class="fas fa-angle-left right"></i></p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-breadcrumb="Index Pelapor">
-                                <i class="far fa-circle nav-icon"></i>
-                                {{ __('Index Pelapor') }}
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-breadcrumb="Kategori Pelapor">
-                                <i class="far fa-circle nav-icon"></i>
-                                {{ __('Kategori Pelapor') }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-breadcrumb="Profil">
-                        <i class="nav-icon bi bi-people-fill"></i>
-                        <p>{{ __('Profil') }}<i class="fas fa-angle-left right"></i></p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-breadcrumb="Index Profil">
-                                <i class="far fa-circle nav-icon"></i>
-                                {{ __('Index Profil') }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-breadcrumb="FAQ">
-                        <i class="nav-icon fas fa-question-circle"></i>
-                        <p>
-                            {{ __('FAQ') }}
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-breadcrumb="Galery">
-                        <p><i class="nav-icon bi bi-images"></i> {{ __('Galeri') }}</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-breadcrumb="File">
-                        <p><i class="nav-icon bi bi-files"></i> {{ __('File') }}</p>
-                    </a>
+
                 </li>
             </ul>
         </nav>

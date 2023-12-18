@@ -18,7 +18,6 @@ class _BasePageState extends State<BasePage> {
     HomePage(),
     FeedPage(),
     FeedPage(),
-    FeedPage(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -43,17 +42,17 @@ class _BasePageState extends State<BasePage> {
               ),
               label: "Home",
             ),
-            BottomNavigationBarItem(
-              activeIcon: Image.asset(
-                icLearning,
-                height: kBottomNavigationBarItemSize,
-              ),
-              icon: Image.asset(
-                icLearningOutlined,
-                height: kBottomNavigationBarItemSize,
-              ),
-              label: "My Learning",
-            ),
+            // BottomNavigationBarItem(
+            //   activeIcon: Image.asset(
+            //     icLearning,
+            //     height: kBottomNavigationBarItemSize,
+            //   ),
+            //   icon: Image.asset(
+            //     icLearningOutlined,
+            //     height: kBottomNavigationBarItemSize,
+            //   ),
+            //   label: "My Learning",
+            // ),
             BottomNavigationBarItem(
               activeIcon: Image.asset(
                 icWishlist,

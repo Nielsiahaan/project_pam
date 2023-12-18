@@ -44,118 +44,123 @@ class _IzinKeluarFormState extends State<IzinKeluarForm> {
         ),
         backgroundColor: Colors.blue, // Set the background color to blue
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              InkWell(
-                onTap: () => selectDate(
-                    context, _rencanaBerangkat, _updateRencanaBerangkat),
-                child: InputDecorator(
-                  decoration: InputDecoration(
-                    labelText: 'Rencana Berangkat',
-                    hintText: 'Pilih Tanggal',
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        formatDate(_rencanaBerangkat),
+      body: ListView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    InkWell(
+                      onTap: () => selectDate(
+                          context, _rencanaBerangkat, _updateRencanaBerangkat),
+                      child: InputDecorator(
+                        decoration: InputDecoration(
+                          labelText: 'Rencana Berangkat',
+                          hintText: 'Pilih Tanggal',
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              formatDate(_rencanaBerangkat),
+                            ),
+                            Icon(Icons.calendar_today),
+                          ],
+                        ),
                       ),
-                      Icon(Icons.calendar_today),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 16.0),
-              InkWell(
-                onTap: () => selectTime(
-                    context, true, _rencanaBerangkat, _updateRencanaBerangkat),
-                child: InputDecorator(
-                  decoration: InputDecoration(
-                    labelText: 'Waktu Berangkat',
-                    hintText: 'Pilih Jam dan Menit',
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "${TimeOfDay.fromDateTime(_rencanaBerangkat).format(context)}",
+                    ),
+                    SizedBox(height: 16.0),
+                    InkWell(
+                      onTap: () => selectTime(context, true, _rencanaBerangkat,
+                          _updateRencanaBerangkat),
+                      child: InputDecorator(
+                        decoration: InputDecoration(
+                          labelText: 'Waktu Berangkat',
+                          hintText: 'Pilih Jam dan Menit',
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "${TimeOfDay.fromDateTime(_rencanaBerangkat).format(context)}",
+                            ),
+                            Icon(Icons.access_time),
+                          ],
+                        ),
                       ),
-                      Icon(Icons.access_time),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 16.0),
-              InkWell(
-                onTap: () =>
-                    selectDate(context, _rencanaKembali, _updateRencanaKembali),
-                child: InputDecorator(
-                  decoration: InputDecoration(
-                    labelText: 'Rencana Kembali',
-                    hintText: 'Pilih Tanggal',
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        formatDate(_rencanaKembali),
+                    ),
+                    SizedBox(height: 16.0),
+                    InkWell(
+                      onTap: () => selectDate(
+                          context, _rencanaKembali, _updateRencanaKembali),
+                      child: InputDecorator(
+                        decoration: InputDecoration(
+                          labelText: 'Rencana Kembali',
+                          hintText: 'Pilih Tanggal',
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              formatDate(_rencanaKembali),
+                            ),
+                            const Icon(Icons.calendar_today),
+                          ],
+                        ),
                       ),
-                      const Icon(Icons.calendar_today),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 16.0),
-              InkWell(
-                onTap: () => selectTime(
-                    context, false, _rencanaKembali, _updateRencanaKembali),
-                child: InputDecorator(
-                  decoration: InputDecoration(
-                    labelText: 'Waktu Kembali',
-                    hintText: 'Pilih Jam dan Menit',
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "${TimeOfDay.fromDateTime(_rencanaKembali).format(context)}",
+                    ),
+                    SizedBox(height: 16.0),
+                    InkWell(
+                      onTap: () => selectTime(context, false, _rencanaKembali,
+                          _updateRencanaKembali),
+                      child: InputDecorator(
+                        decoration: InputDecoration(
+                          labelText: 'Waktu Kembali',
+                          hintText: 'Pilih Jam dan Menit',
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "${TimeOfDay.fromDateTime(_rencanaKembali).format(context)}",
+                            ),
+                            Icon(Icons.access_time),
+                          ],
+                        ),
                       ),
-                      Icon(Icons.access_time),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: 16.0),
+                    TextFormField(
+                      controller: _keperluanController,
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                        labelText: 'Keperluan IK',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    ElevatedButton(
+                      onPressed: () => submitFormIK(
+                        _rencanaBerangkat,
+                        _rencanaKembali,
+                        _keperluanController,
+                        _requestIKController,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Colors.blue, // Set the background color to blue
+                      ),
+                      child: Text('Buat Baru',
+                          style: TextStyle(color: Colors.white)),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(height: 16.0),
-              TextFormField(
-                controller: _keperluanController,
-                maxLines: 6,
-                decoration: InputDecoration(
-                  labelText: 'Keperluan IK',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () => submitFormIK(
-                  _rencanaBerangkat,
-                  _rencanaKembali,
-                  _keperluanController,
-                  _requestIKController,
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      Colors.blue, // Set the background color to blue
-                ),
-                child: Text('Buat Baru', style: TextStyle(color: Colors.white)),
-              ),
-            ],
-          ),
-        ),
-      ),
+            ),
+          ]),
     );
   }
 }

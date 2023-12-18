@@ -1,6 +1,6 @@
 @extends('layouts.backend.main')
 @section('title')
-    Index RequestIK
+    Izin Bermalam
 @endsection
 @push('css')
     <link href="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.css" rel="stylesheet" />
@@ -55,7 +55,8 @@
                                     <tr>
                                         <th scope="col">No</th>
                                         <th scope="col">Nama Mahasiswa</th>
-                                        <th scope="col">Deskripsi Request</th>
+                                        <th scope="col">Keterangan</th>
+                                        <th scope="col">Tujuan</th>
                                         <th scope="col">Tanggal Berangkat</th>
                                         <th scope="col">Tanggal Kembali</th>
                                         <th scope="col">Status</th>
@@ -63,24 +64,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($requestIK as $row)
+                                    @forelse($izinBermalam as $row)
                                         <tr>
-                                            <td>{{ $requestIK->firstItem() + $loop->index }}</td>
+                                            <td>{{ $izinBermalam->firstItem() + $loop->index }}</td>
                                             {{-- Assuming that $row->mahasiswa_id is the foreign key linking to the Mahasiswa table --}}
                                             <td>{{ $row->mahasiswa->name ?? 'N/A' }}</td>
                                             <td>{{ $row->deskripsi }} </td>
+                                            <td>{{$row->tujuan}}</td>
                                             <td>{{ $row->tanggal_berangkat }}</td>
                                             <td>{{ $row->tanggal_kembali }} </td>
                                             <td>{{ $row->status }} </td>
                                             <td>
-                                                <form action="{{ route('approve_status', ['id' => $row->id]) }}"
+                                                <form action="{{ route('approve_IzinBermalam', ['id' => $row->id]) }}"
                                                     method="post" class="d-inline">
                                                     @csrf
                                                     @method('put')
                                                     <button class="btn btn-success btn-sm" id="btn-approve"
                                                         onclick="return confirmAction('approve')">Approve</button>
                                                 </form>
-                                                <form action="{{ route('reject_status', ['id' => $row->id]) }}"
+                                                <form action="{{ route('reject_IzinBermalam', ['id' => $row->id]) }}"
                                                     method="post" class="d-inline">
                                                     @csrf
                                                     @method('put')
@@ -91,7 +93,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="7" class="text-center">{{ 'Data Masih Kosong' }}</td>
+                                            <td colspan="8" class="text-center">{{ 'Data Masih Kosong' }}</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

@@ -13,6 +13,7 @@ class IzinKeluarPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue,
         title: Text('Izin Keluar'),
       ),
       body: Padding(
@@ -27,7 +28,7 @@ class IzinKeluarPage extends StatelessWidget {
               child: Ink(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.blue,
+                  color: Colors.green,
                 ),
                 child: Container(
                   padding: EdgeInsets.all(12.0),

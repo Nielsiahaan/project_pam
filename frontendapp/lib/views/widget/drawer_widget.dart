@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontendapp/controllers/authentication.dart';
+import 'package:frontendapp/views/booking_room_page.dart';
 import 'package:frontendapp/views/requestIB_page.dart';
 import 'package:frontendapp/views/requestik_page.dart';
 import 'package:frontendapp/views/surat_page.dart';
@@ -20,10 +21,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   Map<String, IconData> menuIcons = {
     'Request IK': Icons.access_time,
-    'Request IB': Icons.home_max_outlined,
-    'Request Surat': Icons.mail_outlined,
+    'Request IB': Icons.hotel,
+    'Request Surat': Icons.description,
+    'Booking Room': Icons.meeting_room,
     'Settings': Icons.settings,
-    'Sign Out': Icons.exit_to_app,
+    'Sign Out': Icons.logout,
   };
 
   @override
@@ -58,6 +60,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   Get.to(() => SuratRequestPage());
                 } else if (menu == 'Request IB') {
                   Get.to(() => IzinBermalamPage());
+                } else if (menu == 'Booking Room') {
+                  Get.to(() => BookingRoomPage());
                 }
               },
             ),

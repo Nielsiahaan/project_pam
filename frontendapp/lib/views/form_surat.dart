@@ -83,7 +83,7 @@ class _SuratFormPageState extends State<SuratFormPage> {
                 decoration: InputDecoration(
                   labelText: 'Isi Surat',
                   border:
-                      OutlineInputBorder(), // Add this line to create a border
+                      OutlineInputBorder(),
                 ),
               ),
               SizedBox(height: 16),

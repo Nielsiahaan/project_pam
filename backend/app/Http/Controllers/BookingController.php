@@ -50,4 +50,40 @@ class BookingController extends Controller
             return response()->json(['message' => 'Gagal melakukan booking ruangan.', 'error' => $e->getMessage()], 500);
         }
     }
+
+    public function cancel($id)
+    {
+        try {
+            $booking = Booking::findOrFail($id);
+            if ($booking->status !== 'pending') {
+                return response()->json(['message' => 'Booking room can\'t be cancelled'], 400);
+            }
+            $booking->update(['status' => 'cancelled']);
+            return response()->json(['message' => 'Booking cancelled successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to cancel booking.', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+
+    public function update(BookingRequest $request, Booking $booking, $room_Id)
+    {
+        try {
+            $validatedData = $request->validated();
+
+            // update Booking room
+            $booking->fill([
+                'mahasiswa_id' => auth()->id(),
+                'room_id' => $room_Id,
+                'start_time' => $validatedData['start_time'],
+                'end_time' => $validatedData['end_time'],
+                'keterangan' => $validatedData['keterangan'],
+            ]);
+
+            $booking->save();
+            return response()->json(['message' => 'Booking Room berhasil di perbarui,', 'data' => $booking], 200);
+        } catch (\Throwable $th) {
+            
+        }
+    }
 }

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('no_ktp')->nullable();
             $table->string('password')->nullable();
             $table->string('no_telp')->nullable();
+            // $table->string('role')->default('mahasiswa');
             $table->rememberToken();
             $table->timestamps();
         });
