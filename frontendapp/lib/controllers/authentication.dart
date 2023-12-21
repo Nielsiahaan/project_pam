@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:frontendapp/constants/constants.dart';
-import 'package:frontendapp/views/base_page.dart';
+import 'package:frontendapp/views/home/admin_dashboard.dart';
+import 'package:frontendapp/views/home/base_page.dart';
 // import 'package:frontendapp/views/home_page.dart';
-import 'package:frontendapp/views/login_page.dart';
+import 'package:frontendapp/views/authentikasi/login_page.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
@@ -44,6 +45,7 @@ class AuthenticationController extends GetxController {
         isLoading.value = false;
         token.value = json.decode(response.body)['token'];
         box.write('token', token.value);
+
         Get.off(() => const LoginPage());
         Get.snackbar('Success', 'Successfully Registered',
             snackPosition: SnackPosition.TOP,
@@ -86,7 +88,17 @@ class AuthenticationController extends GetxController {
         token.value = json.decode(response.body)['token'];
         //tulis token
         box.write('token', token.value);
-        Get.offAll(() => const BasePage());
+
+        // check the role of user
+        var role = json.decode(response.body)['user']['role'];
+
+        if (role == 'admin') {
+          Get.offAll(() => const AdminDashboard());
+        } else if (role == 'mahasiswa') {
+          Get.offAll(() => const BasePage());
+        } else {
+          Get.offAll(() => const LoginPage());
+        }
       } else {
         isLoading.value = false;
         final snackBar = GetSnackBar(
@@ -141,7 +153,8 @@ class AuthenticationController extends GetxController {
 
         if (response.statusCode == 200) {
           isLoading.value = false;
-          token.value = ''; // clear the token
+          // clear the token
+          token.value = '';
           box.remove('token');
           Get.offAll(() => const LoginPage());
           Get.snackbar('Success', 'Successfully Logged Out',

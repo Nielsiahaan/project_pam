@@ -14,16 +14,16 @@ class GoogleController extends Controller
         return Socialite::driver('google')->redirect();
     }
 
-    public function handleGoogleCallback(){
+    public function handleGoogleCallback()
+    {
         try {
             $user = Socialite::driver('google')->user();
             $findUser = Mahasiswa::where('google_id', $user->id)->first();
-            if($findUser){
+            if ($findUser) {
                 Auth::login($findUser);
-                
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            
         }
     }
 }

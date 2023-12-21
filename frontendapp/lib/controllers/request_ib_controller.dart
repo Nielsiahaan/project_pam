@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontendapp/constants/constants.dart';
 import 'package:frontendapp/models/requestIB_model.dart';
-import 'package:frontendapp/views/requestIB_page.dart';
+import 'package:frontendapp/views/Mahasiswa/requestIB/requestIB_page.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
@@ -79,6 +79,47 @@ class RequestIBController extends GetxController {
             snackPosition: SnackPosition.TOP,
             backgroundColor: Colors.red[800],
             colorText: Colors.white);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  Future cancelRequestIB(int requestId) async {
+    try {
+      var izinBermalam =
+          requestIB.firstWhere((requestIb) => requestIb.id == requestId);
+      if (izinBermalam.status.toLowerCase() == 'pending') {
+        var response = await http.put(
+          Uri.parse('${url}requestIB/cancel/$requestId'),
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${box.read('token')}',
+          },
+        );
+
+        if (response.statusCode == 200) {
+          Get.back();
+          Get.snackbar('Success', json.decode(response.body)['message'],
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.green,
+              colorText: Colors.white);
+          await getAllRequestIB();
+        } else {
+          Get.back();
+          Get.snackbar('Error', json.decode(response.body)['message'],
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.red[800],
+              colorText: Colors.white);
+        }
+      } else {
+        Get.snackbar(
+          'Error',
+          'Izin Bermalam with status ${izinBermalam.status} cannot be cancelled.',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red[800],
+          colorText: Colors.white,
+        );
       }
     } catch (e) {
       debugPrint(e.toString());

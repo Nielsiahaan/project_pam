@@ -1,5 +1,5 @@
 class RoomModel {
-  int id;
+  int? id;
   String roomName;
   DateTime createdAt;
   DateTime updatedAt;

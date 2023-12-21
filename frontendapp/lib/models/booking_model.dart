@@ -1,6 +1,6 @@
 import 'package:frontendapp/models/mahasiswa_model.dart';
 
-class BookingModel {
+class BookingRoomModel {
   int id;
   int mahasiswaId;
   int roomId;
@@ -12,7 +12,7 @@ class BookingModel {
   DateTime updatedAt;
   Mahasiswa mahasiswa;
 
-  BookingModel({
+  BookingRoomModel({
     required this.id,
     required this.mahasiswaId,
     required this.roomId,
@@ -25,7 +25,7 @@ class BookingModel {
     required this.mahasiswa,
   });
 
-  factory BookingModel.fromJson(Map<String, dynamic> json) => BookingModel(
+  factory BookingRoomModel.fromJson(Map<String, dynamic> json) => BookingRoomModel(
         id: json["id"],
         mahasiswaId: json["mahasiswa_id"],
         roomId: json["room_id"],

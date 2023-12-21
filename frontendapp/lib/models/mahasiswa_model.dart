@@ -7,6 +7,7 @@ class Mahasiswa {
   dynamic emailVerifiedAt;
   String noKtp;
   String noTelp;
+  String role;
   DateTime createdAt;
   DateTime updatedAt;
   dynamic googleId;
@@ -20,11 +21,12 @@ class Mahasiswa {
     required this.emailVerifiedAt,
     required this.noKtp,
     required this.noTelp,
+    required this.role,
     required this.createdAt,
     required this.updatedAt,
     required this.googleId,
   });
-  String get mahasiswaName => name;
+
   factory Mahasiswa.fromJson(Map<String, dynamic> json) => Mahasiswa(
         id: json["id"],
         nim: json["nim"],
@@ -34,6 +36,7 @@ class Mahasiswa {
         emailVerifiedAt: json["email_verified_at"],
         noKtp: json["no_ktp"],
         noTelp: json["no_telp"],
+        role: json["role"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         googleId: json["google_id"],
@@ -48,6 +51,7 @@ class Mahasiswa {
         "email_verified_at": emailVerifiedAt,
         "no_ktp": noKtp,
         "no_telp": noTelp,
+        "role": role,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
         "google_id": googleId,

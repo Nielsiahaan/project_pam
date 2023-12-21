@@ -79,4 +79,20 @@ class SuratRequestController extends Controller
             return response()->json(['message' => 'Gagal memperbarui surat.', 'error' => $e->getMessage()], 500);
         }
     }
+
+    public function cancel($id)
+    {
+        try {
+            $suratRequest = SuratRequest::findOrFail($id);
+            if ($suratRequest->status !== 'pending') {
+                return response()->json(['message' => 'Request Surat cant be cancelled'], 400);
+            }
+
+            $suratRequest->update(['status' =>
+            'cancelled']);
+            return response()->json(['message' => 'Request Surat cancelled successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to cancel Request Surat.', 'error' => $e->getMessage()], 500);
+        }
+    }
 }

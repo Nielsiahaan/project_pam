@@ -27,6 +27,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //surat routes
     Route::apiResource('surat', SuratRequestController::class)->only(['index', 'store', 'update']);
+    Route::put('surat/cancel/{id}', [SuratRequestController::class, 'cancel']);
 
     //Route booking
     Route::get('bookings', [BookingController::class, 'index']);
@@ -35,11 +36,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //Route IK
     Route::apiResource('requestIK', RequestIKController::class)->only(['index', 'store']);
+    Route::put('requestIK/cancel/{id}', [RequestIKController::class, 'cancel']);
     // Route::put('approve-status/{id}', [RequestIKController::class, 'approveStatus']);
     // Route::put('reject-status/{id}', [RequestIKController::class, 'rejectStatus']);
 
     //Route IB
     Route::apiResource('requestIB', IBRequestController::class)->only(['index', 'store']);
+    Route::put('requestIB/cancel/{id}', [IBRequestController::class, 'cancel']);
 });
 
 

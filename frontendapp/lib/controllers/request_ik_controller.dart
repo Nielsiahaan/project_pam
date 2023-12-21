@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontendapp/constants/constants.dart';
 import 'package:frontendapp/models/requestIK_model.dart';
-import 'package:frontendapp/views/requestik_page.dart';
+import 'package:frontendapp/views/Mahasiswa/requestIK/requestik_page.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
@@ -14,7 +14,6 @@ class RequestIKController extends GetxController {
 
   RxList<RequestIkModel> requestIK = RxList<RequestIkModel>();
 
-  
   @override
   void onInit() {
     getAllRequestIK();
@@ -82,6 +81,46 @@ class RequestIKController extends GetxController {
         Get.snackbar(
           'Error',
           json.decode(response.body)['message'],
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red[800],
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<void> cancelRequestIK(int requestId) async {
+    try {
+      var izinKeluar =
+          requestIK.firstWhere((requestik) => requestik.id == requestId);
+
+      if (izinKeluar.status.toLowerCase() == 'pending') {
+        var response = await http
+            .put(Uri.parse('${url}requestIK/cancel/$requestId'), headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${box.read('token')}'
+        });
+
+        if (response.statusCode == 200) {
+          Get.back();
+          Get.snackbar('Success', json.decode(response.body)['message'],
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.green,
+              colorText: Colors.white);
+          await getAllRequestIK();
+        } else {
+          Get.back();
+          Get.snackbar('Error', json.decode(response.body)['message'],
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.red[800],
+              colorText: Colors.white);
+        }
+      } else {
+        Get.snackbar(
+          'Error',
+          'Izin Keluar with status ${izinKeluar.status} cannot be cancelled.',
           snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red[800],
           colorText: Colors.white,

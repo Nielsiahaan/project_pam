@@ -66,24 +66,40 @@ class BookingController extends Controller
     }
 
 
-    public function update(BookingRequest $request, Booking $booking, $room_Id)
-    {
-        try {
-            $validatedData = $request->validated();
+    // public function update(BookingRequest $request, $bookingId)
+    // {
+    //     try {
+    //         $booking = Booking::findOrFail($bookingId);
 
-            // update Booking room
-            $booking->fill([
-                'mahasiswa_id' => auth()->id(),
-                'room_id' => $room_Id,
-                'start_time' => $validatedData['start_time'],
-                'end_time' => $validatedData['end_time'],
-                'keterangan' => $validatedData['keterangan'],
-            ]);
+    //         // Check if the booking is still pending
+    //         if ($booking->status == 'pending') {
+    //             $validatedData = $request->validated();
 
-            $booking->save();
-            return response()->json(['message' => 'Booking Room berhasil di perbarui,', 'data' => $booking], 200);
-        } catch (\Throwable $th) {
-            
-        }
-    }
+    //             $isRoomAvailable = Booking::where('room_id', $booking->room_id)
+    //                 ->where(function ($query) use ($validatedData, $booking) {
+    //                     $query->whereBetween('start_time', [$validatedData['start_time'], $validatedData['end_time']])
+    //                         ->orWhereBetween('end_time', [$validatedData['start_time'], $validatedData['end_time']])
+    //                         ->where('id', '!=', $booking->id);
+    //                 })->doesntExist();
+
+    //             if (!$isRoomAvailable) {
+    //                 return response()->json(['message' => 'Ruangan tidak tersedia, ruangan telah dipesan.'], 400);
+    //             }
+
+    //             $booking->update([
+    //                 'start_time' => $validatedData['start_time'],
+    //                 'end_time' => $validatedData['end_time'],
+    //                 'keterangan' => $validatedData['keterangan'],
+    //             ]);
+
+    //             return response()->json(['message' => 'Booking ruangan berhasil diupdate.', 'data' => $booking], 200);
+    //         } else {
+    //             return response()->json(['message' => 'Booking dengan status ' . $booking->status . ' tidak dapat diupdate.'], 400);
+    //         }
+    //     } catch (ValidationException $e) {
+    //         return response()->json(['message' => 'Gagal melakukan update booking ruangan.', 'errors' => $e->errors()], 400);
+    //     } catch (\Exception $e) {
+    //         return response()->json(['message' => 'Gagal melakukan update booking ruangan.', 'error' => $e->getMessage()], 500);
+    //     }
+    // }
 }

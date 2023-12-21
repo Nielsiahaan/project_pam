@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\IKRequest;
 use App\Models\RequestIK;
-
+use Illuminate\Database\Eloquent\Casts\Json;
 
 class RequestIKController extends Controller
 {
@@ -46,4 +46,18 @@ class RequestIKController extends Controller
         }
     }
 
+
+    public function cancel($id)
+    {
+        try {
+            $ikRequest = RequestIK::findOrFail($id);
+            if ($ikRequest->status !== 'pending') {
+                return response()->json(['message' => 'Izin Keluar can\'t be cancelled.'], 400);
+            }
+            $ikRequest->update(['status' => 'cancelled']);
+            return response()->json(['message' => 'Izin Keluar cancelled successfully.'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to cancel Izin Keluar.', 'error' => $e->getMessage()], 500);
+        }
+    }
 }

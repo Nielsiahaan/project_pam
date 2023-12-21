@@ -10,55 +10,6 @@ use Illuminate\Validation\ValidationException;
 
 class RoomController extends Controller
 {
-    // public function index()
-    // {
-    //     $rooms = Room::latest()->paginate(null);
-    //     return view('admin.rooms.index', compact('rooms'));
-    // }
-
-    // public function create()
-    // {
-    //     return view('admin.rooms.create');
-    // }
-
-    // public function store(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'roomName' => 'required|string',
-    //     ]);
-
-    //     Room::create($validatedData);
-
-    //     return redirect()->route('room.index')->with('success', 'Room berhasil ditambahkan.');
-    // }
-
-    // public function edit($roomId)
-    // {
-    //     $room = Room::findOrFail($roomId);
-    //     return view('admin.rooms.edit', compact('room'));
-    // }
-
-    // public function update(Request $request, $roomId)
-    // {
-    //     $room = Room::findOrFail($roomId);
-
-    //     $validatedData = $request->validate([
-    //         'roomName' => 'required|string',
-    //     ]);
-
-    //     $room->update($validatedData);
-
-    //     return redirect()->route('room.index')->with('success', 'Room berhasil diperbarui.');
-    // }
-
-    // public function destroy($roomId)
-    // {
-    //     $room = Room::findOrFail($roomId);
-    //     $room->delete();
-
-    //     return redirect()->route('room.index')->with('success', 'Room berhasil dihapus.');
-    // }
-
     public function index()
     {
         $rooms = Room::latest()->get();
@@ -126,7 +77,6 @@ class RoomController extends Controller
 
             return response()->json(['message' => 'Room berhasil dihapus.']);
         } catch (\Exception $e) {
-            // Tangkap error lainnya
             return response()->json(['message' => 'Gagal menghapus ruangan.'], 500);
         }
     }

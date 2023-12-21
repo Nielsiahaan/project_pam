@@ -66,8 +66,21 @@ class IBRequestController extends Controller
         ) {
             return;
         }
-
-        // Jika tidak memenuhi kondisi di atas, throw exception atau handle sesuai kebutuhan
         throw new \Exception('Izin bermalam hanya bisa direquest pada hari Jumat di atas jam 17.00 dan hari Sabtu (08.00 – 17.00).');
+    }
+
+    public function cancel($id)
+    {
+        try {
+            $requestIB  = IBRequest::findOrFail($id);
+            if ($requestIB->status !== 'pending') {
+                return response()->json(['message' => 'Izin Bermalam can\'t be cancelled'], 400);
+            }
+
+            $requestIB->update(['status' => 'cancelled']);
+            return response()->json(['message' => 'Izin Bermalam cancelled successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to cancel Izin Bermalam.', 'error' => $e->getMessage()], 500);
+        }
     }
 }
