@@ -12,12 +12,27 @@ use Psy\CodeCleaner\FunctionContextPass;
 
 class AdminController extends Controller
 {
+    public function getMahasiswa($id)
+    {
+        $mahasiswa = Mahasiswa::findOrFail($id);
+        if ($mahasiswa) {
+            $mahasiswaName = $mahasiswa->getMahasiswaName();
+
+            return response(['mahasiswa' => $mahasiswaName], 200);
+        } else {
+            return response()->json(['message' => 'Mahasiswa not found'], 404);
+        }
+    }
+
     // request Ik controller
     public function getALlRequest()
     {
-        $requestIK = RequestIK::latest()->paginate(null);
-        $mahasiswa =  Mahasiswa::get();
-        return view('admin.requestIK.index', compact('requestIK', 'mahasiswa'));
+        try {
+            $requestIK = RequestIK::latest()->paginate(null);
+            return response(['request' => $requestIK], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Gagal mengambil data Izin Keluar.', 'error' => $e->getMessage()]);
+        }
     }
     public function approveStatus($id)
     {
@@ -33,32 +48,29 @@ class AdminController extends Controller
     public function updateStatus($id, $status)
     {
         try {
-
-            $validatedData = request()->validate([
-                'id' => 'integer|exists:request_i_k_s,id',
-            ]);
+            // $validatedData = request()->validate([
+            //     'id' => 'integer|exists:request_i_k_s,id',
+            // ]);
             $ikRequest = RequestIK::findOrFail($id);
             // Check if the status is not 'pending'
             if ($ikRequest->status !== 'pending') {
-                return redirect()->route('requestIk.index')->with('error', 'Status permintaan izin keluar sudah tidak dalam status pending.');
+                return response()->json(['message' => 'Izin Keluar request status is not pending.'], 400);
             }
             // Update the status
             $ikRequest->update(['status' => $status]);
 
-            return redirect()->route('requestIk.index')->with('success', "Status permintaan izin keluar berhasil diubah menjadi '$status'.");
+            return response()->json(['message' => "Izin Keluar request status successfully updated to '$status'."], 200);
         } catch (\Throwable $th) {
-
-            return redirect()->route('requestIk.index')->with('error', 'Gagal mengubah status permintaan izin keluar.');
+            return response()->json(['message' => 'Failed to update Izin Keluar request status.', 'error' => $th->getMessage()], 500);
         }
     }
 
-    // request surat controller
+    // update status request surat controller
 
     public function getAllSurat()
     {
         $surats = SuratRequest::latest()->paginate(null);
-        $mahasiswa = Mahasiswa::get();
-        return view('admin.requestSurat.index', compact('surats', 'mahasiswa'));
+        return response(['surats' => $surats], 200);
     }
 
     public function approveSurat($id)
@@ -77,22 +89,22 @@ class AdminController extends Controller
 
             // Check if the status is not 'pending'
             if ($ikRequest->status !== 'pending') {
-                return redirect()->route('requestSurat.index')->with('error', 'Status permintaan izin keluar sudah tidak dalam status pending.');
+                return response()->json(['message' => 'Surat request\'s status is not pending.'], 400);
             }
             // Update the status
             $ikRequest->update(['status' => $status]);
 
-            return redirect()->route('requestSurat.index')->with('success', "Status permintaan izin keluar berhasil diubah menjadi '$status'.");
+            return response()->json(['message', "Surat request's status successfully updated to '$status'."], 200);
         } catch (\Throwable $th) {
-
-            return redirect()->route('requestSurat.index')->with('error', 'Gagal mengubah status permintaan izin keluar.');
+            return response()->json(['message' => 'Failed to update Surat request status.', 'error' => $th->getMessage()], 500);
         }
     }
+
+    // update status izin bermalam
     public function getAllIzinBermalam()
     {
-        $izinBermalam = IBRequest::latest()->paginate(null);
-        $mahasiswa = Mahasiswa::get();
-        return view('admin.requestIB.index', compact('izinBermalam', 'mahasiswa'));
+        $izinBermalam = IBRequest::latest()->get();
+        return response(['izinBermalam' => $izinBermalam], 200);
     }
 
     public function approveIzinBermalam($id)
@@ -111,24 +123,27 @@ class AdminController extends Controller
             $ibRequest = IBRequest::findOrFail($id);
             // Check if the status is not 'pending'
             if ($ibRequest->status !== 'pending') {
-                return redirect()->route('requestIB.index')->with('error', 'Status permintaan izin keluar sudah tidak dalam status pending.');
+                return response()->json(['message' => 'Surat request\'s status is not pending.'], 400);
             }
             // Update the status
             $ibRequest->update(['status' => $status]);
 
-            return redirect()->route('requestIB.index')->with('success', "Status permintaan izin keluar berhasil diubah menjadi '$status'.");
+            return response()->json(['message', "Izin bermalam status successfully updated to '$status'."], 200);
         } catch (\Throwable $th) {
 
-            return redirect()->route('requestIB.index ')->with('error', 'Gagal mengubah status permintaan izin keluar.');
+            return response()->json(['message' => 'Failed to update Izin bermalam status.', 'error' => $th->getMessage()], 500);
         }
     }
 
 
     public function getAllBookingRoom()
     {
-        $bookingRoom = BookingRequest::latest()->paginate(null);
-        $mahasiswa = Mahasiswa::get();
-        return view('admin.bookingRoom.index', compact('bookingRoom', 'mahasiswa'));
+        try {
+            $bookingRoom = BookingRequest::latest()->paginate(null);
+            return response(['bookingRoom', $bookingRoom], 200);
+        } catch (\Throwable $th) {
+            return response(['message' => 'Failed to fetch booking information.', 'error' => $th->getMessage()], 500);
+        }
     }
 
     public function updateStatusBookingRoom($id, $status)
@@ -147,6 +162,7 @@ class AdminController extends Controller
                 "Status pemesanan ruangan berhasil diubah menjadi '$status'"
             );
         } catch (\Throwable $th) {
+            return response()->json(['message' => 'Failed to update booking room status.', 'error' => $th->getMessage()], 500);
         }
     }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontendapp/views/Admin/requestSurat/index_surat.dart';
 import 'package:frontendapp/views/Admin/room/index_room.dart';
 import 'package:frontendapp/views/component/widget/drawer_widget.dart';
 import 'package:frontendapp/views/component/widget/menu_container.dart';
@@ -87,7 +88,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 children: [
                   Row(
                     children: [
-                      // Fitur 1: Izin Keluar
+                      // Fitur 1: CRUD Room
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
@@ -124,7 +125,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            // Get.to(() => SuratRequestPage());
+                            Get.to(() => IndexSurat());
                           },
                           child: Card(
                             child: MenuContainer(

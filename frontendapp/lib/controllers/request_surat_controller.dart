@@ -93,55 +93,6 @@ class RequestSuratController extends GetxController {
     }
   }
 
-  Future updateSuratRequest({
-    required String id,
-    required String kategori_surat,
-    required String content,
-    required DateTime tanggal_pengambilan,
-  }) async {
-    try {
-      var data = {
-        'kategori_surat': kategori_surat,
-        'content': content,
-        'tanggal_pengambilan':
-            DateFormat('yyyy-MM-dd').format(tanggal_pengambilan),
-      };
-
-      var response = await http.put(
-        Uri.parse('${url}surat/$id'),
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ${box.read('token')}'
-        },
-        body: data,
-      );
-
-      if (response.statusCode == 200) {
-        Get.back();
-        Get.snackbar(
-          'Success',
-          json.decode(response.body)['message'],
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
-        // Refresh the list of surat requests after successful update
-        getAllSuratRequest();
-      } else {
-        //Handle the error response
-        Get.snackbar(
-          'Error',
-          json.decode(response.body)['message'],
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red[800],
-          colorText: Colors.white,
-        );
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
-
   Future cancelSurat(int requestId) async {
     try {
       var suratRequest =

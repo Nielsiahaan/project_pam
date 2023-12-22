@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 14, 2023 at 09:57 AM
+-- Generation Time: Dec 22, 2023 at 09:58 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -55,6 +55,13 @@ CREATE TABLE `bookings` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`id`, `mahasiswa_id`, `room_id`, `start_time`, `end_time`, `status`, `keterangan`, `created_at`, `updated_at`) VALUES
+(1, 2, 2, '2023-12-20 08:00:00', '2023-12-20', 'pending', 'untuk keperluan tutor matdis', '2023-12-19 23:52:02', '2023-12-19 23:52:02');
 
 -- --------------------------------------------------------
 
@@ -124,10 +131,7 @@ CREATE TABLE `i_b_requests` (
 --
 
 INSERT INTO `i_b_requests` (`id`, `mahasiswa_id`, `tanggal_berangkat`, `tanggal_kembali`, `deskripsi`, `tujuan`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, '2023-12-15 18:30:00', '2023-12-17 18:30:00', 'Liburan natal', 'Medan', 'pending', '2023-12-14 02:31:41', '2023-12-14 02:31:41'),
-(2, 1, '2023-12-15 17:36:00', '2023-12-20 16:36:00', 'Belajar di rumah', 'Medan', 'pending', '2023-12-14 02:40:53', '2023-12-14 02:40:53'),
-(3, 1, '2023-12-22 17:30:00', '2024-01-11 19:00:00', 'Liburan Paskah', 'Medan', 'pending', '2023-12-14 02:49:30', '2023-12-14 02:49:30'),
-(4, 1, '2023-12-22 17:05:00', '2024-01-12 19:46:00', 'Liburan semester', 'Medan', 'pending', '2023-12-14 02:51:05', '2023-12-14 02:51:05');
+(1, 2, '2023-12-22 17:30:00', '2024-01-11 19:00:00', 'Liburan Paskah', 'Medan', 'pending', '2023-12-19 23:48:10', '2023-12-19 23:48:10');
 
 -- --------------------------------------------------------
 
@@ -159,6 +163,7 @@ CREATE TABLE `mahasiswas` (
   `no_ktp` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `no_telp` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'mahasiswa',
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -169,8 +174,9 @@ CREATE TABLE `mahasiswas` (
 -- Dumping data for table `mahasiswas`
 --
 
-INSERT INTO `mahasiswas` (`id`, `nim`, `name`, `username`, `email`, `email_verified_at`, `no_ktp`, `password`, `no_telp`, `remember_token`, `created_at`, `updated_at`, `google_id`) VALUES
-(1, '11322014', 'Niel Siahaan', 'niel.shn', 'niel@gmail.com', NULL, '1207261108030001', '$2y$12$ooRWxiX1O1UgFtkEfaDireDXZOFjokKnIWGdGz0cbPbrUSitB7n5a', '081262179432', NULL, '2023-12-13 20:25:32', '2023-12-13 20:25:32', NULL);
+INSERT INTO `mahasiswas` (`id`, `nim`, `name`, `username`, `email`, `email_verified_at`, `no_ktp`, `password`, `no_telp`, `role`, `remember_token`, `created_at`, `updated_at`, `google_id`) VALUES
+(1, NULL, 'Admin', NULL, 'admin@gmail.com', NULL, NULL, '$2y$12$tPb7Iza1Pmvja4QrtUKZLOnpXyp49GSoyf6SQTsMdMziJfeku8YgO', NULL, 'admin', NULL, '2023-12-19 23:38:31', '2023-12-19 23:38:31', NULL),
+(2, '11322014', 'Niel Siahaan', 'niel.shn', 'niel@gmail.com', NULL, '1207261108030001', '$2y$12$XT6qLkQAT26Kd.HGJaXRieK8tJ56CydRzUqrubLKEgkIZB3WPuwE2', '081262179432', 'mahasiswa', NULL, '2023-12-19 23:44:56', '2023-12-19 23:44:56', NULL);
 
 -- --------------------------------------------------------
 
@@ -189,22 +195,22 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(19, '2014_10_12_000000_create_users_table', 1),
-(20, '2014_10_12_100000_create_password_reset_tokens_table', 1),
-(21, '2019_08_19_000000_create_failed_jobs_table', 1),
-(22, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(23, '2022_12_08_015439_create_mahasiswas_table', 1),
-(24, '2022_12_08_033445_add_google_id_column', 1),
-(25, '2023_12_04_011205_create_feeds_table', 1),
-(26, '2023_12_04_013921_create_likes_table', 1),
-(27, '2023_12_04_023800_create_comments_table', 1),
-(28, '2023_12_08_031619_create_rooms_table', 1),
-(29, '2023_12_10_024511_create_bookings_table', 1),
-(30, '2023_12_10_024540_create_surat_requests_table', 1),
 (31, '2023_12_11_075352_create_request_i_k_s_table', 1),
-(32, '2023_12_11_092256_create_admins_table', 1),
-(33, '2023_12_12_014243_create_i_b_requests_table', 1),
-(34, '2023_12_10_075352_create_request_i_k_s_table', 2);
+(50, '2014_10_12_000000_create_users_table', 2),
+(51, '2014_10_12_100000_create_password_reset_tokens_table', 2),
+(52, '2019_08_19_000000_create_failed_jobs_table', 2),
+(53, '2019_12_14_000001_create_personal_access_tokens_table', 2),
+(54, '2022_12_08_015439_create_mahasiswas_table', 2),
+(55, '2022_12_08_033445_add_google_id_column', 2),
+(56, '2023_12_04_011205_create_feeds_table', 2),
+(57, '2023_12_04_013921_create_likes_table', 2),
+(58, '2023_12_04_023800_create_comments_table', 2),
+(59, '2023_12_08_031619_create_rooms_table', 2),
+(60, '2023_12_10_024511_create_bookings_table', 2),
+(61, '2023_12_10_024540_create_surat_requests_table', 2),
+(62, '2023_12_10_075352_create_request_i_k_s_table', 2),
+(63, '2023_12_11_092256_create_admins_table', 2),
+(64, '2023_12_12_014243_create_i_b_requests_table', 2);
 
 -- --------------------------------------------------------
 
@@ -242,13 +248,19 @@ CREATE TABLE `personal_access_tokens` (
 --
 
 INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `expires_at`, `created_at`, `updated_at`) VALUES
-(1, 'App\\Models\\Mahasiswa', 1, 'auth_token', 'e157e4bf6ea5c65bb6fd5237544bd9055f0eca3ed069e7755dfb72053159a902', '[\"*\"]', NULL, NULL, '2023-12-13 20:25:32', '2023-12-13 20:25:32'),
-(2, 'App\\Models\\Mahasiswa', 1, 'auth_token', 'da695c3cf8dac4e00ccd2c7a27f0e59ba06e7c49c3fbb16a4a88c15d85c8965f', '[\"*\"]', '2023-12-13 20:46:56', NULL, '2023-12-13 20:25:39', '2023-12-13 20:46:56'),
-(3, 'App\\Models\\Mahasiswa', 1, 'auth_token', '5f592efd69f557c14ef79da804a1abb788462bc77a1bd874f7a8b582d34267a1', '[\"*\"]', '2023-12-13 21:09:30', NULL, '2023-12-13 21:07:30', '2023-12-13 21:09:30'),
-(4, 'App\\Models\\Mahasiswa', 1, 'auth_token', 'a87ea8fa91866120dc0451705886eb4d44e6d7af31e363649d6852f834e3b8ed', '[\"*\"]', '2023-12-13 21:15:37', NULL, '2023-12-13 21:13:46', '2023-12-13 21:15:37'),
-(5, 'App\\Models\\Mahasiswa', 1, 'auth_token', '1bac8a1476cb159236a0f7e6a2b4d9e76aec75ea6a2deb6590463c674b4627d3', '[\"*\"]', '2023-12-13 21:36:12', NULL, '2023-12-13 21:23:44', '2023-12-13 21:36:12'),
-(6, 'App\\Models\\Mahasiswa', 1, 'auth_token', '9921255d0243308860d8afc0ecf0cda6697078d5021a3b8f923179eaa481333d', '[\"*\"]', '2023-12-14 02:51:14', NULL, '2023-12-13 23:51:20', '2023-12-14 02:51:14'),
-(7, 'App\\Models\\Mahasiswa', 1, 'auth_token', 'ba4b7a5487140bea54a1e985d6e3e324f6c7fcc53c99a120a3968f690ea158da', '[\"*\"]', '2023-12-14 02:49:30', NULL, '2023-12-14 02:28:56', '2023-12-14 02:49:30');
+(1, 'App\\Models\\Mahasiswa', 2, 'auth_token', '9c8690d02454da96caf59fad4746ad78a0f45df9fa241693997acbf9a6ee9118', '[\"*\"]', NULL, NULL, '2023-12-19 23:44:56', '2023-12-19 23:44:56'),
+(3, 'App\\Models\\Mahasiswa', 2, 'auth_token', 'df0358c1e29961fc13799042479d0e00873c2048a4161c0bf172819a2122ded3', '[\"*\"]', '2023-12-19 23:52:11', NULL, '2023-12-19 23:47:40', '2023-12-19 23:52:11'),
+(4, 'App\\Models\\Mahasiswa', 1, 'auth_token', 'ad644aa78ed88e3458ab57d34baa08d079285050f1126e2b881ac446c42179e2', '[\"*\"]', NULL, NULL, '2023-12-20 00:12:51', '2023-12-20 00:12:51'),
+(5, 'App\\Models\\Mahasiswa', 1, 'auth_token', 'ab9801bd99f4b6583125c386107d60b2a051293b4ac2cb7e58c91f081cd1fc4b', '[\"*\"]', NULL, NULL, '2023-12-20 00:12:54', '2023-12-20 00:12:54'),
+(6, 'App\\Models\\Mahasiswa', 1, 'auth_token', '4788a410ab0ff190e95941cafa06a9394f22fc408439218953cbe0e8fbc2178b', '[\"*\"]', NULL, NULL, '2023-12-20 00:13:32', '2023-12-20 00:13:32'),
+(7, 'App\\Models\\Mahasiswa', 1, 'auth_token', 'f3fd5d0976abc0bbc24857ed775bb8d24f91fb39add6b74cca6032f6bd5f4a97', '[\"*\"]', NULL, NULL, '2023-12-20 00:39:55', '2023-12-20 00:39:55'),
+(8, 'App\\Models\\Mahasiswa', 1, 'auth_token', 'cd68b040ffe5e3d78fe179a995f995b4c55cea13dcd667c9507f1173848bf4dc', '[\"*\"]', '2023-12-20 02:05:56', NULL, '2023-12-20 01:48:16', '2023-12-20 02:05:56'),
+(9, 'App\\Models\\Mahasiswa', 1, 'auth_token', '8fe7c3a9c7d691c4eb5e6149f16ccbafdffce7bec4675ca6468cff4fd5e5ef6f', '[\"*\"]', '2023-12-20 02:10:01', NULL, '2023-12-20 02:08:09', '2023-12-20 02:10:01'),
+(10, 'App\\Models\\Mahasiswa', 1, 'auth_token', '37199c1a8b654293a8ba542dac3dc821f54b738adcec841f2113fa96a7f748a1', '[\"*\"]', '2023-12-20 19:03:42', NULL, '2023-12-20 18:50:47', '2023-12-20 19:03:42'),
+(11, 'App\\Models\\Mahasiswa', 1, 'auth_token', '7ffe461e50938d54ba845f5cce7ab7dbda29c51c1b61262ef1beb44c68d3b01a', '[\"*\"]', '2023-12-20 20:44:38', NULL, '2023-12-20 19:54:17', '2023-12-20 20:44:38'),
+(14, 'App\\Models\\Mahasiswa', 1, 'auth_token', '7379130ebb95f43daa00d7b1f59df6787b3a2ea7168792082be1da8672cf045c', '[\"*\"]', NULL, NULL, '2023-12-20 21:29:35', '2023-12-20 21:29:35'),
+(17, 'App\\Models\\Mahasiswa', 1, 'auth_token', 'a8b8d35b87daa322cb0a024fae4baa6a082e0abbf067e9282a9a16e01c8adbaf', '[\"*\"]', '2023-12-20 22:58:17', NULL, '2023-12-20 22:57:34', '2023-12-20 22:58:17'),
+(18, 'App\\Models\\Mahasiswa', 1, 'auth_token', '3f247d7ff9f65ebc99381fc895d626f2f24b54912369d0d9a5f7d573b8216f41', '[\"*\"]', '2023-12-22 02:55:34', NULL, '2023-12-22 02:25:52', '2023-12-22 02:55:34');
 
 -- --------------------------------------------------------
 
@@ -272,10 +284,7 @@ CREATE TABLE `request_i_k_s` (
 --
 
 INSERT INTO `request_i_k_s` (`id`, `mahasiswa_id`, `tanggal_berangkat`, `tanggal_kembali`, `deskripsi`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, '2023-12-13 08:00:00', '2023-12-13 10:00:00', 'pangkas rambut', 'approved', '2023-12-13 20:29:31', '2023-12-13 20:59:22'),
-(2, 1, '2023-12-14 12:00:00', '2023-12-14 13:07:00', 'Healing dulu', 'rejected', '2023-12-13 21:09:30', '2023-12-13 21:23:04'),
-(3, 1, '2023-12-14 14:10:00', '2023-12-14 15:03:00', 'Wawancara project', 'approved', '2023-12-14 00:04:11', '2023-12-14 00:09:30'),
-(4, 1, '2023-12-14 16:40:00', '2023-12-14 18:37:00', 'You\'re the mighty God', 'pending', '2023-12-14 01:39:09', '2023-12-14 01:39:09');
+(1, 2, '2023-12-20 08:00:00', '2023-12-20 10:00:00', 'pangkas rambut', 'pending', '2023-12-19 23:48:46', '2023-12-19 23:48:46');
 
 -- --------------------------------------------------------
 
@@ -295,10 +304,11 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`id`, `roomName`, `created_at`, `updated_at`) VALUES
-(1, 'GD511', '2023-12-13 20:23:57', '2023-12-13 20:23:57'),
-(2, 'GD512', '2023-12-13 20:24:02', '2023-12-13 20:24:02'),
-(3, 'GD513', '2023-12-13 20:24:09', '2023-12-13 20:24:09'),
-(4, 'GD514', '2023-12-13 20:24:20', '2023-12-13 20:24:20');
+(1, 'GD511', '2023-12-19 23:50:06', '2023-12-19 23:50:06'),
+(2, 'GD 517', '2023-12-19 23:50:15', '2023-12-20 02:10:01'),
+(3, 'GD513', '2023-12-19 23:50:19', '2023-12-19 23:50:19'),
+(4, 'GD514', '2023-12-19 23:50:23', '2023-12-19 23:50:23'),
+(5, 'GD 515', '2023-12-20 02:04:18', '2023-12-20 02:04:18');
 
 -- --------------------------------------------------------
 
@@ -322,7 +332,7 @@ CREATE TABLE `surat_requests` (
 --
 
 INSERT INTO `surat_requests` (`id`, `mahasiswa_id`, `kategori_surat`, `content`, `tanggal_pengambilan`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Surat Magang Bersertifikat', 'Nama: Daniel Siahaan\nProdi: Teknologi Informasi 22', '2023-12-16', 'rejected', '2023-12-14 00:20:35', '2023-12-14 00:36:59');
+(1, 2, 'surat MBKM yang diperbarui', 'keperluan magang yang diperbarui', '2023-12-14', 'approved', '2023-12-19 23:49:14', '2023-12-20 21:36:40');
 
 -- --------------------------------------------------------
 
@@ -340,13 +350,6 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@gmail.com', NULL, '$2y$12$bn8s1BcYOV9FyqSzHwOAheNXT0nZibrUT2isZykDfh2VPCwqwhwhe', NULL, '2023-12-13 20:23:20', '2023-12-13 20:23:20');
 
 --
 -- Indexes for dumped tables
@@ -474,7 +477,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `comments`
@@ -498,7 +501,7 @@ ALTER TABLE `feeds`
 -- AUTO_INCREMENT for table `i_b_requests`
 --
 ALTER TABLE `i_b_requests`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `likes`
@@ -510,31 +513,31 @@ ALTER TABLE `likes`
 -- AUTO_INCREMENT for table `mahasiswas`
 --
 ALTER TABLE `mahasiswas`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `request_i_k_s`
 --
 ALTER TABLE `request_i_k_s`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `surat_requests`
@@ -546,7 +549,7 @@ ALTER TABLE `surat_requests`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

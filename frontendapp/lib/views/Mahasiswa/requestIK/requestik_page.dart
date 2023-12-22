@@ -49,7 +49,7 @@ class IzinKeluarPage extends StatelessWidget {
             ),
             SizedBox(height: 16.0),
             Text(
-              'List Request IK',
+              'History Izin Keluar',
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8.0),
@@ -110,10 +110,12 @@ class IzinKeluarPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  keperluan,
-                  style: GoogleFonts.poppins(
-                      fontSize: 13, fontWeight: FontWeight.w400),
+                Flexible(
+                  child: Text(
+                    keperluan,
+                    style: GoogleFonts.poppins(
+                        fontSize: 13, fontWeight: FontWeight.w400),
+                  ),
                 ),
                 PopupMenuButton<String>(
                   itemBuilder: (BuildContext context) =>

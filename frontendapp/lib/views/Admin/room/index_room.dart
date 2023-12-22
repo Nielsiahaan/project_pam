@@ -32,18 +32,18 @@ class IndexRoom extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Center(
                   child: Text(
-                    'Request Surat',
+                    'Add Room',
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey[400],
+                backgroundColor: Colors.blue[600],
               ),
             ),
             SizedBox(height: 24),
             Text(
-              'Riwayat Request Surat',
+              'History Request Surat',
               style: GoogleFonts.poppins(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,

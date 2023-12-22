@@ -43,7 +43,7 @@ class SuratRequestPage extends StatelessWidget {
             ),
             SizedBox(height: 24),
             Text(
-              'Riwayat Request Surat',
+              'Histori Request Surat',
               style: GoogleFonts.poppins(
                   fontSize: 18, fontWeight: FontWeight.w600),
             ),
@@ -110,10 +110,12 @@ class SuratRequestPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Kategori Surat: $kategori_surat',
-                  style: GoogleFonts.poppins(
-                      fontSize: 14, fontWeight: FontWeight.w400),
+                Flexible(
+                  child: Text(
+                    'Kategori Surat: $kategori_surat',
+                    style: GoogleFonts.poppins(
+                        fontSize: 14, fontWeight: FontWeight.w400),
+                  ),
                 ),
                 PopupMenuButton<String>(
                   itemBuilder: (BuildContext context) =>

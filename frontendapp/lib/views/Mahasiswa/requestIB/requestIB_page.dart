@@ -116,10 +116,12 @@ class IzinBermalamPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  keperluan,
-                  style: GoogleFonts.poppins(
-                      fontSize: 14, fontWeight: FontWeight.w400),
+                Flexible(
+                  child: Text(
+                    keperluan,
+                    style: GoogleFonts.poppins(
+                        fontSize: 14, fontWeight: FontWeight.w400),
+                  ),
                 ),
                 PopupMenuButton<String>(
                   itemBuilder: (BuildContext context) =>
