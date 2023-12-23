@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontendapp/views/Admin/requestSurat/index_surat.dart';
 import 'package:frontendapp/views/Admin/room/index_room.dart';
-import 'package:frontendapp/views/component/widget/drawer_widget.dart';
+import 'package:frontendapp/views/component/widget/drawer_widget_admin.dart';
 import 'package:frontendapp/views/component/widget/menu_container.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -157,7 +157,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
           ),
         ),
       ),
-      drawer: DrawerWidget(),
+      drawer: DrawerWidgetAdmin(),
     );
   }
 }

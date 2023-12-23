@@ -14,6 +14,7 @@ class IndexRoom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue,
         title: Text(
           'Index Room',
           style: TextStyle(color: Colors.white),
@@ -29,7 +30,7 @@ class IndexRoom extends StatelessWidget {
                 Get.to(() => CreateRoomPage());
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                padding: const EdgeInsets.all(12.0),
                 child: Center(
                   child: Text(
                     'Add Room',
@@ -38,12 +39,15 @@ class IndexRoom extends StatelessWidget {
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue[600],
+                primary: Colors.green,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
               ),
             ),
             SizedBox(height: 24),
             Text(
-              'History Request Surat',
+              'Ruangan Yang Tersedia',
               style: GoogleFonts.poppins(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -73,7 +77,8 @@ class IndexRoom extends StatelessWidget {
                               IconButton(
                                 icon: Icon(Icons.edit),
                                 onPressed: () {
-                                 Get.to(() => UpdateRoomPage(roomId: room.id!));
+                                  Get.to(
+                                      () => UpdateRoomPage(roomId: room.id!));
                                 },
                               ),
                               IconButton(
