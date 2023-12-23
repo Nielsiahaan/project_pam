@@ -150,11 +150,17 @@ class _IzinKeluarFormState extends State<IzinKeluarForm> {
                         _requestIKController,
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Colors.blue, // Set the background color to blue
+                        backgroundColor: Colors.blue,
                       ),
-                      child: Text('Buat Baru',
-                          style: TextStyle(color: Colors.white)),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: Center(
+                          child: Text(
+                            'Buat Baru',
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
