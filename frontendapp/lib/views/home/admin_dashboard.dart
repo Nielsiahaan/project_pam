@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:frontendapp/views/Admin/requestSurat/index_surat.dart';
 import 'package:frontendapp/views/Admin/room/index_room.dart';
-import 'package:frontendapp/views/component/widget/drawer_widget_admin.dart';
+// import 'package:frontendapp/views/component/widget/drawer_widget_admin.dart';
 import 'package:frontendapp/views/component/widget/menu_container.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
+import 'package:frontendapp/controllers/authentication.dart';
 
 class AdminDashboard extends StatefulWidget {
-  const AdminDashboard({super.key});
+  const AdminDashboard({Key? key}) : super(key: key);
 
   @override
   State<AdminDashboard> createState() => _AdminDashboardState();
@@ -15,6 +16,12 @@ class AdminDashboard extends StatefulWidget {
 
 class _AdminDashboardState extends State<AdminDashboard> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _authenticationController = Get.put(AuthenticationController());
+
+  Map<String, IconData> menuIcons = {
+    'Settings': Icons.settings,
+    'Sign Out': Icons.logout,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -24,21 +31,30 @@ class _AdminDashboardState extends State<AdminDashboard> {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: Text(
-          'Home',
+          'Welcome Admin',
           style: TextStyle(color: Colors.white),
         ),
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: () {
-            _scaffoldKey.currentState?.openDrawer();
-          },
-        ),
+        // leading: IconButton(
+        //   icon: Icon(Icons.menu),
+        //   onPressed: () {
+        //     _scaffoldKey.currentState?.openDrawer();
+        //   },
+        // ),
         actions: [
-          IconButton(
-            icon: Icon(Icons.notifications),
-            onPressed: () {
-              // Handle notifications
-            },
+          Padding(
+            padding: const EdgeInsets.only(
+                right: 16.0), // Adjust the right padding as needed
+            child: InkWell(
+              onTap: () {
+                // Tambahkan logika untuk menampilkan informasi pengguna
+                // (tampilkan dialog atau pindah ke halaman profil)
+                _showUserProfileDialog();
+              },
+              child: CircleAvatar(
+                radius: 20,
+                backgroundImage: AssetImage('assets/img/Niel.jpg'),
+              ),
+            ),
           ),
         ],
       ),
@@ -49,14 +65,14 @@ class _AdminDashboardState extends State<AdminDashboard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Greetings row
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('Welcome Admin',
-                      style: GoogleFonts.poppins(
-                          fontSize: 20, fontWeight: FontWeight.w500)),
-                ],
-              ),
+              // Column(
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   children: [
+              //     Text('Welcome Admin',
+              //         style: GoogleFonts.poppins(
+              //             fontSize: 20, fontWeight: FontWeight.w500)),
+              //   ],
+              // ),
               const SizedBox(height: 26),
               // Search bar
               Container(
@@ -157,7 +173,136 @@ class _AdminDashboardState extends State<AdminDashboard> {
           ),
         ),
       ),
-      drawer: DrawerWidgetAdmin(),
+      // drawer: DrawerWidgetAdmin(),
     );
+  }
+
+  void _showUserProfileDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GestureDetector(
+              onTap: () {
+                // Handle click on profile picture to show user information
+                Navigator.pop(context); // Close the current dialog
+              },
+              child: CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage('assets/img/Niel.jpg'),
+              ),
+            ),
+            SizedBox(height: 10),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text("Settings"),
+              onTap: () {
+                // Handle Settings
+                Navigator.pop(context); // Close the dialog
+                _showUserInfo(); // Show user information dialog
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text("Sign Out"),
+              onTap: () {
+                // Handle Sign Out
+                Navigator.pop(context); // Close the dialog
+                _handleSignOut();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showUserInfo() {
+    // Create controllers for editing
+    TextEditingController nameController =
+        TextEditingController(text: "Daniel Siahaan");
+    TextEditingController emailController =
+        TextEditingController(text: "dsiahaan@gmail.com");
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GestureDetector(
+              onTap: () {
+                // Handle click on profile picture to show user information
+                Navigator.pop(context); // Close the current dialog
+              },
+              child: CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage('assets/img/Niel.jpg'),
+              ),
+            ),
+            SizedBox(height: 10),
+            // Editable fields for name and email
+            TextFormField(
+              controller: nameController,
+              decoration: InputDecoration(labelText: 'Name'),
+            ),
+            TextFormField(
+              controller: emailController,
+              decoration: InputDecoration(labelText: 'Email'),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () {
+              // Save changes and update the user information
+              String newName = nameController.text;
+              String newEmail = emailController.text;
+
+              // TODO: Update user information with newName and newEmail
+              // For now, just print the updated information
+              print("Updated Information - Name: $newName, Email: $newEmail");
+
+              Navigator.pop(context);
+            },
+            child: Text("Save"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _handleSettings() async {
+    _showUserInfo();
+  }
+
+  Future<void> _handleSignOut() async {
+    try {
+      // Show loading indicator
+      Get.dialog(
+        Center(child: CircularProgressIndicator()),
+        barrierDismissible: false,
+      );
+
+      // Call logout method
+      await _authenticationController.logout();
+
+      // Close loading indicator
+      Get.back();
+    } catch (e) {
+      // Handle error (if any)
+      debugPrint('Error during logout: ${e.toString()}');
+      Get.back();
+    }
   }
 }
