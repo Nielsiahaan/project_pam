@@ -46,7 +46,9 @@ class IndexSurat extends StatelessWidget {
                     columns: [
                       const DataColumn(label: Text('No')),
                       const DataColumn(label: Text('Nama Mahasiswa')),
-                      const DataColumn(label: Text('Detail Surat')),
+                      const DataColumn(label: Text('Kategori Surat')),
+                      const DataColumn(label: Text('Status')),
+                      const DataColumn(label: Text('Action')),
                     ],
                     rows: List<DataRow>.generate(
                       _requestSuratController.requestSurat.length,
@@ -71,29 +73,58 @@ class IndexSurat extends StatelessWidget {
                                 }
                               },
                             )),
+                            DataCell(Text(requestSurat.kategoriSurat)),
+                            DataCell(Text(requestSurat.status)),
                             DataCell(
                               Row(
                                 children: [
-                                  ElevatedButton(
+                                  IconButton(
+                                    icon: Icon(Icons.visibility),
                                     onPressed: () {
                                       Get.bottomSheet(
-<<<<<<< HEAD
                                           SuratDetailModal(
                                               requestId: requestSurat.id),
                                           isScrollControlled: true);
-=======
-                                        SuratView(requestId: requestSurat.id),
-                                        isScrollControlled: true,
-                                      );
->>>>>>> 80eab21dae64762d09bdaea117b304379be348de
                                     },
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors
-                                          .blue, // Sesuaikan dengan warna latar belakang yang diinginkan
-                                    ),
-                                    child: Text("Detail",
-                                        style: TextStyle(color: Colors.white)),
                                   ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      _adminController.approveSurat(
+                                          id: requestSurat.id);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.green,
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 8.0),
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text('Approve',
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      _adminController.rejectSurat(
+                                          id: requestSurat.id);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 8.0),
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text('Reject',
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
