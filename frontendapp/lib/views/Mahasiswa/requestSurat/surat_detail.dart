@@ -40,7 +40,7 @@ class SuratDetailModal extends StatelessWidget {
                     Text(
                       'Detail Request Surat',
                       style: TextStyle(
-                        fontSize: 16.0,
+                        fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
@@ -49,25 +49,25 @@ class SuratDetailModal extends StatelessWidget {
                     Text(
                       'Kategori Surat: ${suratRequestDetail.kategoriSurat}',
                       style: GoogleFonts.poppins(
-                          fontSize: 16, fontWeight: FontWeight.w400),
+                          fontSize: 15, fontWeight: FontWeight.w400),
                     ),
                     SizedBox(height: 8.0),
                     Text(
                       'Keterangan: ${suratRequestDetail.content}',
                       style: GoogleFonts.poppins(
-                          fontSize: 16, fontWeight: FontWeight.w400),
+                          fontSize: 15, fontWeight: FontWeight.w400),
                     ),
                     SizedBox(height: 8.0),
                     Text(
-                      'Tanggal Pengambilan: ${DateFormat('yyyy-MM-dd HH:mm').format(suratRequestDetail.tanggalPengambilan)}',
+                      'Tanggal Pengambilan: ${DateFormat('yyyy-MM-dd HH:mm WIB').format(suratRequestDetail.tanggalPengambilan)}',
                       style: GoogleFonts.poppins(
-                          fontSize: 16, fontWeight: FontWeight.w400),
+                          fontSize: 15, fontWeight: FontWeight.w400),
                     ),
                     SizedBox(height: 8.0),
                     Text(
                       'Status: ${suratRequestDetail.status}',
                       style: GoogleFonts.poppins(
-                          fontSize: 16, fontWeight: FontWeight.w400),
+                          fontSize: 15, fontWeight: FontWeight.w400),
                     ),
                     SizedBox(height: 16.0),
                     ElevatedButton(

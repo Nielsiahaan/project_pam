@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:frontendapp/views/Admin/RequestIK/index_IK.dart';
+import 'package:frontendapp/views/Admin/bookingRoom/index.dart';
+import 'package:frontendapp/views/Admin/requestIB/index_ib.dart';
 import 'package:frontendapp/views/Admin/requestSurat/index_surat.dart';
 import 'package:frontendapp/views/Admin/room/index_room.dart';
+import 'package:frontendapp/views/Admin/tshirt/index_tshirt.dart';
 import 'package:frontendapp/views/component/widget/drawer_widget.dart';
-import 'package:frontendapp/views/component/widget/menu_container.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,12 +22,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.grey[200],
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Text(
-          'Home',
+        backgroundColor: Colors.indigo,
+        title: const Text(
+          'Admin Dashboard',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
@@ -48,14 +51,17 @@ class _AdminDashboardState extends State<AdminDashboard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 20),
               // Greetings row
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('Welcome Admin',
-                      style: GoogleFonts.poppins(
-                          fontSize: 20, fontWeight: FontWeight.w500)),
-                ],
+              Center(
+                child: Text(
+                  'Welcome Admin',
+                  style: GoogleFonts.poppins(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.indigo,
+                  ),
+                ),
               ),
               const SizedBox(height: 26),
               // Search bar
@@ -84,80 +90,100 @@ class _AdminDashboardState extends State<AdminDashboard> {
               ),
               const SizedBox(height: 20),
               // Menu containers
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      // Fitur 1: CRUD Room
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            Get.to(() => IndexRoom());
-                          },
-                          child: Card(
-                            child: MenuContainer(
-                              icon: Icons.meeting_room_outlined,
-                              title: 'ROOM',
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Fitur 2: Izin Bermalam
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            // Get.to(() => IzinBermalamPage());
-                          },
-                          child: Card(
-                            child: MenuContainer(
-                              icon: Icons.hotel,
-                              title: 'Izin Bermalam',
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      // Fitur 3: Request Surat
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            Get.to(() => IndexSurat());
-                          },
-                          child: Card(
-                            child: MenuContainer(
-                              icon: Icons.description,
-                              title: 'Request Surat',
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Fitur 4: Booking Room
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            // Get.to(() => BookingRoomPage());
-                          },
-                          child: Card(
-                            child: MenuContainer(
-                              icon: Icons.room_outlined,
-                              title: 'Booking Room',
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  children: [
+                    buildMenuContainer(
+                      icon: Icons.meeting_room_outlined,
+                      title: 'ROOM',
+                      onTap: () {
+                        Get.to(() => IndexRoom());
+                      },
+                    ),
+                    buildMenuContainer(
+                      icon: Icons.room_outlined,
+                      title: 'Booking Room',
+                      onTap: () {
+                        Get.to(() => IndexBookingRoom());
+                      },
+                    ),
+                    buildMenuContainer(
+                      icon: Icons.exit_to_app,
+                      title: 'Izin Keluar',
+                      onTap: () {
+                        Get.to(() => IndexIzinKeluar());
+                      },
+                    ),
+                    buildMenuContainer(
+                      icon: Icons.hotel,
+                      title: 'Izin Bermalam',
+                      onTap: () {
+                        Get.to(() => IndexIzinBermalam());
+                      },
+                    ),
+                    buildMenuContainer(
+                      icon: Icons.description,
+                      title: 'Request Surat',
+                      onTap: () {
+                        Get.to(() => IndexSurat());
+                      },
+                    ),
+                    buildMenuContainer(
+                      icon: Icons.local_mall,
+                      title: 'Pesan Baju',
+                      onTap: () {
+                        Get.to(() => IndexTshirt());
+                      },
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
         ),
       ),
-      drawer: DrawerWidget(),
+      drawer: const DrawerWidget(),
+    );
+  }
+
+  Widget buildMenuContainer({
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: 48,
+                color: Colors.indigo,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                title,
+                style: GoogleFonts.poppins(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.indigo,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

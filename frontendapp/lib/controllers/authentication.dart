@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:frontendapp/constants/constants.dart';
 import 'package:frontendapp/views/home/admin_dashboard.dart';
 import 'package:frontendapp/views/home/base_page.dart';
-// import 'package:frontendapp/views/home_page.dart';
 import 'package:frontendapp/views/authentikasi/login_page.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -117,7 +116,7 @@ class AuthenticationController extends GetxController {
             onPressed: () {
               Get.back();
             },
-            child: Text(
+            child: const Text(
               'OK',
               style: TextStyle(color: Colors.white),
             ),

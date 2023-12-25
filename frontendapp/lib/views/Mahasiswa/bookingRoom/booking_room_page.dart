@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:frontendapp/controllers/bookingRoom_controller.dart';
+import 'package:frontendapp/views/Mahasiswa/bookingRoom/detail_booking_room.dart';
 import 'package:frontendapp/views/Mahasiswa/bookingRoom/form_bookingRoom.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class BookingRoomPage extends StatelessWidget {
-  final BookingRoomController _bookingController = Get.put(BookingRoomController());
+  final BookingRoomController _bookingController =
+      Get.put(BookingRoomController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text('Booking Room', style: TextStyle(color: Colors.white),),
+        title: Text(
+          'Booking Room',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -165,7 +170,7 @@ class BookingRoomPage extends StatelessWidget {
   void handlePopupMenuSelection(String value, int roomId) {
     switch (value) {
       case 'view':
-        viewDetail(roomId);
+        BookingRoomDetailModal(requestId: roomId);
         break;
       case 'batal':
         cancelBooking(roomId);
@@ -173,67 +178,7 @@ class BookingRoomPage extends StatelessWidget {
     }
   }
 
-  void viewDetail(int roomId) {
-    var bookingRoom = _bookingController.bookingRoom
-        .firstWhere((booking) => booking.roomId == roomId);
-    var roomName = _bookingController.getRoomNameById(roomId);
-
-    //modal for view detail
-    showModalBottomSheet(
-      context: Get.context!,
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext context) {
-        return Center(
-          child: Wrap(
-            children: [
-              Container(
-                padding: EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Detail Booking Room',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 16.0),
-                    Text(
-                      'Nama Room: $roomName',
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                    Text(
-                      'Waktu Mulai: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(bookingRoom.startTime)}',
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                    Text(
-                      'Waktu Berakhir: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(bookingRoom.endTime)}',
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                    Text(
-                      'Status: ${bookingRoom.status}',
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                    SizedBox(height: 16.0,),
-                    ElevatedButton(onPressed: (){
-                      Get.back();
-                    }, child: Text('Close'))
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
   void cancelBooking(int roomId) {
-    var bookingRoom = _bookingController.bookingRoom
-        .firstWhere((booking) => booking.roomId == roomId);
     var roomName = _bookingController.getRoomNameById(roomId);
 
     //show a confirmation dialog

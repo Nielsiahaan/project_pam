@@ -4,12 +4,10 @@ import 'package:frontendapp/views/Mahasiswa/requestIB/requestIB_page.dart';
 import 'package:frontendapp/views/Mahasiswa/requestIK/requestik_page.dart';
 import 'package:frontendapp/views/Mahasiswa/requestSurat/surat_page.dart';
 import 'package:frontendapp/views/component/widget/drawer_widget.dart';
-import 'package:frontendapp/views/component/widget/menu_container.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -24,9 +22,9 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.grey[100],
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.teal,
         title: Text(
-          'Home',
+          'Dashboard Mahasiswa',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
@@ -50,15 +48,6 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Greetings row
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('Welcome to dashboard Mahasiswa',
-                      style: GoogleFonts.poppins(
-                          fontSize: 20, fontWeight: FontWeight.w500)),
-                ],
-              ),
               const SizedBox(height: 26),
               // Search bar
               Container(
@@ -97,9 +86,11 @@ class _HomePageState extends State<HomePage> {
                             Get.to(() => IzinKeluarPage());
                           },
                           child: Card(
+                            color: Colors.blue,
                             child: MenuContainer(
                               icon: Icons.exit_to_app,
                               title: 'Izin Keluar',
+                              textColor: Colors.white,
                             ),
                           ),
                         ),
@@ -111,9 +102,11 @@ class _HomePageState extends State<HomePage> {
                             Get.to(() => IzinBermalamPage());
                           },
                           child: Card(
+                            color: Colors.deepPurple,
                             child: MenuContainer(
                               icon: Icons.hotel,
                               title: 'Izin Bermalam',
+                              textColor: Colors.white,
                             ),
                           ),
                         ),
@@ -130,9 +123,11 @@ class _HomePageState extends State<HomePage> {
                             Get.to(() => SuratRequestPage());
                           },
                           child: Card(
+                            color: Colors.green,
                             child: MenuContainer(
                               icon: Icons.description,
                               title: 'Request Surat',
+                              textColor: Colors.white,
                             ),
                           ),
                         ),
@@ -144,9 +139,31 @@ class _HomePageState extends State<HomePage> {
                             Get.to(() => BookingRoomPage());
                           },
                           child: Card(
+                            color: Colors.orange,
                             child: MenuContainer(
                               icon: Icons.meeting_room,
                               title: 'Booking Room',
+                              textColor: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            // Get.to(() => ());
+                          },
+                          child: Card(
+                            color: Colors.teal,
+                            child: MenuContainer(
+                              icon: Icons.local_mall,
+                              title: 'Order T-shirt',
+                              textColor: Colors.white,
                             ),
                           ),
                         ),
@@ -159,7 +176,42 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      drawer: DrawerWidget(),
+      drawer: const DrawerWidget(),
+    );
+  }
+}
+
+class MenuContainer extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final Color textColor;
+
+  const MenuContainer({
+    required this.icon,
+    required this.title,
+    required this.textColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 120,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 32, color: textColor),
+          const SizedBox(height: 8),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: textColor,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
     );
   }
 }

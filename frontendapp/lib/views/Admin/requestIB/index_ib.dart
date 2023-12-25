@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:frontendapp/controllers/admin_controller.dart';
-import 'package:frontendapp/controllers/request_ik_controller.dart';
-import 'package:frontendapp/views/Mahasiswa/requestIK/detail_Ik.dart';
+import 'package:frontendapp/controllers/request_ib_controller.dart';
+import 'package:frontendapp/views/Mahasiswa/requestIB/detail_IB.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class IndexIzinKeluar extends StatelessWidget {
-  IndexIzinKeluar({Key? key}) : super(key: key);
+class IndexIzinBermalam extends StatelessWidget {
+  IndexIzinBermalam({Key? key}) : super(key: key);
 
-  final RequestIKController _requestIKController =
-      Get.put(RequestIKController());
+  final RequestIBController _requestIBController =
+      Get.put(RequestIBController());
   final AdminController _adminController = Get.put(AdminController());
 
   @override
@@ -18,7 +18,7 @@ class IndexIzinKeluar extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: Text(
-          'Index Izin Keluar',
+          'Index Izin Bermalam',
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -28,7 +28,7 @@ class IndexIzinKeluar extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Riwayat Izin Keluar',
+              'Riwayat Izin Bermalam',
               style: GoogleFonts.poppins(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -36,11 +36,11 @@ class IndexIzinKeluar extends StatelessWidget {
             ),
             SizedBox(height: 16),
             Obx(() {
-              if (_requestIKController.isLoading.value) {
+              if (_requestIBController.isLoading.value) {
                 return Center(child: CircularProgressIndicator());
-              } else if (_requestIKController.requestIK.isEmpty) {
+              } else if (_requestIBController.requestIB.isEmpty) {
                 return Center(
-                    child: Text('No izin keluar requests available.'));
+                    child: Text('No izin bermalam request available.'));
               } else {
                 return SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -48,21 +48,21 @@ class IndexIzinKeluar extends StatelessWidget {
                     columns: [
                       const DataColumn(label: Text('No')),
                       const DataColumn(label: Text('Nama Mahasiswa')),
-                      const DataColumn(label: Text('Alasan')),
+                      const DataColumn(label: Text('Keperluan IB')),
                       const DataColumn(label: Text('Status')),
                       const DataColumn(label: Text('Action')),
                     ],
                     rows: List<DataRow>.generate(
-                      _requestIKController.requestIK.length,
+                      _requestIBController.requestIB.length,
                       (index) {
-                        var requestik = _requestIKController.requestIK[index];
+                        var requestib = _requestIBController.requestIB[index];
 
                         return DataRow(
                           cells: [
                             DataCell(Text((index + 1).toString())),
                             DataCell(FutureBuilder<String>(
                               future: _adminController.getNamaMahasiswaFromId(
-                                  requestik.mahasiswaId),
+                                  requestib.mahasiswaId),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
@@ -74,8 +74,8 @@ class IndexIzinKeluar extends StatelessWidget {
                                 }
                               },
                             )),
-                            DataCell(Text(requestik.deskripsi)),
-                            DataCell(Text(requestik.status)),
+                            DataCell(Text(requestib.deskripsi)),
+                            DataCell(Text(requestib.status)),
                             DataCell(
                               Row(
                                 children: [
@@ -83,15 +83,15 @@ class IndexIzinKeluar extends StatelessWidget {
                                     icon: Icon(Icons.visibility),
                                     onPressed: () {
                                       Get.bottomSheet(
-                                          IzinKeluarDetailModal(
-                                              requestId: requestik.id),
+                                          IzinBermalamDetailModal(
+                                              requestId: requestib.id),
                                           isScrollControlled: true);
                                     },
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      _adminController.approveIK(
-                                          id: requestik.id);
+                                      _adminController.approveIB(
+                                          id: requestib.id);
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -109,8 +109,8 @@ class IndexIzinKeluar extends StatelessWidget {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      _adminController.rejectIK(
-                                          id: requestik.id);
+                                      _adminController.rejectIB(
+                                          id: requestib.id);
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(

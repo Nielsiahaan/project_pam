@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontendapp/controllers/admin_controller.dart';
 import 'package:frontendapp/controllers/request_surat_controller.dart';
-import 'package:frontendapp/views/Admin/requestSurat/modal_surat.dart';
+import 'package:frontendapp/views/Mahasiswa/requestSurat/surat_detail.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -82,7 +82,8 @@ class IndexSurat extends StatelessWidget {
                                     icon: Icon(Icons.visibility),
                                     onPressed: () {
                                       Get.bottomSheet(
-                                          SuratView(requestId: requestSurat.id),
+                                          SuratDetailModal(
+                                              requestId: requestSurat.id),
                                           isScrollControlled: true);
                                     },
                                   ),
