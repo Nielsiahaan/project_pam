@@ -24,21 +24,27 @@ class SuratRequestPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ElevatedButton(
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 Get.to(() => SuratFormPage());
               },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Center(
-                  child: Text(
-                    'Request Surat',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+              child: Ink(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: Colors.green,
+                ),
+                child: Container(
+                  padding: EdgeInsets.all(12.0),
+                  child: Center(
+                    child: Text(
+                      'Request Surat',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
               ),
             ),
             SizedBox(height: 24),

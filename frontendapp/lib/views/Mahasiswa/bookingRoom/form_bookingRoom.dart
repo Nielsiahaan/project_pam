@@ -18,71 +18,59 @@ class BookingForm extends StatelessWidget {
       appBar: AppBar(
         title: Text('Booking Form'),
       ),
-      body: ListView(
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  buildDateTimePicker(
-                    label: 'Start Date and Time',
-                    selectedDateTime: _selectedStartTime,
-                    onTap: () => _selectDateTime(context, true),
-                  ),
-                  SizedBox(height: 16.0),
-                  buildDateTimePicker(
-                    label: 'End Date and Time',
-                    selectedDateTime: _selectedEndTime,
-                    onTap: () => _selectDateTime(context, false),
-                  ),
-                  SizedBox(height: 16.0),
-                  buildRoomDropdown(),
-                  SizedBox(height: 16.0),
-                  buildDescriptionTextField(),
-                  SizedBox(height: 24.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            _bookingController.createBookingRoom(
-                              roomId: _bookingController.selectedRoomId.value,
-                              startTime: _selectedStartTime,
-                              endTime: _selectedEndTime,
-                              keterangan: _keteranganController.text,
-                            );
-                          }
-                        },
-                        child: Text('Submit', style: GoogleFonts.inter(fontSize: 16, color: Colors.white, ),),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                          padding: EdgeInsets.symmetric(
-                              vertical: 16.0, horizontal: 24.0),
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text('Cancel', style: GoogleFonts.inter(fontSize: 16, color: Colors.white, ),),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent,
-                          padding: EdgeInsets.symmetric(
-                              vertical: 16.0, horizontal: 24.0),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            children: [
+              buildDateTimePicker(
+                label: 'Start Date and Time',
+                selectedDateTime: _selectedStartTime,
+                onTap: () => _selectDateTime(context, true),
               ),
-            ),
+              SizedBox(height: 16.0),
+              buildDateTimePicker(
+                label: 'End Date and Time',
+                selectedDateTime: _selectedEndTime,
+                onTap: () => _selectDateTime(context, false),
+              ),
+              SizedBox(height: 16.0),
+              buildRoomDropdown(),
+              SizedBox(height: 16.0),
+              buildDescriptionTextField(),
+              SizedBox(height: 24.0),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    _bookingController.createBookingRoom(
+                      roomId: _bookingController.selectedRoomId.value,
+                      startTime: _selectedStartTime,
+                      endTime: _selectedEndTime,
+                      keterangan: _keteranganController.text,
+                    );
+
+                    // Provide feedback to the user (e.g., show a Snackbar)
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Booking created successfully!'),
+                      ),
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue,
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                ),
+                child: Text(
+                  'Buat Baru',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

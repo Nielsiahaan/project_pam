@@ -11,7 +11,6 @@ class SuratFormPage extends StatefulWidget {
 class _SuratFormPageState extends State<SuratFormPage> {
   final RequestSuratController _requestSuratController =
       Get.put(RequestSuratController());
-
   DateTime _selectedDate = DateTime.now();
   TextEditingController _kategoriSuratController = TextEditingController();
   TextEditingController _contentController = TextEditingController();
@@ -82,8 +81,7 @@ class _SuratFormPageState extends State<SuratFormPage> {
                 maxLines: 6,
                 decoration: InputDecoration(
                   labelText: 'Isi Surat',
-                  border:
-                      OutlineInputBorder(),
+                  border: OutlineInputBorder(),
                 ),
               ),
               SizedBox(height: 16),
