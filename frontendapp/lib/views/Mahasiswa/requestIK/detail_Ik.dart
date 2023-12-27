@@ -47,20 +47,24 @@ class IzinKeluarDetailModal extends StatelessWidget {
                     SizedBox(height: 16.0),
                     Text(
                       'Alasan: ${requestIKDetail.deskripsi}',
-                      style: TextStyle(fontSize: 16.0),
+                      style: TextStyle(fontSize: 15.0),
                     ),
                     SizedBox(
                       height: 8.0,
                     ),
                     Text(
-                        'Tanggal berangkat: ${DateFormat('yyyy-MM-dd HH:mm').format(requestIKDetail.tanggalBerangkat)}'),
+                      'Tanggal berangkat: ${DateFormat('yyyy-MM-dd HH:mm WIB').format(requestIKDetail.tanggalBerangkat)}',
+                      style: TextStyle(fontSize: 15.0),
+                    ),
                     SizedBox(height: 8.0),
                     Text(
-                        'Tanggal kembali: ${DateFormat('yyyy-MM-dd HH:mm').format(requestIKDetail.tanggalKembali)}'),
+                      'Tanggal kembali: ${DateFormat('yyyy-MM-dd HH:mm WIB').format(requestIKDetail.tanggalKembali)}',
+                      style: TextStyle(fontSize: 15.0),
+                    ),
                     SizedBox(height: 8.0),
                     Text(
                       'Status: ${requestIKDetail.status}',
-                      style: TextStyle(fontSize: 16.0),
+                      style: TextStyle(fontSize: 15.0),
                     ),
                     SizedBox(height: 16.0),
                     ElevatedButton(

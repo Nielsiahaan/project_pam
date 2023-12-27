@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:frontendapp/controllers/request_ik_controller.dart';
-import 'package:frontendapp/views/Admin/RequestIK/modal_IK.dart';
+import 'package:frontendapp/controllers/request_ib_controller.dart';
+import 'package:frontendapp/views/Admin/requestIB/modal_IB.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class IndexIzinKeluar extends StatelessWidget {
-  IndexIzinKeluar({Key? key}) : super(key: key);
+class IndexIzinBermalam extends StatelessWidget {
+  IndexIzinBermalam({Key? key}) : super(key: key);
 
-  final RequestIKController _requestIKController =
-      Get.put(RequestIKController());
+  final RequestIBController _requestIBController =
+      Get.put(RequestIBController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text(
-          'Index Izin Keluar',
+        title: const Text(
+          'Index Izin Bermalam',
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -26,19 +26,19 @@ class IndexIzinKeluar extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Riwayat Izin Keluar',
+              'Riwayat Izin Bermalam',
               style: GoogleFonts.poppins(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Obx(() {
-              if (_requestIKController.isLoading.value) {
-                return Center(child: CircularProgressIndicator());
-              } else if (_requestIKController.requestIK.isEmpty) {
-                return Center(
-                    child: Text('No izin keluar requests available.'));
+              if (_requestIBController.isLoading.value) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (_requestIBController.requestIB.isEmpty) {
+                return const Center(
+                    child: Text('No izin bermalam request available.'));
               } else {
                 return SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -49,24 +49,23 @@ class IndexIzinKeluar extends StatelessWidget {
                     columns: [
                       const DataColumn(label: Text('No'), numeric: true),
                       const DataColumn(label: Text('Status')),
-                      const DataColumn(label: Text('Detail Ruangan')),
+                      const DataColumn(label: Text('Detail IB')),
                     ],
                     rows: List<DataRow>.generate(
-                      _requestIKController.requestIK.length,
+                      _requestIBController.requestIB.length,
                       (index) {
-                        var requestik = _requestIKController.requestIK[index];
-
+                        var requestib = _requestIBController.requestIB[index];
                         return DataRow(
                           cells: [
                             DataCell(Text((index + 1).toString())),
-                            DataCell(Text(requestik.status)),
+                            DataCell(Text(requestib.status)),
                             DataCell(
                               Row(
                                 children: [
                                   ElevatedButton(
                                     onPressed: () {
                                       Get.bottomSheet(
-                                        IbView(requestId: requestik.id),
+                                        IbView(requestId: requestib.id),
                                         isScrollControlled: true,
                                       );
                                     },

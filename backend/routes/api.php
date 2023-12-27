@@ -1,15 +1,16 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminTshirtController;
 use App\Http\Controllers\Auth\MahasiswaController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Feed\FeedController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\IBRequestController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RequestIKController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SuratRequestController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('logout', [MahasiswaController::class, 'logout']);
 
+    // Routes Feed
     Route::post('feed/store', [FeedController::class, 'store']);
     Route::post('feed/like/{feed_id}', [FeedController::class, 'likePost']);
     Route::post('feed/comment/{feed_id}', [FeedController::class, 'comment']);
@@ -35,30 +37,39 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('approved_surat/{id}', [AdminController::class, 'approveSurat']);
     Route::put('rejected_surat/{id}', [AdminController::class, 'rejectSurat']);
 
-    //Route booking
+    //Routes booking room
     Route::get('bookings', [BookingController::class, 'index']);
     Route::post('booking/store/{room_id}', [BookingController::class, 'store']);
     Route::put('booking/cancel/{id}', [BookingController::class, 'cancel']);
+    Route::put('approved_room/{id}', [AdminController::class, 'approveBookingRoom']);
+    Route::put('rejected_room/{id}', [AdminController::class, 'rejectBookingRoom']);
 
-    //Route IK
+    //Routes IK
     Route::apiResource('requestIK', RequestIKController::class)->only(['index', 'store']);
     Route::put('requestIK/cancel/{id}', [RequestIKController::class, 'cancel']);
-    // Route::put('approve-status/{id}', [RequestIKController::class, 'approveStatus']);
-    // Route::put('reject-status/{id}', [RequestIKController::class, 'rejectStatus']);
+    Route::put('approved_ik/{id}', [AdminController::class, 'approveIK']);
+    Route::put('rejected_ik/{id}', [AdminController::class, 'rejectIK']);
 
-    //Route IB
+    //Routes IB
     Route::apiResource('requestIB', IBRequestController::class)->only(['index', 'store']);
     Route::put('requestIB/cancel/{id}', [IBRequestController::class, 'cancel']);
+    Route::put('approved_ib/{id}', [AdminController::class, 'approveIB']);
+    Route::put('rejected_ib/{id}', [AdminController::class, 'rejectIB']);
+
+    //Route t-shirt
+    Route::apiResource('tshirt', AdminTshirtController::class);
+    Route::get('tshirt-quantities', [OrderController::class, 'getTshirtQuantities']);
+
+    //Routes order t-shirt
+    Route::get('orders-tshirt', [OrderController::class, 'index']);
+    Route::post('orders-place/{tshirt_id}', [OrderController::class, 'placeOrder']);
+    Route::put('orders/cancel/{id}', [OrderController::class, 'cancelOrder']);
+
+    //Route payment t-shirt
+    Route::post('payments-make/{order_id}', [OrderController::class, 'makePayment']);
 });
 
-
-
-Route::get('/test', function () {
-    return response([
-        'message' => 'Api is working'
-    ], 200);
-});
-
+// Routes Authentication
 Route::post('register', [MahasiswaController::class, 'register']);
 Route::post('login', [MahasiswaController::class, 'login']);
 

@@ -77,7 +77,7 @@ class RequestSuratController extends GetxController {
           colorText: Colors.white,
         );
         // Refresh the list of surat requests after successful creation
-        getAllSuratRequest();
+       await getAllSuratRequest();
       } else {
         //Handle the error response
         Get.snackbar(

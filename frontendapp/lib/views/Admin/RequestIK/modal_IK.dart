@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:frontendapp/controllers/request_surat_controller.dart';
+import 'package:frontendapp/controllers/request_ik_controller.dart';
 import 'package:frontendapp/controllers/admin_controller.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class SuratView extends StatelessWidget {
+class IbView extends StatelessWidget {
   final int requestId;
 
-  SuratView({required this.requestId});
+  IbView({required this.requestId});
 
   @override
   Widget build(BuildContext context) {
     final AdminController _adminController = Get.put(AdminController());
 
-    return GetBuilder<RequestSuratController>(
+    return GetBuilder<RequestIKController>(
       builder: (controller) {
-        var requestSuratView = controller.requestSurat
-            .firstWhere((requestSurat) => requestSurat.id == requestId);
+        var requestIKView = controller.requestIK
+            .firstWhere((requestIk) => requestIk.id == requestId);
 
         return Center(
           child: Wrap(
@@ -41,7 +41,7 @@ class SuratView extends StatelessWidget {
                   children: [
                     const Center(
                       child: Text(
-                        'Detail Surat',
+                        'Detail IK',
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
@@ -54,12 +54,12 @@ class SuratView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Nama Mahasiswa        :   ',
+                          'Nama Mahasiswa     :   ',
                           style: TextStyle(fontSize: 15.0),
                         ),
                         FutureBuilder<String>(
                           future: _adminController.getNamaMahasiswaFromId(
-                              requestSuratView.mahasiswaId),
+                              requestIKView.mahasiswaId),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
@@ -78,22 +78,22 @@ class SuratView extends StatelessWidget {
                     ),
                     const SizedBox(height: 8.0),
                     Text(
-                      'Kategori Surat              :   ${requestSuratView.kategoriSurat}',
+                      'Keterangan                :   ${requestIKView.deskripsi}',
                       style: const TextStyle(fontSize: 15.0),
                     ),
                     const SizedBox(height: 8.0),
                     Text(
-                      'Keterangan                   :   ${requestSuratView.content}',
+                      'Tanggal Berangkat    :   ${DateFormat('yyyy-MM-dd HH:mm WIB').format(requestIKView.tanggalBerangkat)}',
                       style: const TextStyle(fontSize: 15.0),
                     ),
                     const SizedBox(height: 8.0),
                     Text(
-                      'Tanggal pengambilan  :   ${DateFormat('yyyy-MM-dd HH:mm').format(requestSuratView.tanggalPengambilan)}',
+                      'Tanggal Kembali       :   ${DateFormat('yyyy-MM-dd HH:mm WIB').format(requestIKView.tanggalKembali)}',
                       style: const TextStyle(fontSize: 15.0),
                     ),
                     const SizedBox(height: 8.0),
                     Text(
-                      'Status                            :   ${requestSuratView.status}',
+                      'Status                         :   ${requestIKView.status}',
                       style: const TextStyle(fontSize: 15.0),
                     ),
                     const SizedBox(height: 50.0),
@@ -103,8 +103,7 @@ class SuratView extends StatelessWidget {
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              _adminController.approveSurat(
-                                  id: requestSuratView.id);
+                              _adminController.approveIK(id: requestIKView.id);
                             },
                             style: ElevatedButton.styleFrom(
                               primary: Colors.green,
@@ -121,8 +120,7 @@ class SuratView extends StatelessWidget {
                           const SizedBox(width: 8.0),
                           ElevatedButton(
                             onPressed: () {
-                              _adminController.rejectSurat(
-                                  id: requestSuratView.id);
+                              _adminController.rejectIK(id: requestIKView.id);
                             },
                             style: ElevatedButton.styleFrom(
                               primary: Colors.red,

@@ -3,9 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontendapp/constants/constants.dart';
 import 'package:frontendapp/models/booking_model.dart';
-import 'package:frontendapp/models/room_model.dart'; // Import the room model if not already done
-import 'package:frontendapp/views/Mahasiswa/bookingRoom/booking_room_page.dart';
-
+import 'package:frontendapp/models/room_model.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
@@ -97,11 +95,12 @@ class BookingRoomController extends GetxController {
           body: data);
 
       if (response.statusCode == 201) {
-        Get.to(() => BookingRoomPage());
+        Get.back();
         Get.snackbar('Success', json.decode(response.body)['message'],
             snackPosition: SnackPosition.TOP,
             backgroundColor: Colors.green,
             colorText: Colors.white);
+        await getAllBooking();
       } else {
         Get.snackbar('Error', json.decode(response.body)['message'],
             snackPosition: SnackPosition.TOP,
@@ -162,44 +161,4 @@ class BookingRoomController extends GetxController {
       debugPrint(e.toString());
     }
   }
-
-  // Future<void> updateBooking({
-  //   required int bookingId,
-  //   required DateTime startTime,
-  //   required DateTime endTime,
-  //   required String keterangan,
-  // }) async {
-  //   try {
-  //     var data = {
-  //       'start_time': DateFormat('yyyy-MM-dd HH:mm:ss').format(startTime),
-  //       'end_time': DateFormat('yyyy-MM-dd HH:mm:ss').format(endTime),
-  //       'keterangan': keterangan,
-  //     };
-
-  //     var response = await http.put(
-  //       Uri.parse('${url}booking/update/$bookingId'),
-  //       headers: {
-  //         'Accept': 'Application/json',
-  //         'Authorization': 'Bearer ${box.read('token')}',
-  //       },
-  //       body: data,
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       Get.to(
-  //           () => BookingRoomPage()); // Navigate back to the booking list page
-  //       Get.snackbar('Success', json.decode(response.body)['message'],
-  //           snackPosition: SnackPosition.TOP,
-  //           backgroundColor: Colors.green,
-  //           colorText: Colors.white);
-  //     } else {
-  //       Get.snackbar('Error', json.decode(response.body)['message'],
-  //           snackPosition: SnackPosition.TOP,
-  //           backgroundColor: Colors.red[800],
-  //           colorText: Colors.white);
-  //     }
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //   }
-  // }
 }

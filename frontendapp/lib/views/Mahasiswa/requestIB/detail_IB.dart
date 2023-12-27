@@ -39,38 +39,42 @@ class IzinBermalamDetailModal extends StatelessWidget {
                     Text(
                       'Detail Izin Bermalam',
                       style: TextStyle(
-                        fontSize: 16.0,
+                        fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     Text(
                       'Alasan: ${requestIBDetail.deskripsi}',
-                      style: TextStyle(fontSize: 16.0),
+                      style: TextStyle(fontSize: 15.0),
                     ),
-                    SizedBox(height: 8.0),
+                    const SizedBox(height: 8.0),
                     Text(
                       'Tujuan: ${requestIBDetail.tujuan}',
-                      style: TextStyle(fontSize: 16.0),
+                      style: TextStyle(fontSize: 15.0),
                     ),
-                    SizedBox(height: 8.0),
+                    const SizedBox(height: 8.0),
                     Text(
-                        'Tanggal berangkat: ${DateFormat('yyyy-MM-dd HH:mm').format(requestIBDetail.tanggalBerangkat)}'),
-                    SizedBox(height: 8.0),
+                      'Tanggal berangkat: ${DateFormat('yyyy-MM-dd HH:mm WIB').format(requestIBDetail.tanggalBerangkat)}',
+                      style: TextStyle(fontSize: 15.0),
+                    ),
+                    const SizedBox(height: 8.0),
                     Text(
-                        'Tanggal kembali: ${DateFormat('yyyy-MM-dd HH:mm').format(requestIBDetail.tanggalKembali)}'),
-                    SizedBox(height: 8.0),
+                      'Tanggal kembali: ${DateFormat('yyyy-MM-dd HH:mm WIB').format(requestIBDetail.tanggalKembali)}',
+                      style: TextStyle(fontSize: 15.0),
+                    ),
+                    const SizedBox(height: 8.0),
                     Text(
                       'Status: ${requestIBDetail.status}',
-                      style: TextStyle(fontSize: 16.0),
+                      style: TextStyle(fontSize: 15.0),
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     ElevatedButton(
                       onPressed: () {
                         Get.back();
                       },
-                      child: Text('Close'),
+                      child: const Text('Close'),
                     ),
                   ],
                 ),

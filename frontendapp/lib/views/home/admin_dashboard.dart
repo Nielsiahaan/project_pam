@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:frontendapp/controllers/authentication.dart';
+import 'package:frontendapp/views/Admin/RequestIK/index_IK.dart';
+import 'package:frontendapp/views/Admin/bookingRoom/index.dart';
+import 'package:frontendapp/views/Admin/requestIB/index_ib.dart';
 import 'package:frontendapp/views/Admin/requestSurat/index_surat.dart';
 import 'package:frontendapp/views/Admin/room/index_room.dart';
-// import 'package:frontendapp/views/component/widget/drawer_widget_admin.dart';
-import 'package:frontendapp/views/component/widget/menu_container.dart';
+import 'package:frontendapp/views/Admin/tshirt/index_tshirt.dart';
+// import 'package:frontendapp/views/component/widget/drawer_widget.dart';
 import 'package:get/get.dart';
-// import 'package:google_fonts/google_fonts.dart';
-import 'package:frontendapp/controllers/authentication.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AdminDashboard extends StatefulWidget {
-  const AdminDashboard({Key? key}) : super(key: key);
+  const AdminDashboard({super.key});
 
   @override
   State<AdminDashboard> createState() => _AdminDashboardState();
@@ -18,20 +21,16 @@ class _AdminDashboardState extends State<AdminDashboard> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _authenticationController = Get.put(AuthenticationController());
 
-  Map<String, IconData> menuIcons = {
-    'Settings': Icons.settings,
-    'Sign Out': Icons.logout,
-  };
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.grey[200],
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Text(
-          'Welcome Admin',
+        backgroundColor: Colors.indigo,
+        title: const Text(
+          'Admin Dashboard',
           style: TextStyle(color: Colors.white),
         ),
         // leading: IconButton(
@@ -40,7 +39,15 @@ class _AdminDashboardState extends State<AdminDashboard> {
         //     _scaffoldKey.currentState?.openDrawer();
         //   },
         // ),
-        actions: [
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.notifications),
+        //     onPressed: () {
+        //       // Handle notifications
+        //     },
+        //   ),
+        // ],
+         actions: [
           Padding(
             padding: const EdgeInsets.only(
                 right: 16.0), // Adjust the right padding as needed
@@ -64,15 +71,18 @@ class _AdminDashboardState extends State<AdminDashboard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 20),
               // Greetings row
-              // Column(
-              //   crossAxisAlignment: CrossAxisAlignment.center,
-              //   children: [
-              //     Text('Welcome Admin',
-              //         style: GoogleFonts.poppins(
-              //             fontSize: 20, fontWeight: FontWeight.w500)),
-              //   ],
-              // ),
+              Center(
+                child: Text(
+                  'Welcome Admin',
+                  style: GoogleFonts.poppins(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.indigo,
+                  ),
+                ),
+              ),
               const SizedBox(height: 26),
               // Search bar
               Container(
@@ -100,80 +110,62 @@ class _AdminDashboardState extends State<AdminDashboard> {
               ),
               const SizedBox(height: 20),
               // Menu containers
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      // Fitur 1: CRUD Room
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            Get.to(() => IndexRoom());
-                          },
-                          child: Card(
-                            child: MenuContainer(
-                              icon: Icons.meeting_room_outlined,
-                              title: 'ROOM',
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Fitur 2: Izin Bermalam
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            // Get.to(() => IzinBermalamPage());
-                          },
-                          child: Card(
-                            child: MenuContainer(
-                              icon: Icons.hotel,
-                              title: 'Izin Bermalam',
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      // Fitur 3: Request Surat
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            Get.to(() => IndexSurat());
-                          },
-                          child: Card(
-                            child: MenuContainer(
-                              icon: Icons.description,
-                              title: 'Request Surat',
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Fitur 4: Booking Room
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            // Get.to(() => BookingRoomPage());
-                          },
-                          child: Card(
-                            child: MenuContainer(
-                              icon: Icons.room_outlined,
-                              title: 'Booking Room',
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  children: [
+                    buildMenuContainer(
+                      icon: Icons.meeting_room_outlined,
+                      title: 'ROOM',
+                      onTap: () {
+                        Get.to(() => IndexRoom());
+                      },
+                    ),
+                    buildMenuContainer(
+                      icon: Icons.room_outlined,
+                      title: 'Booking Room',
+                      onTap: () {
+                        Get.to(() => IndexBookingRoom());
+                      },
+                    ),
+                    buildMenuContainer(
+                      icon: Icons.exit_to_app,
+                      title: 'Izin Keluar',
+                      onTap: () {
+                        Get.to(() => IndexIzinKeluar());
+                      },
+                    ),
+                    buildMenuContainer(
+                      icon: Icons.hotel,
+                      title: 'Izin Bermalam',
+                      onTap: () {
+                        Get.to(() => IndexIzinBermalam());
+                      },
+                    ),
+                    buildMenuContainer(
+                      icon: Icons.description,
+                      title: 'Request Surat',
+                      onTap: () {
+                        Get.to(() => IndexSurat());
+                      },
+                    ),
+                    buildMenuContainer(
+                      icon: Icons.local_mall,
+                      title: 'Pesan Baju',
+                      onTap: () {
+                        Get.to(() => IndexTshirt());
+                      },
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
         ),
       ),
-      // drawer: DrawerWidgetAdmin(),
+      // drawer: const DrawerWidget(),
     );
   }
 
@@ -202,7 +194,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
               onTap: () {
                 // Handle Settings
                 Navigator.pop(context); // Close the dialog
-                _showUserInfo(); // Show user information dialog
+                _showMahasiswaInfo(); // Show user information dialog
               },
             ),
             ListTile(
@@ -220,7 +212,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
     );
   }
 
-  void _showUserInfo() {
+  void _showMahasiswaInfo() {
     // Create controllers for editing
     TextEditingController nameController =
         TextEditingController(text: "Daniel Siahaan");
@@ -283,7 +275,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
   }
 
   Future<void> _handleSettings() async {
-    _showUserInfo();
+    _showMahasiswaInfo();
   }
 
   Future<void> _handleSignOut() async {
@@ -304,5 +296,43 @@ class _AdminDashboardState extends State<AdminDashboard> {
       debugPrint('Error during logout: ${e.toString()}');
       Get.back();
     }
+  }
+
+  Widget buildMenuContainer({
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: 48,
+                color: Colors.indigo,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                title,
+                style: GoogleFonts.poppins(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.indigo,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

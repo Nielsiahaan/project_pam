@@ -118,7 +118,7 @@ class IzinBermalamPage extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    keperluan,
+                    "Alasan: ${keperluan}",
                     style: GoogleFonts.poppins(
                         fontSize: 14, fontWeight: FontWeight.w400),
                   ),
@@ -142,7 +142,7 @@ class IzinBermalamPage extends StatelessWidget {
                 ),
               ],
             ),
-            Text(tujuan,
+            Text("Tujuan: ${tujuan}",
                 style: GoogleFonts.poppins(
                     fontSize: 14, fontWeight: FontWeight.w400)),
           ],

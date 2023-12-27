@@ -75,7 +75,7 @@ class RoomController extends Controller
             $room = Room::findOrFail($roomId);
             $room->delete();
 
-            return response()->json(['message' => 'Room berhasil dihapus.']);
+            return response()->json(['message' => 'Room berhasil dihapus.'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Gagal menghapus ruangan.'], 500);
         }

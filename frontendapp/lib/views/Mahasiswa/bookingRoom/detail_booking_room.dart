@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:frontendapp/controllers/request_surat_controller.dart';
+import 'package:frontendapp/controllers/bookingRoom_controller.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-class SuratDetailModal extends StatelessWidget {
+class BookingRoomDetailModal extends StatelessWidget {
   final int requestId;
 
-  SuratDetailModal({required this.requestId});
+  BookingRoomDetailModal({required this.requestId});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RequestSuratController>(
+    return GetBuilder<BookingRoomController>(
       builder: (controller) {
-        var suratRequestDetail = controller.requestSurat
-            .firstWhere((suratRequest) => suratRequest.id == requestId);
-
+        var bookingRoomDetail = controller.bookingRoom
+            .firstWhere((bookingRoom) => bookingRoom.id == requestId);
+        var roomName = controller.getRoomNameById(bookingRoomDetail.id);
         return Center(
           child: Wrap(
             children: [
@@ -38,43 +37,44 @@ class SuratDetailModal extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Detail Request Surat',
+                      'Detail Pemesanan Ruangan',
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     Text(
-                      'Kategori Surat: ${suratRequestDetail.kategoriSurat}',
-                      style: GoogleFonts.poppins(
-                          fontSize: 15, fontWeight: FontWeight.w400),
+                      'Ruangan: ${roomName}',
+                      style: TextStyle(fontSize: 15.0),
                     ),
-                    SizedBox(height: 8.0),
+                    const SizedBox(height: 16.0),
                     Text(
-                      'Keterangan: ${suratRequestDetail.content}',
-                      style: GoogleFonts.poppins(
-                          fontSize: 15, fontWeight: FontWeight.w400),
+                      'Keterangan: ${bookingRoomDetail.keterangan}',
+                      style: TextStyle(fontSize: 15.0),
                     ),
-                    SizedBox(height: 8.0),
+                    const SizedBox(height: 8.0),
                     Text(
-                      'Tanggal Pengambilan: ${DateFormat('yyyy-MM-dd HH:mm WIB').format(suratRequestDetail.tanggalPengambilan)}',
-                      style: GoogleFonts.poppins(
-                          fontSize: 15, fontWeight: FontWeight.w400),
+                      'Waktu Mulai: ${DateFormat('yyyy-MM-dd HH:mm WIB').format(bookingRoomDetail.startTime)}',
+                      style: TextStyle(fontSize: 15.0),
                     ),
-                    SizedBox(height: 8.0),
+                    const SizedBox(height: 8.0),
                     Text(
-                      'Status: ${suratRequestDetail.status}',
-                      style: GoogleFonts.poppins(
-                          fontSize: 15, fontWeight: FontWeight.w400),
+                      'Waktu Berakhir: ${DateFormat('yyyy-MM-dd HH:mm WIB').format(bookingRoomDetail.endTime)}',
+                      style: TextStyle(fontSize: 15.0),
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 8.0),
+                    Text(
+                      'Status: ${bookingRoomDetail.status}',
+                      style: TextStyle(fontSize: 15.0),
+                    ),
+                    const SizedBox(height: 16.0),
                     ElevatedButton(
                       onPressed: () {
                         Get.back();
                       },
-                      child: Text('Close'),
+                      child: const Text('Close'),
                     ),
                   ],
                 ),
