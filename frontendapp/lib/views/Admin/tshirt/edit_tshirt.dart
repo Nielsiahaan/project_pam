@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontendapp/controllers/tshirt_controller.dart';
-import 'package:frontendapp/views/Admin/tshirt/create_tshirt.dart';
 import 'package:get/get.dart';
 
 class EditTshirtForm extends StatefulWidget {
@@ -17,7 +16,8 @@ class _EditTshirtFormState extends State<EditTshirtForm> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _priceController = TextEditingController();
   TextEditingController _quantityController = TextEditingController();
-  TshirtSize? _selectedSize;
+  String? _selectedSize = 'S';
+
   @override
   void initState() {
     super.initState();
@@ -26,7 +26,6 @@ class _EditTshirtFormState extends State<EditTshirtForm> {
 
   void _fetchTshirtDetails() async {
     try {
-      // Fetch details of the selected T-shirt using the provided tshirtId
       await _tshirtController.getTshirtDetails(widget.tshirtId);
 
       // Set the controller values to the values of the selected T-shirt
@@ -34,16 +33,13 @@ class _EditTshirtFormState extends State<EditTshirtForm> {
           _tshirtController.selectedTshirt.value.price.toString();
       _quantityController.text =
           _tshirtController.selectedTshirt.value.quantity.toString();
-      _selectedSize =
-          stringToTshirtSize(_tshirtController.selectedTshirt.value.size);
+      _selectedSize = _tshirtController.selectedTshirt.value.size;
+
+      // Ensure to trigger a rebuild after fetching the T-shirt details
+      setState(() {});
     } catch (e) {
       debugPrint(e.toString());
     }
-  }
-
-  TshirtSize stringToTshirtSize(String sizeString) {
-    return TshirtSize.values
-        .firstWhere((e) => e.toString().split('.').last == sizeString);
   }
 
   @override
@@ -63,28 +59,42 @@ class _EditTshirtFormState extends State<EditTshirtForm> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  DropdownButtonFormField<TshirtSize>(
+                  DropdownButtonFormField<String>(
+                    key: UniqueKey(),
                     value: _selectedSize,
-                    onChanged: (TshirtSize? newValue) {
+                    onChanged: (String? newValue) {
                       if (newValue != null) {
                         setState(() {
                           _selectedSize = newValue;
                         });
                       }
                     },
-                    items: TshirtSize.values
-                        .map((size) => DropdownMenuItem<TshirtSize>(
+                    items: ['S', 'M', 'L', 'XL', 'XXL']
+                        .map((size) => DropdownMenuItem<String>(
                               value: size,
-                              child: Text(size.toString().split('.').last),
+                              child: Text(size),
                             ))
                         .toList(),
-                    decoration: InputDecoration(labelText: 'Size'),
+                    decoration: InputDecoration(
+                      labelText: 'Size',
+                      // set value enable to be _selectedSize
+                      enabled: _selectedSize == _selectedSize,
+                    ),
                     validator: (value) {
-                      if (value == null) {
+                      if (_selectedSize == null) {
                         return 'Please select the size';
                       }
                       return null;
                     },
+                    onTap: () {
+                      // Set value to be _selectedSize to disable the dropdown
+                      if (_selectedSize != null) {
+                        setState(() {
+                          _selectedSize = _selectedSize;
+                        });
+                      }
+                    },
+                    disabledHint: Text('Size: $_selectedSize'),
                   ),
                   TextFormField(
                     controller: _priceController,
@@ -134,43 +144,20 @@ class _EditTshirtFormState extends State<EditTshirtForm> {
       // Check if quantity is a valid integer
       var quantityText = _quantityController.text.trim();
       if (!RegExp(r'^[0-9]+$').hasMatch(quantityText)) {
-       
         print('Invalid quantity format');
         return;
       }
 
       var quantity = int.parse(quantityText);
 
-      var result = await _tshirtController.updateTshirt(
+      await _tshirtController.updateTshirt(
         id: widget.tshirtId,
-        size: _selectedSize!.toString().split('.').last,
+        size: _selectedSize!,
         price: price!,
         quantity: quantity,
       );
-
-      if (result != null) {
-        Get.snackbar(
-          'Success',
-          'T-shirt updated successfully',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
-
-        Get.back();
-      } else {
-        Get.back();
-        Get.snackbar(
-          'Error',
-          'Failed to update T-shirt',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red[800],
-          colorText: Colors.white,
-        );
-        await _tshirtController.getAllTshirt();
-      }
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     }
   }
 }

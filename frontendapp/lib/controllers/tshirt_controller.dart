@@ -16,7 +16,7 @@ class TshirtController extends GetxController {
   Rx<TshirtModel> selectedTshirt = TshirtModel(
     id: 0,
     size: '',
-    price: 0.0,
+    price: '',
     quantity: 0,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
@@ -97,61 +97,7 @@ class TshirtController extends GetxController {
     }
   }
 
-  // Future updateTshirt({
-  //   required id,
-  //   required TshirtSize size,
-  //   required double price,
-  //   required int quantity,
-  // }) async {
-  //   try {
-  //     isLoading.value = true;
-  //     var data = {
-  //       "size": size.toString().split('.').last,
-  //       "price": price.toString(),
-  //       "quantity": quantity.toString(),
-  //     };
-  //     var response = await http.put(
-  //       Uri.parse('${url}tshirt/$id'),
-  //       headers: {
-  //         'Accept': 'application/json',
-  //         'Authorization': "Bearer ${box.read('token')}",
-  //       },
-  //       body: data,
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       var updatedTshirt =
-  //           TshirtModel.fromJson(json.decode(response.body)['data']);
-  //       var index =
-  //           tshirts.indexWhere((tshirt) => tshirt.id == updatedTshirt.id);
-  //       if (index != -1) {
-  //         tshirts[index] = updatedTshirt;
-  //       }
-
-  //       isLoading.value = false;
-  //       selectedTshirt.value = updatedTshirt;
-  //       Get.back();
-  //       // Get.snackbar(
-  //       //   'Success',
-  //       //   json.decode(response.body)['message'],
-  //       //   snackPosition: SnackPosition.TOP,
-  //       //   backgroundColor: Colors.green,
-  //       //   colorText: Colors.white,
-  //       // );
-  //       await getAllTshirt();
-  //     } else {
-  //       isLoading.value = false;
-  //       Get.back();
-  //       debugPrint(json.decode(response.body));
-  //       await getAllTshirt();
-  //     }
-  //   } catch (e) {
-  //     isLoading.value = false;
-  //     debugPrint(e.toString());
-  //   }
-  // }
-
-   Future<TshirtModel?> updateTshirt({
+  Future updateTshirt({
     required int id,
     required String size,
     required double price,
@@ -159,7 +105,6 @@ class TshirtController extends GetxController {
   }) async {
     try {
       isLoading.value = true;
-
       var data = {
         "size": size,
         "price": price.toString(),
@@ -170,97 +115,37 @@ class TshirtController extends GetxController {
         Uri.parse('${url}tshirt/$id'),
         headers: {
           'Accept': 'application/json',
-          'Authorization': "Bearer ${box.read('token')}",
+          'Authorization': 'Bearer ${box.read('token')}',
         },
         body: data,
       );
 
       if (response.statusCode == 200) {
-        var updatedTshirt = TshirtModel.fromJson(json.decode(response.body)['data']);
-
-        // Assuming you have a list of tshirts and a selectedTshirt variable
-        var index = tshirts.indexWhere((tshirt) => tshirt.id == updatedTshirt.id);
-        if (index != -1) {
-          tshirts[index] = updatedTshirt;
-        }
-
+        Get.off(() => IndexTshirt());
         isLoading.value = false;
-        selectedTshirt.value = updatedTshirt;
-        Get.back();
+        Get.snackbar(
+          'Success',
+          json.decode(response.body)['message'],
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
         await getAllTshirt();
-
-        return updatedTshirt;
       } else {
         isLoading.value = false;
-        Get.back();
-        debugPrint(json.decode(response.body));
-        await getAllTshirt();
-        return null;
+        Get.snackbar(
+          'Error',
+          json.decode(response.body)['message'],
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red[800],
+          colorText: Colors.white,
+        );
       }
     } catch (e) {
-      isLoading.value = false;
+      isLoading(false);
       debugPrint(e.toString());
-      return null;
     }
   }
-  // Future updateTshirt({
-  //   required int id,
-  //   required TshirtSize size,
-  //   required double price,
-  //   required int quantity,
-  // }) async {
-  //   try {
-  //     isLoading.value = true;
-
-  //     var data = {
-  //       "size": size.toString().split('.').last,
-  //       "price": price,
-  //       "quantity": quantity,
-  //     };
-
-  //     var response = await http.put(
-  //       Uri.parse('${url}tshirt/$id'),
-  //       headers: {
-  //         'Accept': 'application/json',
-  //         'Authorization': "Bearer ${box.read('token')}",
-  //         'Content-Type': 'application/json', // Set content type to JSON
-  //       },
-  //       body: jsonEncode(data), // Encode the data as JSON
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       var updatedTshirt =
-  //           TshirtModel.fromJson(json.decode(response.body)['data']);
-  //       var index =
-  //           tshirts.indexWhere((tshirt) => tshirt.id == updatedTshirt.id);
-
-  //       if (index != -1) {
-  //         tshirts[index] = updatedTshirt;
-  //       }
-
-  //       isLoading.value = false;
-  //       selectedTshirt.value = updatedTshirt;
-  //       Get.back();
-  //       Get.snackbar(
-  //         'Success',
-  //         json.decode(response.body)['message'],
-  //         snackPosition: SnackPosition.TOP,
-  //         backgroundColor: Colors.green,
-  //         colorText: Colors.white,
-  //       );
-  //       await getAllTshirt();
-  //     } else {
-  //       isLoading.value = false;
-  //       Get.back();
-  //       debugPrint(json.decode(response.body));
-  //       // Handle error
-  //       await getAllTshirt();
-  //     }
-  //   } catch (e) {
-  //     isLoading.value = false;
-  //     debugPrint(e.toString());
-  //   }
-  // }
 
   Future deleteTshirt({required int id}) async {
     try {

@@ -15,7 +15,20 @@ class AdminTshirtController extends Controller
         $tshirts = Tshirt::latest()->get();
         return response(['data' => $tshirts], 200);
     }
+    public function show($id)
+    {
+        try {
+            $tshirt = Tshirt::findOrFail($id);
 
+            if (!$tshirt) {
+                return response()->json(['message' => 'T-shirt not found'], JsonResponse::HTTP_NOT_FOUND);
+            }
+
+            return response()->json(['message' => 'T-shirt details retrieved successfully', 'data' => $tshirt], JsonResponse::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to retrieve T-shirt details.'], 500);
+        }
+    }
     public function store(TshirtRequest $request)
     {
         try {

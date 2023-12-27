@@ -80,7 +80,8 @@ class IndexTshirt extends StatelessWidget {
                               IconButton(
                                 icon: Icon(Icons.edit),
                                 onPressed: () {
-                                  Get.to(() => EditTshirtForm(tshirtId: tshirt.id));
+                                  Get.to(() =>
+                                      EditTshirtForm(tshirtId: tshirt.id));
                                 },
                               ),
                               IconButton(

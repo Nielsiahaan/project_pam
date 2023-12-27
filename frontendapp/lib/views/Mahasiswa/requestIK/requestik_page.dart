@@ -34,8 +34,8 @@ class IzinKeluarPage extends StatelessWidget {
                   color: Colors.green,
                 ),
                 child: Container(
-                  padding: EdgeInsets.all(12.0),
-                  child: Center(
+                  padding: const EdgeInsets.all(12.0),
+                  child: const Center(
                     child: Text(
                       'Request Izin Keluar',
                       style: TextStyle(
@@ -49,7 +49,7 @@ class IzinKeluarPage extends StatelessWidget {
             ),
             SizedBox(height: 16.0),
             Text(
-              'History Izin Keluar',
+              'Riwayat Izin Keluar',
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8.0),
@@ -112,9 +112,9 @@ class IzinKeluarPage extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    keperluan,
+                    "Alasan: ${keperluan}",
                     style: GoogleFonts.poppins(
-                        fontSize: 13, fontWeight: FontWeight.w400),
+                        fontSize: 14, fontWeight: FontWeight.w400),
                   ),
                 ),
                 PopupMenuButton<String>(
@@ -138,7 +138,9 @@ class IzinKeluarPage extends StatelessWidget {
             ),
           ],
         ),
-        subtitle: Text('Status Request: $status'),
+        subtitle: Text('Status: $status',
+            style:
+                GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w400)),
       ),
     );
   }
@@ -160,8 +162,8 @@ class IzinKeluarPage extends StatelessWidget {
 
   void cancelRequestIK(int requestId) {
     Get.defaultDialog(
-      title: 'Cancel Izin Bermalam',
-      middleText: 'Are you sure you want to cancel the Request IB?',
+      title: 'Cancel Izin keluar',
+      middleText: 'Are you sure you want to cancel the Request IK?',
       textCancel: 'No',
       textConfirm: 'Yes',
       confirmTextColor: Colors.white,

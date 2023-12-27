@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontendapp/constants/constants.dart';
 import 'package:frontendapp/models/requestIK_model.dart';
-import 'package:frontendapp/views/Mahasiswa/requestIK/requestik_page.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
@@ -29,6 +28,7 @@ class RequestIKController extends GetxController {
         'Authorization': 'Bearer ${box.read('token')}',
       });
 
+      //
       if (response.statusCode == 200) {
         isLoading.value = false;
         var requestIKList = (json.decode(response.body)['requestIk'] as List)
@@ -37,7 +37,7 @@ class RequestIKController extends GetxController {
         requestIK.assignAll(requestIKList);
       } else {
         isLoading.value = false;
-        debugPrint(json.decode(response.body).toString());
+        debugPrint('Error: ${json.decode(response.body)}');
       }
     } catch (e) {
       isLoading.value = false;
@@ -68,7 +68,7 @@ class RequestIKController extends GetxController {
       );
 
       if (response.statusCode == 201) {
-        Get.off(() => IzinKeluarPage());
+        Get.back();
         Get.snackbar(
           'Success',
           json.decode(response.body)['message'],
@@ -76,8 +76,8 @@ class RequestIKController extends GetxController {
           backgroundColor: Colors.green,
           colorText: Colors.white,
         );
+        await getAllRequestIK();
       } else {
-        // Handle the error response
         Get.snackbar(
           'Error',
           json.decode(response.body)['message'],
@@ -116,6 +116,7 @@ class RequestIKController extends GetxController {
               snackPosition: SnackPosition.TOP,
               backgroundColor: Colors.red[800],
               colorText: Colors.white);
+          await getAllRequestIK();
         }
       } else {
         Get.snackbar(

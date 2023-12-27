@@ -59,7 +59,7 @@ class IndexBookingRoom extends StatelessWidget {
                         var bookingRoom =
                             _bookingRoomController.bookingRoom[index];
                         String roomName = _bookingRoomController
-                            .getRoomNameById(bookingRoom.id);
+                            .getRoomNameById(bookingRoom.roomId);
                         return DataRow(
                           cells: [
                             DataCell(Text((index + 1).toString())),

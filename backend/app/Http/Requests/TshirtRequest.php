@@ -22,7 +22,7 @@ class TshirtRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'size' => 'required|in:S,M,L,XL,XXL',
+            'size' => 'required|in:S,M,L,XL,XXL|unique:tshirts',
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|numeric|min:0',
         ];

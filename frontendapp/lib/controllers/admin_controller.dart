@@ -48,7 +48,7 @@ class AdminController extends GetxController {
       return 'Unknown';
     }
   }
-  
+
   // Update Status Surat
   Future approveSurat({required int id}) async {
     await _updateStatusSurat(id: id, status: 'approved');
@@ -60,13 +60,16 @@ class AdminController extends GetxController {
 
   Future _updateStatusSurat({required int id, required String status}) async {
     try {
-      var response =
-          await http.put(Uri.parse('${url}${status}_surat/$id'), headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ${box.read('token')}',
-      });
+      var response = await http.put(
+        Uri.parse('${url}${status}_surat/$id'),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${box.read('token')}',
+        },
+      );
 
       if (response.statusCode == 200) {
+       
         Get.snackbar(
           'Success',
           json.decode(response.body)['message'],
@@ -74,8 +77,10 @@ class AdminController extends GetxController {
           backgroundColor: Colors.green,
           colorText: Colors.white,
         );
+
         await _requestSuratController.getAllSuratRequest();
       } else {
+       
         Get.snackbar(
           'Error',
           json.decode(response.body)['message'],
@@ -83,6 +88,7 @@ class AdminController extends GetxController {
           backgroundColor: Colors.red[800],
           colorText: Colors.white,
         );
+        await _requestSuratController.getAllSuratRequest();
       }
     } catch (e) {
       debugPrint(e.toString());
@@ -114,6 +120,7 @@ class AdminController extends GetxController {
           backgroundColor: Colors.green,
           colorText: Colors.white,
         );
+
         await _requestIKController.getAllRequestIK();
       } else {
         Get.snackbar(
@@ -123,6 +130,7 @@ class AdminController extends GetxController {
           backgroundColor: Colors.red[800],
           colorText: Colors.white,
         );
+        await _requestIKController.getAllRequestIK();
       }
     } catch (e) {
       debugPrint(e.toString());
@@ -162,6 +170,7 @@ class AdminController extends GetxController {
           backgroundColor: Colors.red[800],
           colorText: Colors.white,
         );
+        await _requestIBController.getAllRequestIB();
       }
     } catch (e) {
       debugPrint(e.toString());

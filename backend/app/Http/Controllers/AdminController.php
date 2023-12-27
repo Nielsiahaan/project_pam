@@ -79,7 +79,7 @@ class AdminController extends Controller
             // Update the status
             $ikRequest->update(['status' => $status]);
 
-            return response()->json(['message', "Surat request's status successfully updated to '$status'."], 200);
+            return response()->json(['message' => "Surat request's status successfully updated to '$status'."], 200);
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Failed to update Surat request status.', 'error' => $th->getMessage()], 500);
         }
@@ -108,7 +108,7 @@ class AdminController extends Controller
             // Update the status
             $ibRequest->update(['status' => $status]);
 
-            return response()->json(['message', "Izin bermalam status successfully updated to '$status'."], 200);
+            return response()->json(['message' => "Izin bermalam status successfully updated to '$status'."], 200);
         } catch (\Throwable $th) {
 
             return response()->json(['message' => 'Failed to update Izin bermalam status.', 'error' => $th->getMessage()], 500);
@@ -138,7 +138,7 @@ class AdminController extends Controller
             $bookingRoom->update([
                 'status' => $status
             ]);
-            return response()->json(['message', "Booking status successfully updated to '$status'."], 200);
+            return response()->json(['message' => "Booking status successfully updated to '$status'."], 200);
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Failed to update booking room status.', 'error' => $th->getMessage()], 500);
         }

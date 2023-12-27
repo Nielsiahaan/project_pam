@@ -11,6 +11,7 @@ class IndexSurat extends StatelessWidget {
   final RequestSuratController _requestSuratController =
       Get.put(RequestSuratController());
   final AdminController _adminController = Get.put(AdminController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -170,7 +170,10 @@ class BookingRoomPage extends StatelessWidget {
   void handlePopupMenuSelection(String value, int roomId) {
     switch (value) {
       case 'view':
-        BookingRoomDetailModal(requestId: roomId);
+        Get.bottomSheet(
+          BookingRoomDetailModal(requestId: roomId),
+           isScrollControlled: true,
+        );
         break;
       case 'batal':
         cancelBooking(roomId);

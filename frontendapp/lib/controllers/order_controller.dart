@@ -15,9 +15,6 @@ class OrderController extends GetxController {
   RxList<OrderModel> orders = RxList<OrderModel>();
   RxList<TshirtModel> tshirts = RxList<TshirtModel>();
 
-  // Enum getSizeTshirtById(int tshirtId){
-
-  // }
   @override
   void onInit() {
     super.onInit();
@@ -33,7 +30,7 @@ class OrderController extends GetxController {
       });
 
       if (response.statusCode == 200) {
-        var tshirtList = (json.decode(response.body)['tshirts'] as List)
+        var tshirtList = (json.decode(response.body)['data'] as List)
             .map((item) => TshirtModel.fromJson(item))
             .toList();
         tshirts.assignAll(tshirtList);
