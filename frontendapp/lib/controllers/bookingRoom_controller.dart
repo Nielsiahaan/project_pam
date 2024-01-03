@@ -65,7 +65,7 @@ class BookingRoomController extends GetxController {
         bookingRoom.assignAll(bookingRoomList);
       } else {
         isLoading.value = false;
-        debugPrint(json.decode(response.body));
+        debugPrint(json.decode(response.body).toString());
       }
     } catch (e) {
       isLoading.value = false;

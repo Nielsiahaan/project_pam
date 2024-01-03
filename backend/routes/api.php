@@ -58,20 +58,25 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //Route t-shirt
     Route::apiResource('tshirt', AdminTshirtController::class);
+    Route::post('add-to-cart', [AdminTshirtController::class, 'addToCart']);
+    Route::get('get-cart', [AdminTshirtController::class, 'getCart']);
     Route::get('tshirt-quantities', [OrderController::class, 'getTshirtQuantities']);
+
 
     //Routes order t-shirt
     Route::get('orders-tshirt', [OrderController::class, 'index']);
-    Route::post('orders-place/{tshirt_id}', [OrderController::class, 'placeOrder']);
     Route::put('orders/cancel/{id}', [OrderController::class, 'cancelOrder']);
 
-    //Route payment t-shirt
-    Route::post('payments-make/{order_id}', [OrderController::class, 'makePayment']);
+    //Route OrderAndPayment
+    Route::post('place-order-and-make-payment/{tshirt_id}', [OrderController::class, 'placeOrderAndMakePayment']);
 });
 
 // Routes Authentication
 Route::post('register', [MahasiswaController::class, 'register']);
 Route::post('login', [MahasiswaController::class, 'login']);
+Route::post('forgot-password', [MahasiswaController::class, 'forgotPassword']);
+Route::post('reset-password', [MahasiswaController::class, 'resetPassword']);
+
 
 Route::controller(GoogleController::class)->group(function () {
     Route::get('auth/google', 'redirectToGoogle')->name('auth.google');

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontendapp/views/Mahasiswa/order_tshirt.dart/avaiable_tshirt_page.dart';
 import 'package:frontendapp/views/feed/feed_page.dart';
-// import 'package:frontendapp/views/home/feed/feed_page.dart';
 import 'package:frontendapp/constants/icons.dart';
 import 'package:frontendapp/constants/color.dart';
 import 'package:frontendapp/constants/size.dart';
@@ -15,10 +15,10 @@ class BasePage extends StatefulWidget {
 
 class _BasePageState extends State<BasePage> {
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = [
-    HomePage(),
-    FeedPage(),
-    FeedPage(),
+  static List<Widget> _widgetOptions = [
+    const HomePage(),
+    const FeedPage(),
+    OrderPage(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -43,17 +43,6 @@ class _BasePageState extends State<BasePage> {
               ),
               label: "Home",
             ),
-            // BottomNavigationBarItem(
-            //   activeIcon: Image.asset(
-            //     icLearning,
-            //     height: kBottomNavigationBarItemSize,
-            //   ),
-            //   icon: Image.asset(
-            //     icLearningOutlined,
-            //     height: kBottomNavigationBarItemSize,
-            //   ),
-            //   label: "My Learning",
-            // ),
             BottomNavigationBarItem(
               activeIcon: Image.asset(
                 icWishlist,
@@ -65,17 +54,17 @@ class _BasePageState extends State<BasePage> {
               ),
               label: "Wishlist",
             ),
-            BottomNavigationBarItem(
-              activeIcon: Image.asset(
-                icSetting,
-                height: kBottomNavigationBarItemSize,
+            const BottomNavigationBarItem(
+              activeIcon: Icon(
+                Icons.local_mall,
+                size: kBottomNavigationBarItemSize,
               ),
-              icon: Image.asset(
-                icSettingOutlined,
-                height: kBottomNavigationBarItemSize,
+              icon: Icon(
+                Icons.local_mall_outlined,
+                size: kBottomNavigationBarItemSize,
               ),
-              label: "Settings",
-            ),
+              label: 'Order T-shirt',
+            )
           ],
           currentIndex: _selectedIndex,
           onTap: (int index) {

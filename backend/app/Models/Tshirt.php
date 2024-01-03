@@ -14,10 +14,11 @@ class Tshirt extends Model
         'size', 'price', 'quantity',
     ];
 
-    public function orders(): HasMany
+    public function orderItem(): HasMany
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(OrderItem::class);
     }
+
     public static function updateQuantity($size, $price, $quantity)
     {
         $tshirt = self::where('size', $size)

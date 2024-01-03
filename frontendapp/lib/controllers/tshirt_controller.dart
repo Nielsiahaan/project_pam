@@ -41,7 +41,7 @@ class TshirtController extends GetxController {
             .toList();
         tshirts.assignAll(tshirtList);
       } else {
-        debugPrint(json.decode(response.body));
+        debugPrint(json.decode(response.body).toString());
       }
     } catch (e) {
       debugPrint(e.toString());

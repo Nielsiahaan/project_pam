@@ -6,6 +6,7 @@ use App\Http\Requests\BookingRequest;
 use App\Models\Booking;
 use App\Models\IBRequest;
 use App\Models\Mahasiswa;
+use App\Models\OrderItem;
 use App\Models\RequestIK;
 use App\Models\SuratRequest;
 use Psy\CodeCleaner\FunctionContextPass;
@@ -57,6 +58,7 @@ class AdminController extends Controller
 
 
     // update status request surat
+
 
     public function approveSurat($id)
     {
@@ -143,4 +145,15 @@ class AdminController extends Controller
             return response()->json(['message' => 'Failed to update booking room status.', 'error' => $th->getMessage()], 500);
         }
     }
+
+    public function approveOrderItem(int $orderItemId)
+    {
+        $orderItem = OrderItem::findOrFail($orderItemId);
+
+        // Lakukan logika approval
+        // Misalnya, set status menjadi 'Sukses' setelah melihat bukti pembayaran
+
+        $orderItem->setStatus('Sukses');
+    }
+
 }

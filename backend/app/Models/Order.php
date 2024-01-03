@@ -5,24 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
     use HasFactory;
-    protected $fillable = ['mahasiswa_id', 'tshirt_id', 'selected_size', 'quantity', 'total_price'];
 
-    public function tshirt(): BelongsTo
+    protected $fillable = ['mahasiswa_id', 'total_price'];
+
+    public function orderItem(): HasMany
     {
-        return $this->belongsTo(Tshirt::class);
+        return $this->hasMany(OrderItem::class);
     }
 
-    public function payment(): HasOne
+    public function mahasiswa(): BelongsTo
     {
-        return $this->hasOne(Payment::class);
-    }
-
-    public function mahasiswa(): BelongsTo{
         return $this->belongsTo(Mahasiswa::class, 'mahasiswa_id');
     }
 }

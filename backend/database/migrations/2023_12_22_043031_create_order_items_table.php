@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('order_items', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('mahasiswa_id');
-            $table->foreign('mahasiswa_id')->references('id')->on('mahasiswas');
+            $table->unsignedBigInteger('order_id');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->unsignedBigInteger('tshirt_id');
-            $table->foreign('tshirt_id')->references('id')->on('tshirts');
+            $table->foreign('tshirt_id')->references('id')->on('tshirts')->onDelete('cascade');
             $table->string('selected_size');
             $table->integer('quantity');
-            $table->decimal('total_price');
+            $table->enum('status', ['Belum bayar', 'Sukses', 'Gagal', 'Canceled'])->default('Belum bayar');
+            $table->string('proof_of_payment')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('order_items');
     }
 };

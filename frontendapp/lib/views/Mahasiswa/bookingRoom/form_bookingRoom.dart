@@ -4,12 +4,20 @@ import 'package:frontendapp/controllers/bookingRoom_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-class BookingForm extends StatelessWidget {
+class BookingForm extends StatefulWidget {
+  @override
+  State<BookingForm> createState() => _BookingFormState();
+}
+
+class _BookingFormState extends State<BookingForm> {
   final BookingRoomController _bookingController = Get.find();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final TextEditingController _keteranganController = TextEditingController();
+
   DateTime _selectedStartTime = DateTime.now();
+
   DateTime _selectedEndTime = DateTime.now().add(Duration(hours: 2));
 
   @override

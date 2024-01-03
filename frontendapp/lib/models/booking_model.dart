@@ -1,5 +1,3 @@
-import 'package:frontendapp/models/mahasiswa_model.dart';
-
 class BookingRoomModel {
   int id;
   int mahasiswaId;
@@ -10,7 +8,6 @@ class BookingRoomModel {
   String keterangan;
   DateTime createdAt;
   DateTime updatedAt;
-  Mahasiswa mahasiswa;
 
   BookingRoomModel({
     required this.id,
@@ -22,10 +19,10 @@ class BookingRoomModel {
     required this.keterangan,
     required this.createdAt,
     required this.updatedAt,
-    required this.mahasiswa,
   });
 
-  factory BookingRoomModel.fromJson(Map<String, dynamic> json) => BookingRoomModel(
+  factory BookingRoomModel.fromJson(Map<String, dynamic> json) =>
+      BookingRoomModel(
         id: json["id"],
         mahasiswaId: json["mahasiswa_id"],
         roomId: json["room_id"],
@@ -35,7 +32,6 @@ class BookingRoomModel {
         keterangan: json["keterangan"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        mahasiswa: Mahasiswa.fromJson(json["mahasiswa"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -49,6 +45,5 @@ class BookingRoomModel {
         "keterangan": keterangan,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
-        "mahasiswa": mahasiswa.toJson(),
       };
 }
