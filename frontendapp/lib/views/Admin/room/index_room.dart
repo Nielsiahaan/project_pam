@@ -14,6 +14,7 @@ class IndexRoom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.indigo[600],
         title: Text(
           'Index Room',
           style: TextStyle(color: Colors.white),
@@ -38,7 +39,7 @@ class IndexRoom extends StatelessWidget {
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue[600],
+                backgroundColor: Colors.blue[800],
               ),
             ),
             SizedBox(height: 24),
@@ -73,7 +74,8 @@ class IndexRoom extends StatelessWidget {
                               IconButton(
                                 icon: Icon(Icons.edit),
                                 onPressed: () {
-                                 Get.to(() => UpdateRoomPage(roomId: room.id!));
+                                  Get.to(
+                                      () => UpdateRoomPage(roomId: room.id!));
                                 },
                               ),
                               IconButton(

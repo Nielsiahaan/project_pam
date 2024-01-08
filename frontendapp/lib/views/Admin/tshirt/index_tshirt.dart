@@ -14,7 +14,7 @@ class IndexTshirt extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue[600],
+        backgroundColor: Colors.indigo[600],
         title: const Text(
           'T-shirt List',
           style: TextStyle(color: Colors.white),
@@ -39,7 +39,7 @@ class IndexTshirt extends StatelessWidget {
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue[600],
+                backgroundColor: Colors.blue[800],
               ),
             ),
             SizedBox(height: 24),

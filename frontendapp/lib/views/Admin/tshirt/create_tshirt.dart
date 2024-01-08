@@ -21,8 +21,11 @@ class _CreateTshirtFormState extends State<CreateTshirtForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create T-shirt', style: TextStyle(color: Colors.white),),
-        backgroundColor: Colors.teal[400],
+        title: Text(
+          'Create T-shirt',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.indigo[600],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -46,7 +49,7 @@ class _CreateTshirtFormState extends State<CreateTshirtForm> {
                           child: Text(
                             size.toString().split('.').last,
                             style: TextStyle(
-                              color: Colors.teal,
+                              color: Colors.black,
                             ),
                           ),
                         ))
@@ -54,7 +57,7 @@ class _CreateTshirtFormState extends State<CreateTshirtForm> {
                 decoration: InputDecoration(
                   labelText: 'Size',
                   labelStyle: TextStyle(
-                    color: Colors.teal,
+                    color: Colors.black,
                   ),
                 ),
                 validator: (value) {
@@ -70,7 +73,7 @@ class _CreateTshirtFormState extends State<CreateTshirtForm> {
                 decoration: InputDecoration(
                   labelText: 'Price',
                   labelStyle: TextStyle(
-                    color: Colors.teal,
+                    color: Colors.black,
                   ),
                 ),
                 keyboardType: TextInputType.number,
@@ -87,7 +90,7 @@ class _CreateTshirtFormState extends State<CreateTshirtForm> {
                 decoration: InputDecoration(
                   labelText: 'Quantity',
                   labelStyle: TextStyle(
-                    color: Colors.teal[400],
+                    color: Colors.black,
                   ),
                 ),
                 keyboardType: TextInputType.number,
@@ -106,15 +109,14 @@ class _CreateTshirtFormState extends State<CreateTshirtForm> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal[400],
+                  backgroundColor: Colors.blue[800],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    'Add T-shirt',
-                    style: TextStyle(
-                      fontSize: 18,color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  child: Center(
+                    child: Text(
+                      'Add T-shirt',
+                      style: TextStyle(fontSize: 15, color: Colors.white),
                     ),
                   ),
                 ),

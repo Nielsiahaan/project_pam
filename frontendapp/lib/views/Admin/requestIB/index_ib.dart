@@ -160,7 +160,7 @@ class IndexIzinBermalam extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.indigo[600],
         title: const Text(
           'Index Izin Bermalam',
           style: TextStyle(color: Colors.white),

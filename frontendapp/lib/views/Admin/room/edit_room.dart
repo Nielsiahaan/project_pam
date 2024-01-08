@@ -27,7 +27,11 @@ class _UpdateRoomPageState extends State<UpdateRoomPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Update Room'),
+        backgroundColor: Colors.indigo[600],
+        title: Text(
+          'Update Room',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -65,7 +69,18 @@ class _UpdateRoomPageState extends State<UpdateRoomPage> {
                           );
                         }
                       },
-                      child: Text('Update Room'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue[800],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        child: Center(
+                          child: Text(
+                            'Update Room',
+                            style: TextStyle(fontSize: 15, color: Colors.white),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 );

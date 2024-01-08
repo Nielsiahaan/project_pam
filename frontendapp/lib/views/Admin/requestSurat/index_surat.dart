@@ -16,7 +16,7 @@ class IndexSurat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.indigo[600],
         title: Text(
           'Index Request Surat',
           style: TextStyle(color: Colors.white),

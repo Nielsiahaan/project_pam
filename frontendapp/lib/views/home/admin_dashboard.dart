@@ -28,7 +28,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
       backgroundColor: Colors.grey[200],
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.indigo[600],
         title: const Text(
           'Admin Dashboard',
           style: TextStyle(color: Colors.white),

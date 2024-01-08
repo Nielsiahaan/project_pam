@@ -46,7 +46,11 @@ class _EditTshirtFormState extends State<EditTshirtForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit T-shirt'),
+        backgroundColor: Colors.indigo[600],
+        title: Text(
+          'Edit T-shirt',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -125,7 +129,18 @@ class _EditTshirtFormState extends State<EditTshirtForm> {
                         _updateTshirt();
                       }
                     },
-                    child: Text('Update T-shirt'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue[800],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      child: Center(
+                        child: Text(
+                          'Update T-shirt',
+                          style: TextStyle(fontSize: 15, color: Colors.white),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               );
