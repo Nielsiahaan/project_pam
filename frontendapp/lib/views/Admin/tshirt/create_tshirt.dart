@@ -210,6 +210,7 @@ class _CreateTshirtFormState extends State<CreateTshirtForm> {
       appBar: AppBar(
         title: Text(
           'Create T-shirt',
+<<<<<<< HEAD
           style: GoogleFonts.poppins(
               fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
         ),
@@ -217,6 +218,11 @@ class _CreateTshirtFormState extends State<CreateTshirtForm> {
         backgroundColor: Colors.indigo,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
+=======
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.indigo[600],
+>>>>>>> 217f97deb0c189460ebf4cbb66a2059b3740b7fd
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -239,8 +245,13 @@ class _CreateTshirtFormState extends State<CreateTshirtForm> {
                           value: size,
                           child: Text(
                             size.toString().split('.').last,
+<<<<<<< HEAD
                             style: const TextStyle(
                               color: Colors.teal,
+=======
+                            style: TextStyle(
+                              color: Colors.black,
+>>>>>>> 217f97deb0c189460ebf4cbb66a2059b3740b7fd
                             ),
                           ),
                         ))
@@ -248,7 +259,7 @@ class _CreateTshirtFormState extends State<CreateTshirtForm> {
                 decoration: const InputDecoration(
                   labelText: 'Size',
                   labelStyle: TextStyle(
-                    color: Colors.teal,
+                    color: Colors.black,
                   ),
                 ),
                 validator: (value) {
@@ -265,7 +276,7 @@ class _CreateTshirtFormState extends State<CreateTshirtForm> {
                 decoration: const InputDecoration(
                   labelText: 'Price',
                   labelStyle: TextStyle(
-                    color: Colors.teal,
+                    color: Colors.black,
                   ),
                 ),
                 keyboardType: TextInputType.number,
@@ -283,7 +294,7 @@ class _CreateTshirtFormState extends State<CreateTshirtForm> {
                 decoration: InputDecoration(
                   labelText: 'Quantity',
                   labelStyle: TextStyle(
-                    color: Colors.teal[400],
+                    color: Colors.black,
                   ),
                 ),
                 keyboardType: TextInputType.number,
@@ -303,6 +314,7 @@ class _CreateTshirtFormState extends State<CreateTshirtForm> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
+<<<<<<< HEAD
                   foregroundColor: Colors.white,
                   backgroundColor: Colors.indigo,
                   padding: const EdgeInsets.all(18.0),
@@ -315,6 +327,17 @@ class _CreateTshirtFormState extends State<CreateTshirtForm> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
+=======
+                  backgroundColor: Colors.blue[800],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  child: Center(
+                    child: Text(
+                      'Add T-shirt',
+                      style: TextStyle(fontSize: 15, color: Colors.white),
+                    ),
+>>>>>>> 217f97deb0c189460ebf4cbb66a2059b3740b7fd
                   ),
                 ),
               ),

@@ -18,12 +18,20 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+<<<<<<< HEAD
         title: Text('Room Form', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.indigo[600],
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
       ),
+=======
+          backgroundColor: Colors.indigo[600],
+          title: Text(
+            'Room Form',
+            style: TextStyle(color: Colors.white),
+          )),
+>>>>>>> 217f97deb0c189460ebf4cbb66a2059b3740b7fd
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -92,6 +100,7 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
                     );
                   }
                 },
+<<<<<<< HEAD
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.indigo[600],
                   shape: RoundedRectangleBorder(
@@ -104,6 +113,19 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
                     'Create Room',
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
+=======
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  child: Center(
+                    child: Text(
+                      'Create Room',
+                      style: TextStyle(fontSize: 15, color: Colors.white),
+                    ),
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue[800],
+>>>>>>> 217f97deb0c189460ebf4cbb66a2059b3740b7fd
                 ),
               ),
             ],

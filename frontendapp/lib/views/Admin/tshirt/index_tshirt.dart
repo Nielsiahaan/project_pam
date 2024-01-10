@@ -125,11 +125,16 @@ class IndexTshirt extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+<<<<<<< HEAD
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
         backgroundColor: Colors.indigo[600],
         title: Text(
+=======
+        backgroundColor: Colors.indigo[600],
+        title: const Text(
+>>>>>>> 217f97deb0c189460ebf4cbb66a2059b3740b7fd
           'T-shirt List',
           style: GoogleFonts.poppins(
               fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
@@ -162,6 +167,12 @@ class IndexTshirt extends StatelessWidget {
                   ),
                 ),
               ),
+<<<<<<< HEAD
+=======
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue[800],
+              ),
+>>>>>>> 217f97deb0c189460ebf4cbb66a2059b3740b7fd
             ),
             const SizedBox(height: 24),
             Text(

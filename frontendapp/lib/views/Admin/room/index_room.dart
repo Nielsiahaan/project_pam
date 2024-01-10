@@ -14,9 +14,13 @@ class IndexRoom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+<<<<<<< HEAD
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
+=======
+        backgroundColor: Colors.indigo[600],
+>>>>>>> 217f97deb0c189460ebf4cbb66a2059b3740b7fd
         title: Text(
           'Index Room',
           style: GoogleFonts.poppins(
@@ -54,6 +58,12 @@ class IndexRoom extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+<<<<<<< HEAD
+=======
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue[800],
+              ),
+>>>>>>> 217f97deb0c189460ebf4cbb66a2059b3740b7fd
             ),
             const SizedBox(height: 24),
             Text(
@@ -111,8 +121,12 @@ class IndexRoom extends StatelessWidget {
                                 ),
                                 onPressed: () {
                                   Get.to(
+<<<<<<< HEAD
                                     () => UpdateRoomPage(roomId: room.id!),
                                   );
+=======
+                                      () => UpdateRoomPage(roomId: room.id!));
+>>>>>>> 217f97deb0c189460ebf4cbb66a2059b3740b7fd
                                 },
                               ),
                               IconButton(

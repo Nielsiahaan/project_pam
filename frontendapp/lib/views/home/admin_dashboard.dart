@@ -27,8 +27,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.indigo[600],
+<<<<<<< HEAD
         centerTitle: true,
         title: Text(
+=======
+        title: const Text(
+>>>>>>> 217f97deb0c189460ebf4cbb66a2059b3740b7fd
           'Admin Dashboard',
           style: GoogleFonts.poppins(
               fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
