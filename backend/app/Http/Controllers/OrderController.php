@@ -17,7 +17,8 @@ class OrderController extends Controller
     public function index()
     {
         try {
-            $orders = OrderItem::with('payment')->latest()->get();
+            $mahasiswaId = auth()->id();
+            $orders = Order::with('orderItem.tshirt', 'orderItem.payment')->where('mahasiswa_id', $mahasiswaId)->latest()->get();;
             return response(['data' => $orders], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Failed to fetching data orders.', 'error' => $e->getMessage()], 500);
@@ -61,8 +62,10 @@ class OrderController extends Controller
                 'quantity' => $validatedData['quantity'],
                 'status' => 'Belum bayar',
             ]);
-            $tshirt->quantity -= $validatedData['quantity'];
-            $tshirt->save();
+            if ($orderItem->status != 'Belum bayar') {
+                $tshirt->quantity -= $validatedData['quantity'];
+                $tshirt->save();
+            }
             // Step 2: Create payment
             $paymentAmount = $totalPrice;
             $payment = Payment::create([

@@ -14,7 +14,6 @@ class IndexBookingRoom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         centerTitle: true,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),

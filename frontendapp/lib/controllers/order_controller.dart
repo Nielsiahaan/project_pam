@@ -19,6 +19,7 @@ class OrderController extends GetxController {
   final isLoading = false.obs;
   final box = GetStorage();
   List<bool> selectedItems = [];
+  RxList<int> selectedQuantities = <int>[].obs;
   RxDouble totalPrice = 0.0.obs;
   List<CartItemModel> get cartItems => cart;
   RxList<OrderModel> orders = RxList<OrderModel>();
@@ -27,7 +28,7 @@ class OrderController extends GetxController {
   RxList<CartItemModel> cart = <CartItemModel>[].obs;
   RxInt quantity = 1.obs;
   List<TshirtModel> cartItem = [];
-  RxList<int> quantities = <int>[].obs;
+  List<int> quantities = <int>[].obs;
 
   @override
   void onInit() {
@@ -196,7 +197,7 @@ class OrderController extends GetxController {
 
       if (response.statusCode == 200) {
         isLoading.value = false;
-        var data = json.decode(response.body)['orders'] as List;
+        var data = json.decode(response.body)['data'] as List;
         orders.assignAll(data.map((order) => OrderModel.fromJson(order)));
       } else {
         isLoading.value = false;
@@ -207,6 +208,45 @@ class OrderController extends GetxController {
       debugPrint(e.toString());
     }
   }
+  // Future fetchOrders() async {
+  //   try {
+  //     isLoading.value = true;
+
+  //     var response = await http.get(
+  //       Uri.parse('${url}orders-tshirt'),
+  //       headers: {
+  //         'Accept': 'application/json',
+  //         'Authorization': 'Bearer ${box.read('token')}',
+  //       },
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       isLoading.value = false;
+  //       var data = json.decode(response.body)['data'] as List;
+  //       orders.assignAll(data.map((order) {
+  //         // Retrieve order item data including T-shirt details
+  //         List<OrderItemModel> orderItems =
+  //             (order['order_item'] as List).map((item) {
+  //           // Parse T-shirt details
+  //           // Assuming you have a method to parse T-shirt data
+  //           return OrderItemModel.fromJson(item);
+  //         }).toList();
+
+  //         // Create OrderModel instance with order items
+  //         return OrderModel.fromJson({
+  //           ...order,
+  //           'order_itemModel': orderItems,
+  //         });
+  //       }));
+  //     } else {
+  //       isLoading.value = false;
+  //       debugPrint(json.decode(response.body).toString());
+  //     }
+  //   } catch (e) {
+  //     isLoading.value = false;
+  //     debugPrint(e.toString());
+  //   }
+  // }
 
   // Increment and decrement methods
   void decrementQuantity() {
@@ -341,11 +381,30 @@ class OrderController extends GetxController {
     }
   }
 
-  Future getAllTshirt() async {
+  // Future getAllTshirt() async {
+  //   try {
+  //     var response = await http.get(Uri.parse('${url}tshirt'), headers: {
+  //       'Accept': 'application/json',
+  //       'Authorization': "Bearer ${box.read('token')}",
+  //     });
+
+  //     if (response.statusCode == 200) {
+  //       var tshirtList = (json.decode(response.body)['data'] as List)
+  //           .map((item) => TshirtModel.fromJson(item))
+  //           .toList();
+  //       tshirts.assignAll(tshirtList);
+  //     } else {
+  //       debugPrint(json.decode(response.body).toString());
+  //     }
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //   }
+  // }
+  Future<List<TshirtModel>> getAllTshirt() async {
     try {
       var response = await http.get(Uri.parse('${url}tshirt'), headers: {
         'Accept': 'application/json',
-        'Authorization': "Bearer ${box.read('token')}",
+        'Authorization': 'Bearer ${box.read('token')}',
       });
 
       if (response.statusCode == 200) {
@@ -353,71 +412,39 @@ class OrderController extends GetxController {
             .map((item) => TshirtModel.fromJson(item))
             .toList();
         tshirts.assignAll(tshirtList);
+        return tshirtList; // Return the list
       } else {
         debugPrint(json.decode(response.body).toString());
+        return []; // Return an empty list in case of an error
       }
     } catch (e) {
       debugPrint(e.toString());
+      return []; // Return an empty list in case of an exception
     }
   }
 
-  // double calculateTotalPrice() {
-  //   double total = 0.0;
-  //   for (int i = 0; i < cart.length; i++) {
-  //     double itemPrice = double.parse(cart[i].tshirt.price);
-  //     int itemQuantity = cart[i].quantity;
-  //     if (selectedItems[i]) {
-  //       total += itemPrice * itemQuantity;
-  //     }
-  //   }
-  //   totalPrice.value = total;
-  //   return total;
-  // }
-
-  // double calculateTotalPrice() {
-  //   double total = 0.0;
-
-  //   // Check if the lengths match, if not, update selectedItems
-  //   if (selectedItems.length != cart.length) {
-  //     selectedItems.addAll(List<bool>.filled(cart.length, false));
-  //   }
-
-  //   for (int i = 0; i < cart.length; i++) {
-  //     double itemPrice = double.parse(cart[i].tshirt.price);
-  //     int itemQuantity = cart[i].quantity;
-
-  //     // Check if the index is within the bounds of selectedItems
-  //     if (i < selectedItems.length && selectedItems[i]) {
-  //       total += itemPrice * itemQuantity;
-  //     }
-  //   }
-
-  //   totalPrice.value = total;
-  //   return total;
-  // }
   double calculateTotalPrice() {
-  double total = 0.0;
+    double total = 0.0;
 
-  // Ensure that selectedItems and cart have the same length
-  if (selectedItems.length != cart.length) {
-    selectedItems = List<bool>.filled(cart.length, false);
-  }
-
-  for (int i = 0; i < cart.length; i++) {
-    double itemPrice = double.tryParse(cart[i].tshirt.price) ?? 0.0;
-    int itemQuantity = cart[i].quantity;
-
-    // Check if the index is within the bounds of selectedItems
-    if (i < selectedItems.length && selectedItems[i]) {
-      total += itemPrice * itemQuantity;
+    // Ensure that selectedItems and cart have the same length
+    if (selectedItems.length != cart.length) {
+      selectedItems = List<bool>.filled(cart.length, false);
     }
+
+    for (int i = 0; i < cart.length; i++) {
+      double itemPrice = double.tryParse(cart[i].tshirt.price) ?? 0.0;
+      int itemQuantity = cart[i].quantity;
+
+      // Check if the index is within the bounds of selectedItems
+      if (i < selectedItems.length && selectedItems[i]) {
+        total += itemPrice * itemQuantity;
+      }
+    }
+
+    // Round the total to two decimal places
+    total = double.parse(total.toStringAsFixed(2));
+
+    totalPrice.value = total;
+    return total;
   }
-
-  // Round the total to two decimal places
-  total = double.parse(total.toStringAsFixed(2));
-
-  totalPrice.value = total;
-  return total;
-}
-
 }

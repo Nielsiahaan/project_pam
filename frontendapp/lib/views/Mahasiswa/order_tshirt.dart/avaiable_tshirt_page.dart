@@ -17,89 +17,90 @@ class _OrderPageState extends State<OrderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
-      appBar: AppBar(
-        title: const Text(
-          'Order T-shirt',
-          style: TextStyle(color: Colors.white),
+        backgroundColor: Colors.grey[200],
+        appBar: AppBar(
+          title: const Text(
+            'Order T-shirt',
+            style: TextStyle(color: Colors.white),
+          ),
+          centerTitle: true,
+          elevation: 0,
+          iconTheme: const IconThemeData(color: Colors.white),
+          backgroundColor: Colors.deepOrangeAccent,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.shopping_cart),
+              onPressed: () {
+                // Modify the CartPage instantiation to include both T-shirt items and CartItem items
+                Get.to(() => CartPage(
+                    cartItems: orderController.tshirts,
+                    cartItemsInCart: orderController.cart));
+              },
+            ),
+            IconButton(
+                onPressed: () {
+                  Get.to(() => MyOrderPage());
+                },
+                icon: const Icon(Icons.assignment_outlined))
+          ],
         ),
-        centerTitle: true,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: Colors.deepOrangeAccent,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            onPressed: () {
-              // Modify the CartPage instantiation to include both T-shirt items and CartItem items
-              Get.to(() => CartPage(
-                  cartItems: orderController.tshirts,
-                  cartItemsInCart: orderController.cart));
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: FutureBuilder<List<TshirtModel>>(
+            future: orderController.getAllTshirt(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasError || snapshot.data == null) {
+                return const Center(
+                  child: Text('Error loading data'),
+                );
+              } else if (snapshot.data!.isEmpty) {
+                return const Center(
+                  child: Text('T-shirt not available right now'),
+                );
+              } else {
+                orderController.tshirts.assignAll(snapshot.data!);
+
+                return SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Available T-Shirts',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.deepOrangeAccent,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 16.0,
+                          mainAxisSpacing: 16.0,
+                        ),
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          return buildSizeContainer(
+                            context,
+                            snapshot.data![index],
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              }
             },
           ),
-          IconButton(
-              onPressed: () {
-                Get.to(() => MyOrderPage());
-              },
-              icon: const Icon(Icons.assignment_outlined))
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: FutureBuilder(
-          future: orderController.getAllTshirt(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (snapshot.hasError) {
-              return const Center(
-                child: Text('Error loading data'),
-              );
-            } else if (orderController.tshirts.isEmpty) {
-              return const Center(
-                child: Text('T-shirt not available right now'),
-              );
-            } else {
-              return SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Available T-Shirts',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.deepOrangeAccent,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 16.0,
-                        mainAxisSpacing: 16.0,
-                      ),
-                      itemCount: orderController.tshirts.length,
-                      itemBuilder: (context, index) {
-                        return buildSizeContainer(
-                          context,
-                          orderController.tshirts[index],
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              );
-            }
-          },
-        ),
-      ),
-    );
+        ));
   }
 
   Widget buildSizeContainer(BuildContext context, TshirtModel tshirt) {

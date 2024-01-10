@@ -37,9 +37,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   void initState() {
     super.initState();
+    // Menyamakan nilai quantities dengan widget.selectedQuantities
     quantities = List<int>.from(widget.selectedQuantities);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +54,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
               itemCount: widget.selectedTshirts.length,
               itemBuilder: (context, index) {
                 TshirtModel tshirt = widget.selectedTshirts[index];
-                int quantity =
-                    _orderController.cart[index].quantity = quantities[index];
+                int quantity = quantities[
+                    index]; // Menggunakan quantities dari state lokal
                 final formattedPrice = NumberFormat.currency(
                   locale: 'id_ID',
                   symbol: 'Rp.',
@@ -131,7 +131,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     try {
                       for (var i = 0; i < widget.selectedTshirts.length; i++) {
                         TshirtModel selectedTshirt = widget.selectedTshirts[i];
-                        int quantity = widget.selectedQuantities[i];
+                        int quantity = quantities[i];
                         await _orderController.placeOrderAndMakePayment(
                           selectedTshirt.id,
                           selectedTshirt.size,

@@ -14,6 +14,9 @@ class IndexSurat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.indigo[600],
         title: Text(
           'Riwayat Izin Bermalam',
