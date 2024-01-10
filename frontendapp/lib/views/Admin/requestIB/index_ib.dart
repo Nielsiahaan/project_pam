@@ -14,24 +14,10 @@ class IndexIzinBermalam extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-<<<<<<< HEAD
-        centerTitle: true,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: Colors.indigo[600],
-        title: Text(
-          'Riwayat Izin Bermalam',
-          style: GoogleFonts.poppins(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-=======
         backgroundColor: Colors.indigo[600],
         title: const Text(
           'Index Izin Bermalam',
           style: TextStyle(color: Colors.white),
->>>>>>> 217f97deb0c189460ebf4cbb66a2059b3740b7fd
         ),
       ),
       body: Padding(

@@ -14,12 +14,6 @@ class IndexIzinKeluar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-<<<<<<< HEAD
-        centerTitle: true,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
-=======
->>>>>>> 217f97deb0c189460ebf4cbb66a2059b3740b7fd
         backgroundColor: Colors.indigo[600],
         title: Text(
           'Riwayat Izin Keluar',

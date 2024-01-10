@@ -45,7 +45,6 @@ class _EditTshirtFormState extends State<EditTshirtForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-<<<<<<< HEAD
         title: Text(
           'Edit T-shirt',
           style: GoogleFonts.poppins(
@@ -58,13 +57,6 @@ class _EditTshirtFormState extends State<EditTshirtForm> {
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.indigo[600],
         centerTitle: true,
-=======
-        backgroundColor: Colors.indigo[600],
-        title: Text(
-          'Edit T-shirt',
-          style: TextStyle(color: Colors.white),
-        ),
->>>>>>> 217f97deb0c189460ebf4cbb66a2059b3740b7fd
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -196,7 +188,6 @@ class _EditTshirtFormState extends State<EditTshirtForm> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-<<<<<<< HEAD
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.indigo,
                       padding: const EdgeInsets.all(16.0),
@@ -211,19 +202,6 @@ class _EditTshirtFormState extends State<EditTshirtForm> {
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
-=======
-                      backgroundColor: Colors.blue[800],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      child: Center(
-                        child: Text(
-                          'Update T-shirt',
-                          style: TextStyle(fontSize: 15, color: Colors.white),
-                        ),
-                      ),
-                    ),
->>>>>>> 217f97deb0c189460ebf4cbb66a2059b3740b7fd
                   ),
                 ],
               );
