@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontendapp/views/component/future_method/combined_date_picker.dart';
 import 'package:get/get.dart';
 import 'package:frontendapp/controllers/bookingRoom_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,14 +18,24 @@ class _BookingFormState extends State<BookingForm> {
   final TextEditingController _keteranganController = TextEditingController();
 
   DateTime _selectedStartTime = DateTime.now();
-
-  DateTime _selectedEndTime = DateTime.now().add(Duration(hours: 2));
+  DateTime _selectedEndTime = DateTime.now().add(const Duration(hours: 2));
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Booking Form'),
+        centerTitle: true,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: Colors.teal[400],
+        title: Text(
+          'Booking Form',
+          style: GoogleFonts.poppins(
+            fontSize: 18.0,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: ListView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -36,22 +47,30 @@ class _BookingFormState extends State<BookingForm> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  buildDateTimePicker(
-                    label: 'Start Date and Time',
+                  CombinedDateTimePicker(
+                    title: 'Start Date and Time',
                     selectedDateTime: _selectedStartTime,
-                    onTap: () => _selectDateTime(context, true),
+                    updateDateTime: (DateTime dateTime) {
+                      setState(() {
+                        _selectedStartTime = dateTime;
+                      });
+                    },
                   ),
-                  SizedBox(height: 16.0),
-                  buildDateTimePicker(
-                    label: 'End Date and Time',
+                  const SizedBox(height: 16.0),
+                  CombinedDateTimePicker(
+                    title: 'End Date and Time',
                     selectedDateTime: _selectedEndTime,
-                    onTap: () => _selectDateTime(context, false),
+                    updateDateTime: (DateTime dateTime) {
+                      setState(() {
+                        _selectedEndTime = dateTime;
+                      });
+                    },
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   buildRoomDropdown(),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   buildDescriptionTextField(),
-                  SizedBox(height: 24.0),
+                  const SizedBox(height: 24.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -66,10 +85,16 @@ class _BookingFormState extends State<BookingForm> {
                             );
                           }
                         },
-                        child: Text('Submit', style: GoogleFonts.inter(fontSize: 16, color: Colors.white, ),),
+                        child: Text(
+                          'Submit',
+                          style: GoogleFonts.inter(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 16.0, horizontal: 24.0),
                         ),
                       ),
@@ -77,10 +102,16 @@ class _BookingFormState extends State<BookingForm> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text('Cancel', style: GoogleFonts.inter(fontSize: 16, color: Colors.white, ),),
+                        child: Text(
+                          'Cancel',
+                          style: GoogleFonts.inter(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.redAccent,
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 16.0, horizontal: 24.0),
                         ),
                       ),
@@ -105,17 +136,23 @@ class _BookingFormState extends State<BookingForm> {
       child: InputDecorator(
         decoration: InputDecoration(
           labelText: label,
-          border: OutlineInputBorder(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
           filled: true,
-          fillColor: Colors.grey[200],
+          fillColor: Colors.teal[50],
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               DateFormat('yyyy-MM-dd HH:mm:ss').format(selectedDateTime),
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.teal[400],
+              ),
             ),
-            Icon(Icons.calendar_today),
+            Icon(Icons.calendar_today, color: Colors.teal[400]),
           ],
         ),
       ),
@@ -123,23 +160,39 @@ class _BookingFormState extends State<BookingForm> {
   }
 
   Widget buildRoomDropdown() {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(8.0),
-        color: Colors.grey[200],
-      ),
-      child: DropdownButtonFormField<int>(
+    return DropdownButtonFormField<int>(
         value: _bookingController.rooms.isNotEmpty
             ? _bookingController.rooms.first.id
             : null,
-        decoration: InputDecoration.collapsed(hintText: 'Select a Room'),
+        decoration: InputDecoration(
+          hintText: 'Select a Room',
+          hintStyle: TextStyle(
+            fontSize: 16.0,
+            color: Colors.teal[400],
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.teal[400]!, width: 2.0),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey[300]!, width: 1.0),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
         items: _bookingController.rooms
             .map(
               (room) => DropdownMenuItem<int>(
                 value: room.id,
-                child: Text(room.roomName),
+                child: Text(
+                  room.roomName,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.teal[400],
+                  ),
+                ),
               ),
             )
             .toList(),
@@ -151,9 +204,7 @@ class _BookingFormState extends State<BookingForm> {
             return 'Please select a room';
           }
           return null;
-        },
-      ),
-    );
+        });
   }
 
   Widget buildDescriptionTextField() {
@@ -162,9 +213,33 @@ class _BookingFormState extends State<BookingForm> {
       maxLines: 3,
       decoration: InputDecoration(
         labelText: 'Description',
-        border: OutlineInputBorder(),
-        filled: true,
-        fillColor: Colors.grey[200],
+        labelStyle: GoogleFonts.poppins(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: Colors.teal[400],
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.teal[400]!, width: 2.0),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey[300]!, width: 1.0),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.red[400]!, width: 2.0),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.red[400]!, width: 2.0),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        // filled: true,
+        // fillColor: Colors.teal[50],
+      ),
+      style: TextStyle(
+        fontSize: 16.0,
+        color: Colors.teal[400],
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -173,39 +248,5 @@ class _BookingFormState extends State<BookingForm> {
         return null;
       },
     );
-  }
-
-  Future<void> _selectDateTime(BuildContext context, bool isStartTime) async {
-    DateTime currentDate = isStartTime ? _selectedStartTime : _selectedEndTime;
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: currentDate,
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2101),
-    );
-    if (pickedDate != null) {
-      TimeOfDay? pickedTime = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.fromDateTime(currentDate),
-      );
-
-      if (pickedTime != null) {
-        DateTime combinedDateTime = DateTime(
-          pickedDate.year,
-          pickedDate.month,
-          pickedDate.day,
-          pickedTime.hour,
-          pickedTime.minute,
-        );
-
-        if (isStartTime) {
-          _selectedStartTime = combinedDateTime;
-        } else {
-          _selectedEndTime = combinedDateTime;
-        }
-
-        Get.forceAppUpdate();
-      }
-    }
   }
 }

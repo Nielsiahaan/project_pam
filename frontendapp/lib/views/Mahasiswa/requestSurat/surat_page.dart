@@ -13,10 +13,17 @@ class SuratRequestPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        centerTitle: true,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: Colors.teal[400],
         title: Text(
           'Request Surat',
-          style: TextStyle(color: Colors.white),
+          style: GoogleFonts.poppins(
+            fontSize: 18.0,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       body: Padding(
@@ -28,31 +35,42 @@ class SuratRequestPage extends StatelessWidget {
               onPressed: () {
                 Get.to(() => SuratFormPage());
               },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal[400],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(12.0),
                 child: Center(
                   child: Text(
                     'Request Surat',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    style: GoogleFonts.poppins(
+                      fontSize: 14.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
+            ),
+            const SizedBox(height: 16.0),
+            Text(
+              'Riwayat Request Surat',
+              style: GoogleFonts.poppins(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.teal[400],
               ),
             ),
-            SizedBox(height: 24),
-            Text(
-              'Histori Request Surat',
-              style: GoogleFonts.poppins(
-                  fontSize: 18, fontWeight: FontWeight.w600),
-            ),
-            SizedBox(height: 16),
+            const SizedBox(height: 8.0),
             Obx(() {
               if (_requestSuratController.isLoading.value) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (_requestSuratController.requestSurat.isEmpty) {
-                return Center(child: Text('No surat requests available.'));
+                return const Center(
+                    child: Text('No surat requests available.'));
               } else {
                 return Expanded(
                   child: ListView.builder(
@@ -72,7 +90,7 @@ class SuratRequestPage extends StatelessWidget {
                   ),
                 );
               }
-            }),
+            })
           ],
         ),
       ),
@@ -87,20 +105,26 @@ class SuratRequestPage extends StatelessWidget {
     required int requestId,
   }) {
     Color? backgroundColor;
+    late Color textColor;
 
     switch (status.toLowerCase()) {
       case 'rejected':
-        backgroundColor = Colors.red[100];
+        backgroundColor = Colors.red[300];
+        textColor = Colors.white;
         break;
       case 'pending':
         backgroundColor = Colors.yellow[100];
+        textColor = Colors.deepOrange[300]!;
         break;
       case 'approved':
         backgroundColor = Colors.green[100];
+        textColor = Colors.green[700]!;
         break;
       default:
-        backgroundColor = Colors.white;
+        backgroundColor = Colors.grey[200];
+        textColor = Colors.blueGrey;
     }
+
     return Card(
       color: backgroundColor,
       child: ListTile(
@@ -114,32 +138,55 @@ class SuratRequestPage extends StatelessWidget {
                   child: Text(
                     'Kategori Surat: $kategori_surat',
                     style: GoogleFonts.poppins(
-                        fontSize: 14, fontWeight: FontWeight.w400),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: textColor,
+                    ),
                   ),
                 ),
                 PopupMenuButton<String>(
                   itemBuilder: (BuildContext context) =>
                       <PopupMenuEntry<String>>[
-                    const PopupMenuItem<String>(
+                    PopupMenuItem<String>(
                       value: 'view',
-                      child: Text('View Detail'),
+                      child: Text(
+                        'View Detail',
+                        style: TextStyle(
+                          color: Colors.teal[400],
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
                     if (status.toLowerCase() == 'pending')
-                      const PopupMenuItem<String>(
+                      PopupMenuItem<String>(
                         value: 'cancel',
-                        child: Text('Batal'),
-                      ),
+                        child: Text(
+                          'Batal',
+                          style: TextStyle(
+                            color: Colors.red[400],
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      )
                   ],
                   onSelected: (String value) {
                     handlePopupMenuSelection(value, requestId);
                   },
+                  icon: Icon(
+                    Icons.more_vert,
+                    color: Colors.teal[400],
+                  ),
+                  offset: const Offset(0, 20),
                 ),
               ],
             ),
             Text(
               'Status: $status',
               style: GoogleFonts.poppins(
-                  fontSize: 14, fontWeight: FontWeight.w400),
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: textColor,
+              ),
             ),
           ],
         ),
@@ -156,19 +203,21 @@ class SuratRequestPage extends StatelessWidget {
         );
         break;
       case 'cancel':
-        cancelRequestIB(requestId);
+        cancelRequestSurat(requestId);
         break;
       default:
     }
   }
 
-  void cancelRequestIB(int requestId) {
+  void cancelRequestSurat(int requestId) {
     Get.defaultDialog(
-      title: 'Cancel Izin Bermalam',
-      middleText: 'Are you sure you want to cancel the Request IB?',
-      textCancel: 'No',
-      textConfirm: 'Yes',
+      title: 'Batal Request Surat',
+      middleText: 'Apakah Anda yakin ingin membatalkan request surat?',
+      textCancel: 'Tidak',
+      textConfirm: 'Ya',
       confirmTextColor: Colors.white,
+      cancelTextColor: Colors.blueGrey,
+      buttonColor: Colors.blueGrey,
       onConfirm: () async {
         await _requestSuratController.cancelSurat(requestId);
       },

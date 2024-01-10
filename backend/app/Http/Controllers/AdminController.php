@@ -29,16 +29,16 @@ class AdminController extends Controller
 
     public function approveIK($id)
     {
-        return $this->updateStatus($id, 'approved');
+        return $this->updateStatusIK($id, 'approved');
     }
 
     public function rejectIK($id)
     {
-        return $this->updateStatus($id, 'rejected');
+        return $this->updateStatusIK($id, 'rejected');
     }
 
 
-    public function updateStatus($id, $status)
+    public function updateStatusIK($id, $status)
     {
         try {
             $ikRequest = RequestIK::findOrFail($id);
@@ -149,10 +149,6 @@ class AdminController extends Controller
     public function approveOrderItem(int $orderItemId)
     {
         $orderItem = OrderItem::findOrFail($orderItemId);
-
-        // Lakukan logika approval
-        // Misalnya, set status menjadi 'Sukses' setelah melihat bukti pembayaran
-
         $orderItem->setStatus('Sukses');
     }
 

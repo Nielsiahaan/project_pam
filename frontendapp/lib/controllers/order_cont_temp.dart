@@ -396,28 +396,27 @@ class OrderController extends GetxController {
   //   return total;
   // }
   double calculateTotalPrice() {
-  double total = 0.0;
+    double total = 0.0;
 
-  // Ensure that selectedItems and cart have the same length
-  if (selectedItems.length != cart.length) {
-    selectedItems = List<bool>.filled(cart.length, false);
-  }
-
-  for (int i = 0; i < cart.length; i++) {
-    double itemPrice = double.tryParse(cart[i].tshirt.price) ?? 0.0;
-    int itemQuantity = cart[i].quantity;
-
-    // Check if the index is within the bounds of selectedItems
-    if (i < selectedItems.length && selectedItems[i]) {
-      total += itemPrice * itemQuantity;
+    // Ensure that selectedItems and cart have the same length
+    if (selectedItems.length != cart.length) {
+      selectedItems = List<bool>.filled(cart.length, false);
     }
+
+    for (int i = 0; i < cart.length; i++) {
+      double itemPrice = double.tryParse(cart[i].tshirt.price) ?? 0.0;
+      int itemQuantity = cart[i].quantity;
+
+      // Check if the index is within the bounds of selectedItems
+      if (i < selectedItems.length && selectedItems[i]) {
+        total += itemPrice * itemQuantity;
+      }
+    }
+
+    // Round the total to two decimal places
+    total = double.parse(total.toStringAsFixed(2));
+
+    totalPrice.value = total;
+    return total;
   }
-
-  // Round the total to two decimal places
-  total = double.parse(total.toStringAsFixed(2));
-
-  totalPrice.value = total;
-  return total;
-}
-
 }

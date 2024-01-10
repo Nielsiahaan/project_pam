@@ -24,19 +24,24 @@ class _OrderPageState extends State<OrderPage> {
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.deepOrangeAccent,
         actions: [
           IconButton(
-            icon: Icon(Icons.shopping_cart),
+            icon: const Icon(Icons.shopping_cart),
             onPressed: () {
-              Get.to(() => CartPage(cartItems: orderController.tshirts));
+              // Modify the CartPage instantiation to include both T-shirt items and CartItem items
+              Get.to(() => CartPage(
+                  cartItems: orderController.tshirts,
+                  cartItemsInCart: orderController.cart));
             },
           ),
           IconButton(
               onPressed: () {
                 Get.to(() => MyOrderPage());
               },
-              icon: Icon(Icons.assignment_outlined))
+              icon: const Icon(Icons.assignment_outlined))
         ],
       ),
       body: Padding(
@@ -45,15 +50,15 @@ class _OrderPageState extends State<OrderPage> {
           future: orderController.getAllTshirt(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             } else if (snapshot.hasError) {
-              return Center(
+              return const Center(
                 child: Text('Error loading data'),
               );
             } else if (orderController.tshirts.isEmpty) {
-              return Center(
+              return const Center(
                 child: Text('T-shirt not available right now'),
               );
             } else {
@@ -61,7 +66,7 @@ class _OrderPageState extends State<OrderPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'Available T-Shirts',
                       style: TextStyle(
                         fontSize: 20,
@@ -69,11 +74,12 @@ class _OrderPageState extends State<OrderPage> {
                         color: Colors.deepOrangeAccent,
                       ),
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     GridView.builder(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16.0,
                         mainAxisSpacing: 16.0,
@@ -100,9 +106,9 @@ class _OrderPageState extends State<OrderPage> {
     return Card(
       elevation: 4,
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [
               Colors.deepOrangeAccent,
               Colors.orangeAccent,
@@ -117,21 +123,21 @@ class _OrderPageState extends State<OrderPage> {
           children: [
             Text(
               'Size: ${tshirt.size}',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               'Stock: ${tshirt.quantity}',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
                 color: Colors.white,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 Get.bottomSheet(
@@ -143,7 +149,7 @@ class _OrderPageState extends State<OrderPage> {
                 foregroundColor: Colors.deepOrangeAccent,
                 backgroundColor: Colors.white,
               ),
-              child: Text('See Details'),
+              child: const Text('See Details'),
             ),
           ],
         ),

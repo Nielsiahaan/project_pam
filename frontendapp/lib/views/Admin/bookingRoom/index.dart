@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontendapp/controllers/admin_controller.dart';
 import 'package:frontendapp/controllers/bookingRoom_controller.dart';
-import 'package:frontendapp/views/Mahasiswa/bookingRoom/detail_booking_room.dart';
+import 'package:frontendapp/views/Admin/bookingRoom/view_booking_room.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -10,16 +9,22 @@ class IndexBookingRoom extends StatelessWidget {
 
   final BookingRoomController _bookingRoomController =
       Get.put(BookingRoomController());
-  final AdminController _adminController = Get.put(AdminController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        centerTitle: true,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: Colors.indigo[600],
         title: Text(
-          'Index Pemesanan Ruangan',
-          style: TextStyle(color: Colors.white),
+          'Riwayat Izin Bermalam',
+          style: GoogleFonts.poppins(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
       ),
       body: Padding(
@@ -27,110 +32,103 @@ class IndexBookingRoom extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'Riwayat Pemesanan Ruangan',
-              style: GoogleFonts.poppins(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: 16),
             Obx(() {
               if (_bookingRoomController.isLoading.value) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (_bookingRoomController.bookingRoom.isEmpty) {
                 return Center(
-                    child: Text('No izin bermalam request available.'));
+                    child: Text(
+                  'Belum ada pemesanan ruangan.☹️',
+                  style: GoogleFonts.poppins(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ));
               } else {
                 return SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: DataTable(
-                    columns: [
-                      const DataColumn(label: Text('No')),
-                      const DataColumn(label: Text('Nama Mahasiswa')),
-                      const DataColumn(label: Text('Ruangan')),
-                      const DataColumn(label: Text('Keterangan')),
-                      const DataColumn(label: Text('Status')),
-                      const DataColumn(label: Text('Action')),
+                    horizontalMargin: MediaQuery.of(context).size.width * 0.1,
+                    columnSpacing: 65.0,
+                    columns: const [
+                      DataColumn(
+                        label: Text(
+                          'No',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        numeric: true,
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Status',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Detail',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ),
                     ],
                     rows: List<DataRow>.generate(
                       _bookingRoomController.bookingRoom.length,
                       (index) {
                         var bookingRoom =
                             _bookingRoomController.bookingRoom[index];
-                        String roomName = _bookingRoomController
-                            .getRoomNameById(bookingRoom.roomId);
                         return DataRow(
                           cells: [
-                            DataCell(Text((index + 1).toString())),
-                            DataCell(FutureBuilder<String>(
-                              future: _adminController.getNamaMahasiswaFromId(
-                                  bookingRoom.mahasiswaId),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return const CircularProgressIndicator();
-                                } else if (snapshot.hasError) {
-                                  return const Text('Error');
-                                } else {
-                                  return Text(snapshot.data ?? 'Unknown');
-                                }
-                              },
-                            )),
-                            DataCell(Text(roomName)),
-                            DataCell(Text(bookingRoom.keterangan)),
-                            DataCell(Text(bookingRoom.status)),
                             DataCell(
-                              Row(
-                                children: [
-                                  IconButton(
-                                    icon: Icon(Icons.visibility),
-                                    onPressed: () {
-                                      Get.bottomSheet(
-                                          BookingRoomDetailModal(
-                                              requestId: bookingRoom.id),
-                                          isScrollControlled: true);
-                                    },
+                              Text(
+                                (index + 1).toString(),
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              Text(
+                                bookingRoom.status,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              ElevatedButton(
+                                onPressed: () {
+                                  Get.bottomSheet(
+                                    BookingRoomView(requestId: bookingRoom.id),
+                                    isScrollControlled: true,
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.indigo,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      _adminController.approveBookingRoom(
-                                          id: bookingRoom.id);
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.green,
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      margin:
-                                          EdgeInsets.symmetric(horizontal: 8.0),
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Text('Approve',
-                                          style:
-                                              TextStyle(color: Colors.white)),
-                                    ),
+                                ),
+                                child: const Text(
+                                  "Detail",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      _adminController.rejectBookingRoom(
-                                          id: bookingRoom.id);
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.red,
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      margin:
-                                          EdgeInsets.symmetric(horizontal: 8.0),
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Text('Reject',
-                                          style:
-                                              TextStyle(color: Colors.white)),
-                                    ),
-                                  )
-                                ],
+                                ),
                               ),
                             ),
                           ],

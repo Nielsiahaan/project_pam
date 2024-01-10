@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontendapp/controllers/request_ik_controller.dart';
 import 'package:frontendapp/views/Mahasiswa/requestIK/detail_Ik.dart';
 import 'package:frontendapp/views/Mahasiswa/requestIK/form_ik.dart';
+
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,51 +14,63 @@ class IzinKeluarPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: Colors.teal[400],
         title: Text(
           'Izin Keluar',
-          style: TextStyle(color: Colors.white),
+          style: GoogleFonts.poppins(
+            fontSize: 18.0,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            InkWell(
-              onTap: () {
+            ElevatedButton(
+              onPressed: () {
                 Get.to(() => IzinKeluarForm());
               },
-              child: Ink(
-                decoration: BoxDecoration(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal[400],
+                shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.green,
                 ),
-                child: Container(
-                  padding: const EdgeInsets.all(12.0),
-                  child: const Center(
-                    child: Text(
-                      'Request Izin Keluar',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.white,
-                      ),
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(12.0),
+                child: Center(
+                  child: Text(
+                    'Request Izin Keluar',
+                    style: GoogleFonts.poppins(
+                      fontSize: 14.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             Text(
               'Riwayat Izin Keluar',
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              style: GoogleFonts.poppins(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.teal[400],
+              ),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Obx(() {
               if (_requestIKController.isLoading.value) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (_requestIKController.requestIK.isEmpty) {
-                return Center(child: Text('No Request IK available.'));
+                return const Center(child: Text('No Request IK available.'));
               } else {
                 return Expanded(
                   child: ListView.builder(
@@ -86,19 +99,24 @@ class IzinKeluarPage extends StatelessWidget {
     required int requestId,
   }) {
     Color? backgroundColor;
+    late Color textColor;
 
     switch (status.toLowerCase()) {
       case 'rejected':
-        backgroundColor = Colors.red[100];
+        backgroundColor = Colors.red[300];
+        textColor = Colors.white;
         break;
       case 'pending':
         backgroundColor = Colors.yellow[100];
+        textColor = Colors.deepOrange[300]!;
         break;
       case 'approved':
         backgroundColor = Colors.green[100];
+        textColor = Colors.green[700]!;
         break;
       default:
-        backgroundColor = Colors.grey[300];
+        backgroundColor = Colors.grey[200];
+        textColor = Colors.blueGrey;
     }
 
     return Card(
@@ -112,35 +130,61 @@ class IzinKeluarPage extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    "Alasan: ${keperluan}",
-                    style: GoogleFonts.poppins(
-                        fontSize: 14, fontWeight: FontWeight.w400),
+                    "Alasan: $keperluan",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: textColor,
+                    ),
                   ),
                 ),
                 PopupMenuButton<String>(
                   itemBuilder: (BuildContext context) =>
                       <PopupMenuEntry<String>>[
-                    const PopupMenuItem<String>(
+                    PopupMenuItem<String>(
                       value: 'view',
-                      child: Text('View Detail'),
+                      child: Text(
+                        'View Detail',
+                        style: TextStyle(
+                          color: Colors.teal[400],
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
                     if (status.toLowerCase() == 'pending')
-                      const PopupMenuItem<String>(
+                      PopupMenuItem<String>(
                         value: 'cancel',
-                        child: Text('Batal'),
+                        child: Text(
+                          'Batal',
+                          style: TextStyle(
+                            color: Colors.red[400],
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ),
                   ],
                   onSelected: (String value) {
                     handlePopupMenuSelection(value, requestId);
                   },
-                )
+                  icon: Icon(
+                    Icons.more_vert,
+                    color: Colors.teal[400],
+                  ),
+                  offset: const Offset(0, 20),
+                ),
               ],
+            ),
+            const SizedBox(height: 2),
+            Text(
+              'Status: $status',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: textColor,
+              ),
             ),
           ],
         ),
-        subtitle: Text('Status: $status',
-            style:
-                GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w400)),
       ),
     );
   }
@@ -162,11 +206,13 @@ class IzinKeluarPage extends StatelessWidget {
 
   void cancelRequestIK(int requestId) {
     Get.defaultDialog(
-      title: 'Cancel Izin keluar',
-      middleText: 'Are you sure you want to cancel the Request IK?',
-      textCancel: 'No',
-      textConfirm: 'Yes',
+      title: 'Batal Izin Keluar',
+      middleText: 'Apakah Anda yakin ingin membatalkan Permintaan Izin Keluar?',
+      textCancel: 'Tidak',
+      textConfirm: 'Ya',
       confirmTextColor: Colors.white,
+      cancelTextColor: Colors.blueGrey,
+      buttonColor: Colors.blueGrey,
       onConfirm: () async {
         await _requestIKController.cancelRequestIK(requestId);
       },

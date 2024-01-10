@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 class IzinKeluarDetailModal extends StatelessWidget {
   final int requestId;
 
-  IzinKeluarDetailModal({required this.requestId});
+  const IzinKeluarDetailModal({super.key, required this.requestId});
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +19,17 @@ class IzinKeluarDetailModal extends StatelessWidget {
           child: Wrap(
             children: [
               Container(
-                margin: EdgeInsets.all(20.0),
-                padding: EdgeInsets.all(16.0),
+                margin: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Colors.teal[50],
                   borderRadius: BorderRadius.circular(10.0),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 2,
                       blurRadius: 5,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
@@ -39,39 +39,45 @@ class IzinKeluarDetailModal extends StatelessWidget {
                     Text(
                       'Detail Izin Keluar',
                       style: TextStyle(
-                        fontSize: 16.0,
+                        fontSize: 20.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: Colors.teal[900],
                       ),
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     Text(
                       'Alasan: ${requestIKDetail.deskripsi}',
-                      style: TextStyle(fontSize: 15.0),
+                      style: TextStyle(fontSize: 16.0, color: Colors.teal[900]),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8.0,
                     ),
                     Text(
-                      'Tanggal berangkat: ${DateFormat('yyyy-MM-dd HH:mm WIB').format(requestIKDetail.tanggalBerangkat)}',
-                      style: TextStyle(fontSize: 15.0),
+                      'Tanggal Berangkat: ${DateFormat('yyyy-MM-dd HH:mm WIB').format(requestIKDetail.tanggalBerangkat)}',
+                      style: TextStyle(fontSize: 16.0, color: Colors.teal[900]),
                     ),
-                    SizedBox(height: 8.0),
+                    const SizedBox(height: 8.0),
                     Text(
-                      'Tanggal kembali: ${DateFormat('yyyy-MM-dd HH:mm WIB').format(requestIKDetail.tanggalKembali)}',
-                      style: TextStyle(fontSize: 15.0),
+                      'Tanggal Kembali: ${DateFormat('yyyy-MM-dd HH:mm WIB').format(requestIKDetail.tanggalKembali)}',
+                      style: TextStyle(fontSize: 16.0, color: Colors.teal[900]),
                     ),
-                    SizedBox(height: 8.0),
+                    const SizedBox(height: 8.0),
                     Text(
                       'Status: ${requestIKDetail.status}',
-                      style: TextStyle(fontSize: 15.0),
+                      style: TextStyle(
+                          fontSize: 16.0,
+                          color: getStatusColor(requestIKDetail.status)),
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     ElevatedButton(
                       onPressed: () {
                         Get.back();
                       },
-                      child: Text('Close'),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.teal[700],
+                      ),
+                      child: const Text('Close'),
                     ),
                   ],
                 ),
@@ -81,5 +87,18 @@ class IzinKeluarDetailModal extends StatelessWidget {
         );
       },
     );
+  }
+
+  Color getStatusColor(String status) {
+    switch (status.toLowerCase()) {
+      case 'rejected':
+        return Colors.red[700]!;
+      case 'pending':
+        return Colors.deepOrange[700]!;
+      case 'approved':
+        return Colors.green[700]!;
+      default:
+        return Colors.teal[900]!;
+    }
   }
 }

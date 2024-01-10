@@ -58,17 +58,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //Route t-shirt
     Route::apiResource('tshirt', AdminTshirtController::class);
-    Route::post('add-to-cart', [AdminTshirtController::class, 'addToCart']);
-    Route::get('get-cart', [AdminTshirtController::class, 'getCart']);
-    Route::get('tshirt-quantities', [OrderController::class, 'getTshirtQuantities']);
+    Route::get('tshirt-quantities', [AdminTshirtController::class, 'getTshirtQuantities']);
 
 
     //Routes order t-shirt
     Route::get('orders-tshirt', [OrderController::class, 'index']);
-    Route::put('orders/cancel/{id}', [OrderController::class, 'cancelOrder']);
-
-    //Route OrderAndPayment
     Route::post('place-order-and-make-payment/{tshirt_id}', [OrderController::class, 'placeOrderAndMakePayment']);
+    Route::post('add-to-cart/{tshirt_id}', [OrderController::class, 'addToCart']);
+    Route::post('remove-from-cart/{tshirt_id}', [OrderController::class, 'removeFromCart']);
+    Route::get('get-cart', [OrderController::class, 'getCart']);
+    Route::put('orders/cancel/{id}', [OrderController::class, 'cancelOrder']);
 });
 
 // Routes Authentication

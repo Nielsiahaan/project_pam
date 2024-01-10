@@ -15,32 +15,6 @@ class AdminTshirtController extends Controller
         $tshirts = Tshirt::latest()->get();
         return response(['data' => $tshirts], 200);
     }
-    public function addToCart(Request $request, Tshirt $tshirt)
-    {
-        try {
-            // Perform size check before adding to the cart
-            $existingCartItem = Tshirt::where('size', $tshirt->size)->first();
-
-            if ($existingCartItem) {
-                return response()->json(['message' => 'T-shirt with the same size already exists in the cart'], 400);
-            }
-
-            // Perform any additional logic if needed
-
-            return response()->json(['message' => 'T-shirt successfully added to the cart', 'data' => $tshirt], 201);
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'Failed to add T-shirt to the cart.'], 500);
-        }
-    }
-
-
-
-    public function getCart()
-    {
-        $cartItems = Tshirt::latest()->get();
-
-        return response()->json(['data' => $cartItems], 200);
-    }
 
 
     public function show($id)
@@ -124,5 +98,24 @@ class AdminTshirtController extends Controller
         } catch (\Exception $e) {
             return response()->json(['message' => 'Failed to delete T-shirt.'], 500);
         }
+    }
+
+    public function getTshirtQuantities()
+    {
+        $tshirts = Tshirt::all();
+
+        $formattedData = [];
+        foreach ($tshirts as $tshirt) {
+            if (!isset($formattedData[$tshirt->size])) {
+                $formattedData[$tshirt->size] = [
+                    'size' => $tshirt->size,
+                    'total_quantity' => 0,
+                ];
+            }
+
+            $formattedData[$tshirt->size]['total_quantity'] += $tshirt->quantity;
+        }
+
+        return response()->json(['tshirt_quantities' => array_values($formattedData)], 200);
     }
 }

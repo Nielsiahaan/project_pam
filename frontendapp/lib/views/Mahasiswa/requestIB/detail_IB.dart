@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 class IzinBermalamDetailModal extends StatelessWidget {
   final int requestId;
 
-  IzinBermalamDetailModal({required this.requestId});
+  const IzinBermalamDetailModal({super.key, required this.requestId});
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +19,17 @@ class IzinBermalamDetailModal extends StatelessWidget {
           child: Wrap(
             children: [
               Container(
-                margin: EdgeInsets.all(20.0),
-                padding: EdgeInsets.all(16.0),
+                margin: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Colors.teal[50],
                   borderRadius: BorderRadius.circular(10.0),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 2,
                       blurRadius: 5,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
@@ -41,39 +41,45 @@ class IzinBermalamDetailModal extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: Colors.teal[900],
                       ),
                     ),
                     const SizedBox(height: 16.0),
                     Text(
                       'Alasan: ${requestIBDetail.deskripsi}',
-                      style: TextStyle(fontSize: 15.0),
+                      style: TextStyle(fontSize: 16.0, color: Colors.teal[900]),
                     ),
                     const SizedBox(height: 8.0),
                     Text(
                       'Tujuan: ${requestIBDetail.tujuan}',
-                      style: TextStyle(fontSize: 15.0),
+                      style: TextStyle(fontSize: 16.0, color: Colors.teal[900]),
                     ),
                     const SizedBox(height: 8.0),
                     Text(
                       'Tanggal berangkat: ${DateFormat('yyyy-MM-dd HH:mm WIB').format(requestIBDetail.tanggalBerangkat)}',
-                      style: TextStyle(fontSize: 15.0),
+                      style: TextStyle(fontSize: 16.0, color: Colors.teal[900]),
                     ),
                     const SizedBox(height: 8.0),
                     Text(
                       'Tanggal kembali: ${DateFormat('yyyy-MM-dd HH:mm WIB').format(requestIBDetail.tanggalKembali)}',
-                      style: TextStyle(fontSize: 15.0),
+                      style: TextStyle(fontSize: 16.0, color: Colors.teal[900]),
                     ),
                     const SizedBox(height: 8.0),
                     Text(
                       'Status: ${requestIBDetail.status}',
-                      style: TextStyle(fontSize: 15.0),
+                      style: TextStyle(
+                          fontSize: 16.0,
+                          color: getStatusColor(requestIBDetail.status)),
                     ),
                     const SizedBox(height: 16.0),
                     ElevatedButton(
                       onPressed: () {
                         Get.back();
                       },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.teal[700],
+                      ),
                       child: const Text('Close'),
                     ),
                   ],
@@ -84,5 +90,18 @@ class IzinBermalamDetailModal extends StatelessWidget {
         );
       },
     );
+  }
+
+  Color getStatusColor(String status) {
+    switch (status.toLowerCase()) {
+      case 'rejected':
+        return Colors.red[700]!;
+      case 'pending':
+        return Colors.deepOrange[700]!;
+      case 'approved':
+        return Colors.green[700]!;
+      default:
+        return Colors.teal[900]!;
+    }
   }
 }

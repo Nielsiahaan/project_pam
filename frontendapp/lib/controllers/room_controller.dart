@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontendapp/constants/constants.dart';
 import 'package:frontendapp/models/room_model.dart';
-import 'package:frontendapp/views/Admin/room/index_room.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
@@ -59,7 +58,7 @@ class RoomController extends GetxController {
           body: data);
 
       if (response.statusCode == 201) {
-        Get.to(() => IndexRoom());
+        Get.back();
         Get.snackbar('Success', json.decode(response.body)['message'],
             snackPosition: SnackPosition.TOP,
             backgroundColor: Colors.green,
@@ -101,7 +100,7 @@ class RoomController extends GetxController {
 
         // Update selectedRoom
         selectedRoom.value = updatedRoom;
-        Get.to(() => IndexRoom());
+        Get.back();
         Get.snackbar('Success', json.decode(response.body)['message'],
             snackPosition: SnackPosition.TOP,
             backgroundColor: Colors.green,
@@ -127,8 +126,6 @@ class RoomController extends GetxController {
       });
 
       if (response.statusCode == 200) {
-        // Handle successful deletion, if needed
-        Get.to(() => IndexRoom());
         Get.snackbar('Success', json.decode(response.body)['message'],
             snackPosition: SnackPosition.TOP,
             backgroundColor: Colors.green,

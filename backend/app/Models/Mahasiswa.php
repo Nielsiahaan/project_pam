@@ -47,9 +47,19 @@ class Mahasiswa extends Authenticatable
         return $this->hasMany(RequestIK::class);
     }
 
+    public function requestIB(): HasMany
+    {
+        return $this->hasMany(IBRequest::class);
+    }
+
     public function order(): HasMany
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function carItems(): HasMany
+    {
+        return $this->hasMany(CartItem::class);
     }
     public function getMahasiswaName(): String
     {

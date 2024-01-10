@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderRequest;
+use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Payment;
@@ -60,7 +61,8 @@ class OrderController extends Controller
                 'quantity' => $validatedData['quantity'],
                 'status' => 'Belum bayar',
             ]);
-
+            $tshirt->quantity -= $validatedData['quantity'];
+            $tshirt->save();
             // Step 2: Create payment
             $paymentAmount = $totalPrice;
             $payment = Payment::create([
@@ -109,22 +111,101 @@ class OrderController extends Controller
     }
 
 
-    public function getTshirtQuantities()
-    {
-        $tshirts = Tshirt::all();
 
-        $formattedData = [];
-        foreach ($tshirts as $tshirt) {
-            if (!isset($formattedData[$tshirt->size])) {
-                $formattedData[$tshirt->size] = [
-                    'size' => $tshirt->size,
-                    'total_quantity' => 0,
-                ];
+
+    public function getCart()
+    {
+        try {
+            $mahasiswaId = auth()->id();
+            $cartItems = CartItem::with('tshirt')->where('mahasiswa_id', $mahasiswaId)->latest()->get();
+
+            return response()->json(['data' => $cartItems], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to retrieve cart items.'], 500);
+        }
+    }
+
+
+    public function addToCart(Request $request, int $tshirtId)
+    {
+        try {
+            $validatedData = $request->validate([
+                'size' => 'required|in:S,M,L,XL,XXL',
+                'quantity' => 'required|numeric|min:1',
+            ]);
+
+            // Validate and fetch the Tshirt model
+            $tshirt = Tshirt::find($tshirtId);
+
+            if (!$tshirt) {
+                return response()->json(['message' => 'Invalid T-shirt ID'], 400);
             }
 
-            $formattedData[$tshirt->size]['total_quantity'] += $tshirt->quantity;
-        }
+            // Periksa apakah ukuran T-shirt yang dipilih sesuai
+            if ($tshirt->size !== $validatedData['size']) {
+                return response()->json(['message' => 'Size selected does not match the product size'], 400);
+            }
 
-        return response()->json(['tshirt_quantities' => array_values($formattedData)], 200);
+            // Find existing cart item for the user, tshirt, and size
+            $cartItem = CartItem::where([
+                'mahasiswa_id' => auth()->id(),
+                'tshirt_id' => $tshirtId,
+                'size' => $validatedData['size'],
+            ])->first();
+
+            if ($cartItem) {
+                // If T-shirt with the same size exists, increment the quantity
+                $cartItem->update(['quantity' => $cartItem->quantity + $validatedData['quantity']]);
+            } else {
+                // Use the validated quantity
+                $validatedData['mahasiswa_id'] = auth()->id();
+                $validatedData['tshirt_id'] = $tshirtId; // Assign the correct tshirt_id
+                CartItem::create($validatedData);
+                $cartItem = CartItem::latest()->first();
+            }
+
+            // Customize the response data if needed
+            $responseData = [
+                'message' => 'T-shirt successfully added to the cart',
+                'data' => [
+                    'cart_item_id' => $cartItem->id,
+                    'quantity' => $cartItem->quantity,
+                ],
+            ];
+
+            return response()->json($responseData, 201);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to add T-shirt to the cart.'], 500);
+        }
+    }
+
+    public function removeFromCart(Request $request, $tshirtId)
+    {
+        try {
+            $user = auth()->id();
+
+            // Find the cart item for the logged-in user
+            $cartItem = CartItem::where('tshirt_id', $tshirtId)
+                ->where('mahasiswa_id', $user)
+                ->first();
+
+            if (!$cartItem) {
+                return response()->json(['message' => 'Item not found in the cart.'], 404);
+            }
+
+            // Update the cart item quantity
+            $cartItem->quantity = $cartItem->quantity - $request->input('quantity', 1);
+
+            // If the quantity becomes zero or negative, remove the item from the cart
+            if ($cartItem->quantity <= 0) {
+                $cartItem->delete();
+            } else {
+                $cartItem->save();
+            }
+
+            return response()->json(['message' => 'Item removed from the cart successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to remove item from the cart.', 'error' => $e->getMessage()], 500);
+        }
     }
 }

@@ -21,8 +21,8 @@ class TshirtDetail extends StatelessWidget {
     return Center(
       child: Wrap(children: [
         Container(
-          margin: EdgeInsets.all(20.0),
-          padding: EdgeInsets.all(16),
+          margin: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10.0),
@@ -31,7 +31,7 @@ class TshirtDetail extends StatelessWidget {
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 2,
                 blurRadius: 5,
-                offset: Offset(0, 3),
+                offset: const Offset(0, 3),
               ),
             ],
           ),
@@ -44,7 +44,7 @@ class TshirtDetail extends StatelessWidget {
                 children: [
                   Text(
                     'Size: ${tshirt.size}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.deepOrangeAccent,
@@ -58,7 +58,7 @@ class TshirtDetail extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 'Stock: ${tshirt.quantity}',
                 style: const TextStyle(
@@ -66,25 +66,31 @@ class TshirtDetail extends StatelessWidget {
                   color: Colors.grey,
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 'Price: $formattedPrice',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
                       GestureDetector(
-                        onTap: () {
-                          orderController.addToCart(tshirt);
+                        onTap: () async {
+                          int tshirtId = tshirt.id;
+                          String size = tshirt.size;
+                          int quantity = 1;
+
+                          // Call addToCart with the extracted details
+                          await orderController.addToCart(
+                              tshirtId, size, quantity);
                         },
-                        child: Row(
+                        child: const Row(
                           children: [
                             Icon(Icons.shopping_cart),
                             SizedBox(width: 4),
@@ -98,7 +104,7 @@ class TshirtDetail extends StatelessWidget {
                     onPressed: () {
                       Get.to(() => OrderFormPage(tshirt: tshirt));
                     },
-                    child: Text('Check Out'),
+                    child: const Text('Check Out'),
                   ),
                 ],
               ),

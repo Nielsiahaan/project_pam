@@ -69,7 +69,6 @@ class AdminController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-       
         Get.snackbar(
           'Success',
           json.decode(response.body)['message'],
@@ -80,7 +79,6 @@ class AdminController extends GetxController {
 
         await _requestSuratController.getAllSuratRequest();
       } else {
-       
         Get.snackbar(
           'Error',
           json.decode(response.body)['message'],

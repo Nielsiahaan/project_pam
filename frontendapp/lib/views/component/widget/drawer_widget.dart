@@ -35,9 +35,15 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         children: <Widget>[
           Container(
             color: Colors.teal,
-            child: DrawerHeader(
+            child: const DrawerHeader(
               decoration: BoxDecoration(
                 color: Colors.teal,
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.teal,
+                    width: 0,
+                  ),
+                ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +80,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               ),
               title: Text(
                 menu,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 14,
                   color: Colors.teal,

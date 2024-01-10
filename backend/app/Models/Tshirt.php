@@ -38,4 +38,9 @@ class Tshirt extends Model
 
         return $tshirt;
     }
+
+    public function cartItems(): HasMany
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }

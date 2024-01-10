@@ -6,12 +6,11 @@ import 'package:frontendapp/views/Admin/requestIB/index_ib.dart';
 import 'package:frontendapp/views/Admin/requestSurat/index_surat.dart';
 import 'package:frontendapp/views/Admin/room/index_room.dart';
 import 'package:frontendapp/views/Admin/tshirt/index_tshirt.dart';
-// import 'package:frontendapp/views/component/widget/drawer_widget.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AdminDashboard extends StatefulWidget {
-  const AdminDashboard({super.key});
+  const AdminDashboard({Key? key});
 
   @override
   State<AdminDashboard> createState() => _AdminDashboardState();
@@ -21,43 +20,27 @@ class _AdminDashboardState extends State<AdminDashboard> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _authenticationController = Get.put(AuthenticationController());
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.grey[100],
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Colors.indigo,
-        title: const Text(
+        backgroundColor: Colors.indigo[600],
+        centerTitle: true,
+        title: Text(
           'Admin Dashboard',
-          style: TextStyle(color: Colors.white),
+          style: GoogleFonts.poppins(
+              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
         ),
-        // leading: IconButton(
-        //   icon: Icon(Icons.menu),
-        //   onPressed: () {
-        //     _scaffoldKey.currentState?.openDrawer();
-        //   },
-        // ),
-        // actions: [
-        //   IconButton(
-        //     icon: Icon(Icons.notifications),
-        //     onPressed: () {
-        //       // Handle notifications
-        //     },
-        //   ),
-        // ],
-         actions: [
+        actions: [
           Padding(
-            padding: const EdgeInsets.only(
-                right: 16.0), // Adjust the right padding as needed
-            child: InkWell(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: GestureDetector(
               onTap: () {
-                // Tambahkan logika untuk menampilkan informasi pengguna
-                // (tampilkan dialog atau pindah ke halaman profil)
                 _showUserProfileDialog();
               },
-              child: CircleAvatar(
+              child: const CircleAvatar(
                 radius: 20,
                 backgroundImage: AssetImage('assets/img/Niel.jpg'),
               ),
@@ -72,7 +55,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              // Greetings row
               Center(
                 child: Text(
                   'Welcome Admin',
@@ -84,18 +66,25 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 ),
               ),
               const SizedBox(height: 26),
-              // Search bar
               Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 2,
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
                   child: Row(
                     children: [
                       Icon(Icons.search, color: Colors.grey),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       Expanded(
                         child: TextField(
                           decoration: InputDecoration(
@@ -109,7 +98,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 ),
               ),
               const SizedBox(height: 20),
-              // Menu containers
               Expanded(
                 child: GridView.count(
                   crossAxisCount: 2,
@@ -165,7 +153,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
           ),
         ),
       ),
-      // drawer: const DrawerWidget(),
     );
   }
 
@@ -179,30 +166,31 @@ class _AdminDashboardState extends State<AdminDashboard> {
           children: [
             GestureDetector(
               onTap: () {
-                // Handle click on profile picture to show user information
-                Navigator.pop(context); // Close the current dialog
+                Navigator.pop(context);
               },
-              child: CircleAvatar(
+              child: const CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('assets/img/Niel.jpg'),
+                backgroundColor: Colors.indigo, // Warna latar belakang avatar
+                child: CircleAvatar(
+                  radius: 48,
+                  backgroundImage: AssetImage('assets/img/Niel.jpg'),
+                ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 16),
             ListTile(
-              leading: Icon(Icons.settings),
-              title: Text("Settings"),
+              leading: const Icon(Icons.settings, color: Colors.indigo),
+              title: const Text("Settings", style: TextStyle(color: Colors.indigo)),
               onTap: () {
-                // Handle Settings
-                Navigator.pop(context); // Close the dialog
-                _showMahasiswaInfo(); // Show user information dialog
+                Navigator.pop(context);
+                _showMahasiswaInfo();
               },
             ),
             ListTile(
-              leading: Icon(Icons.logout),
-              title: Text("Sign Out"),
+              leading: const Icon(Icons.logout, color: Colors.indigo),
+              title: const Text("Sign Out", style: TextStyle(color: Colors.indigo)),
               onTap: () {
-                // Handle Sign Out
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context);
                 _handleSignOut();
               },
             ),
@@ -213,7 +201,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
   }
 
   void _showMahasiswaInfo() {
-    // Create controllers for editing
     TextEditingController nameController =
         TextEditingController(text: "Daniel Siahaan");
     TextEditingController emailController =
@@ -228,23 +215,31 @@ class _AdminDashboardState extends State<AdminDashboard> {
           children: [
             GestureDetector(
               onTap: () {
-                // Handle click on profile picture to show user information
-                Navigator.pop(context); // Close the current dialog
+                Navigator.pop(context);
               },
-              child: CircleAvatar(
+              child: const CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('assets/img/Niel.jpg'),
+                backgroundColor: Colors.indigo, // Warna latar belakang avatar
+                child: CircleAvatar(
+                  radius: 48,
+                  backgroundImage: AssetImage('assets/img/Niel.jpg'),
+                ),
               ),
             ),
-            SizedBox(height: 10),
-            // Editable fields for name and email
+            const SizedBox(height: 16),
             TextFormField(
               controller: nameController,
-              decoration: InputDecoration(labelText: 'Name'),
+              decoration: const InputDecoration(
+                labelText: 'Name',
+                labelStyle: TextStyle(color: Colors.indigo),
+              ),
             ),
             TextFormField(
               controller: emailController,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(
+                labelText: 'Email',
+                labelStyle: TextStyle(color: Colors.indigo),
+              ),
             ),
           ],
         ),
@@ -253,46 +248,35 @@ class _AdminDashboardState extends State<AdminDashboard> {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text("Cancel"),
+            child: const Text("Cancel", style: TextStyle(color: Colors.indigo)),
           ),
           TextButton(
             onPressed: () {
-              // Save changes and update the user information
               String newName = nameController.text;
               String newEmail = emailController.text;
 
-              // TODO: Update user information with newName and newEmail
-              // For now, just print the updated information
               print("Updated Information - Name: $newName, Email: $newEmail");
 
               Navigator.pop(context);
             },
-            child: Text("Save"),
+            child: const Text("Save", style: TextStyle(color: Colors.indigo)),
           ),
         ],
       ),
     );
   }
 
-  Future<void> _handleSettings() async {
-    _showMahasiswaInfo();
-  }
-
   Future<void> _handleSignOut() async {
     try {
-      // Show loading indicator
       Get.dialog(
-        Center(child: CircularProgressIndicator()),
+        const Center(child: CircularProgressIndicator()),
         barrierDismissible: false,
       );
 
-      // Call logout method
       await _authenticationController.logout();
 
-      // Close loading indicator
       Get.back();
     } catch (e) {
-      // Handle error (if any)
       debugPrint('Error during logout: ${e.toString()}');
       Get.back();
     }

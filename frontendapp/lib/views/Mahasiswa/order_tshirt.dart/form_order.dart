@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 class OrderFormPage extends StatefulWidget {
   final TshirtModel tshirt;
 
-  OrderFormPage({required this.tshirt});
+  const OrderFormPage({super.key, required this.tshirt});
 
   @override
   State<OrderFormPage> createState() => _OrderFormPageState();
@@ -27,6 +27,9 @@ class _OrderFormPageState extends State<OrderFormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
         title: Text('Order Form'),
       ),
       body: Padding(

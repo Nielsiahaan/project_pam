@@ -7,11 +7,11 @@ import 'package:intl/intl.dart';
 class IKView extends StatelessWidget {
   final int requestId;
 
-  IKView({required this.requestId});
+  const IKView({super.key, required this.requestId});
 
   @override
   Widget build(BuildContext context) {
-    final AdminController _adminController = Get.put(AdminController());
+    final AdminController adminController = Get.put(AdminController());
 
     return GetBuilder<RequestIKController>(
       builder: (controller) {
@@ -23,11 +23,11 @@ class IKView extends StatelessWidget {
             width: 350.0,
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.0),
+              color: Colors.grey[100], // Light grey background
+              borderRadius: BorderRadius.circular(12.0),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
+                  color: Colors.grey.withOpacity(0.3),
                   spreadRadius: 2,
                   blurRadius: 5,
                   offset: const Offset(0, 3),
@@ -38,29 +38,40 @@ class IKView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
+                const Text(
                   'Detail Izin Keluar',
                   style: TextStyle(
-                    fontSize: 18.0,
+                    fontSize: 22.0,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: Colors.black87,
                   ),
                 ),
                 const SizedBox(height: 20.0),
                 buildDetailRow(
                   title: 'Nama Mahasiswa',
                   content: FutureBuilder<String>(
-                    future: _adminController
+                    future: adminController
                         .getNamaMahasiswaFromId(requestIKView.mahasiswaId),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator();
+                        return const CircularProgressIndicator(
+                          color: Colors.blueGrey,
+                        );
                       } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
+                        return Text(
+                          'Error: ${snapshot.error}',
+                          style: const TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.red,
+                          ),
+                        );
                       } else {
                         return Text(
                           snapshot.data ?? 'N/A',
-                          style: TextStyle(fontSize: 15.0),
+                          style: const TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.black87,
+                          ),
                         );
                       }
                     },
@@ -92,20 +103,22 @@ class IKView extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    buildActionButton(
-                      onPressed: () {
-                        _adminController.approveIB(id: requestIKView.id);
-                      },
-                      label: 'Approve',
-                      color: Colors.green,
-                    ),
-                    buildActionButton(
-                      onPressed: () {
-                        _adminController.rejectIB(id: requestIKView.id);
-                      },
-                      label: 'Reject',
-                      color: Colors.red,
-                    ),
+                    if (requestIKView.status == 'pending')
+                      buildActionButton(
+                        onPressed: () {
+                          adminController.approveIK(id: requestIKView.id);
+                        },
+                        label: 'Approve',
+                        color: Colors.green,
+                      ),
+                    if (requestIKView.status == 'pending')
+                      buildActionButton(
+                        onPressed: () {
+                          adminController.rejectIK(id: requestIKView.id);
+                        },
+                        label: 'Reject',
+                        color: Colors.red,
+                      ),
                     buildActionButton(
                       onPressed: () {
                         Get.back();
@@ -130,7 +143,7 @@ class IKView extends StatelessWidget {
       children: [
         Text(
           '$title:',
-          style: TextStyle(fontSize: 15.0),
+          style: TextStyle(fontSize: 15.0, color: Colors.teal[900]),
         ),
         const SizedBox(width: 8.0),
         Expanded(child: content),
@@ -141,7 +154,7 @@ class IKView extends StatelessWidget {
   Widget buildDetailText({required String title, required String content}) {
     return Text(
       '$title: $content',
-      style: TextStyle(fontSize: 15.0),
+      style: TextStyle(fontSize: 15.0, color: Colors.teal[900]),
     );
   }
 
@@ -162,7 +175,7 @@ class IKView extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: TextStyle(color: Colors.white, fontSize: 16),
+        style: const TextStyle(color: Colors.white, fontSize: 16),
       ),
     );
   }

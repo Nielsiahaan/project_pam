@@ -14,10 +14,17 @@ class BookingRoomPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        centerTitle: true,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: Colors.teal[400],
         title: Text(
           'Booking Room',
-          style: TextStyle(color: Colors.white),
+          style: GoogleFonts.poppins(
+            fontSize: 18.0,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       body: Padding(
@@ -25,40 +32,53 @@ class BookingRoomPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            InkWell(
-              onTap: () {
+            ElevatedButton(
+              onPressed: () {
                 Get.to(() => BookingForm());
               },
-              child: Ink(
-                decoration: BoxDecoration(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal[400],
+                shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.green,
                 ),
-                child: Container(
-                  padding: EdgeInsets.all(12.0),
-                  child: Center(
-                    child: Text(
-                      'Booking Room',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.white,
-                      ),
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(12.0),
+                child: Center(
+                  child: Text(
+                    'Booking Room',
+                    style: GoogleFonts.poppins(
+                      fontSize: 14.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             Text(
               'Riwayat Booking Room',
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              style: GoogleFonts.poppins(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.teal[400],
+              ),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Obx(() {
               if (_bookingController.isLoading.value) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (_bookingController.bookingRoom.isEmpty) {
-                return Center(child: Text('No booking room available.'));
+                return Center(
+                    child: Text(
+                  'No booking room available.',
+                  style: GoogleFonts.poppins(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.teal[400],
+                  ),
+                ));
               } else {
                 return Expanded(
                   child: ListView.builder(
@@ -66,10 +86,11 @@ class BookingRoomPage extends StatelessWidget {
                     itemBuilder: (context, index) {
                       var bookingRoom = _bookingController.bookingRoom[index];
                       return buildIzinTile(
-                          roomId: bookingRoom.roomId,
-                          start_time: bookingRoom.startTime,
-                          end_time: bookingRoom.endTime,
-                          status: bookingRoom.status);
+                        roomId: bookingRoom.roomId,
+                        start_time: bookingRoom.startTime,
+                        end_time: bookingRoom.endTime,
+                        status: bookingRoom.status,
+                      );
                     },
                   ),
                 );
@@ -87,22 +108,26 @@ class BookingRoomPage extends StatelessWidget {
     required DateTime end_time,
     required String status,
   }) {
-    Color? backgroundColor;
-
     String roomName = _bookingController.getRoomNameById(roomId);
+    late Color backgroundColor;
+    late Color textColor;
 
     switch (status.toLowerCase()) {
       case 'rejected':
-        backgroundColor = Colors.red[100];
+        backgroundColor = Colors.red[300]!;
+        textColor = Colors.white;
         break;
       case 'pending':
-        backgroundColor = Colors.yellow[100];
+        backgroundColor = Colors.yellow[100]!;
+        textColor = Colors.deepOrange[300]!;
         break;
       case 'approved':
-        backgroundColor = Colors.green[100];
+        backgroundColor = Colors.green[100]!;
+        textColor = Colors.green[700]!;
         break;
       default:
-        backgroundColor = Colors.grey[300];
+        backgroundColor = Colors.grey[200]!;
+        textColor = Colors.blueGrey;
     }
 
     return Card(
@@ -118,40 +143,60 @@ class BookingRoomPage extends StatelessWidget {
                   roomName,
                   style: GoogleFonts.poppins(
                     fontSize: 14,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w600,
+                    color: textColor,
                   ),
                 ),
                 PopupMenuButton<String>(
                   itemBuilder: (BuildContext context) =>
                       <PopupMenuEntry<String>>[
-                    const PopupMenuItem<String>(
+                    PopupMenuItem<String>(
                       value: 'view',
-                      child: Text('View Detail'),
+                      child: Text(
+                        'View Detail',
+                        style: TextStyle(
+                          color: Colors.teal[400],
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
                     if (status.toLowerCase() == 'pending')
-                      const PopupMenuItem<String>(
+                      PopupMenuItem<String>(
                         value: 'batal',
-                        child: Text('Batal'),
+                        child: Text(
+                          'Batal',
+                          style: TextStyle(
+                            color: Colors.red[400],
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ),
                   ],
                   onSelected: (String value) {
                     handlePopupMenuSelection(value, roomId);
                   },
+                  icon: Icon(
+                    Icons.more_vert,
+                    color: Colors.teal[400],
+                  ),
+                  offset: const Offset(0, 20),
                 ),
               ],
             ),
             Text(
-              'Waktu Mulai: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(start_time)}',
+              'Waktu Mulai: ${DateFormat('yyyy-MM-dd HH:mm WIB').format(start_time)}',
               style: GoogleFonts.poppins(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
+                color: textColor,
               ),
             ),
             Text(
-              'Waktu Berakhir: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(end_time)}',
+              'Waktu Berakhir: ${DateFormat('yyyy-MM-dd HH:mm WIB').format(end_time)}',
               style: GoogleFonts.poppins(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
+                color: textColor,
               ),
             ),
           ],
@@ -161,6 +206,7 @@ class BookingRoomPage extends StatelessWidget {
           style: GoogleFonts.poppins(
             fontSize: 12,
             fontWeight: FontWeight.w400,
+            color: textColor,
           ),
         ),
       ),
@@ -172,7 +218,7 @@ class BookingRoomPage extends StatelessWidget {
       case 'view':
         Get.bottomSheet(
           BookingRoomDetailModal(requestId: roomId),
-           isScrollControlled: true,
+          isScrollControlled: true,
         );
         break;
       case 'batal':
@@ -191,6 +237,8 @@ class BookingRoomPage extends StatelessWidget {
       textCancel: 'No',
       textConfirm: 'Yes',
       confirmTextColor: Colors.white,
+      cancelTextColor: Colors.blueGrey,
+      buttonColor: Colors.blueGrey,
       onConfirm: () async {
         //call the cancelBooking  method
         await _bookingController.cancelBooking(roomId);

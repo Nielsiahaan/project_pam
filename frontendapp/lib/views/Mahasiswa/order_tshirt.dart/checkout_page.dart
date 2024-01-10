@@ -27,12 +27,19 @@ enum PaymentMethod {
 class _CheckoutPageState extends State<CheckoutPage> {
   PaymentMethod selectedPaymentMethod = PaymentMethod.CreditCard;
   final OrderController _orderController = Get.put(OrderController());
+  late List<int> quantities;
   final List<PaymentMethod> paymentMethods = [
     PaymentMethod.CreditCard,
     PaymentMethod.CashOnDelivery,
     PaymentMethod.BankTransfer,
     PaymentMethod.DebitCard,
   ];
+  @override
+  void initState() {
+    super.initState();
+    quantities = List<int>.from(widget.selectedQuantities);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +54,14 @@ class _CheckoutPageState extends State<CheckoutPage> {
               itemCount: widget.selectedTshirts.length,
               itemBuilder: (context, index) {
                 TshirtModel tshirt = widget.selectedTshirts[index];
-                int quantity = widget.selectedQuantities[index];
+                int quantity =
+                    _orderController.cart[index].quantity = quantities[index];
                 final formattedPrice = NumberFormat.currency(
                   locale: 'id_ID',
                   symbol: 'Rp.',
                   decimalDigits: 0,
                 ).format(double.parse(tshirt.price));
+
                 return Card(
                   elevation: 4,
                   margin: const EdgeInsets.all(8),
@@ -122,10 +131,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     try {
                       for (var i = 0; i < widget.selectedTshirts.length; i++) {
                         TshirtModel selectedTshirt = widget.selectedTshirts[i];
+                        int quantity = widget.selectedQuantities[i];
                         await _orderController.placeOrderAndMakePayment(
                           selectedTshirt.id,
                           selectedTshirt.size,
-                          widget.selectedQuantities[i],
+                          quantity,
                           selectedPaymentMethod,
                         );
                       }
